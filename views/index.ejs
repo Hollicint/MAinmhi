@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head-->
+<%- include ("./partials/head.ejs") %>
+
+<body>
+    <!--nav bar-->
+    <%- include ("partials/navbar/nav.ejs") %>
+    <h1>Welcome to M'Ainmhi</h1>
+
+    <h3>Please To store your beloved pet medical information</h3><br>
+
+
+    <% var sMessage="Login or Register" %>
+    <%= sMessage %>
+
+    <br>
+    
+    <form action="login" method="post">
+        <!--User and Password that will be checked if exists-->
+        <label for="username">Username</label>
+        <input type="text" name="username" placeholder="Username" class="displayBox" required> <br>
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Password"  class="displayBox" required> <br> <br>
+
+       
+       
+        <!--Submit button-->
+        <button type="submit">Enter </button>
+        <!-- Register location that will connect to DB -->
+        <a href="/regNewUser" id="regButton">Register</a>
+        <!--a href="/forgottenpass"> | Forgotten Password</a-->
+
+    </form>
+
+
+    
+    <!--Footer-->
+    <%- include ("./partials/footer.ejs") %>%>
+
+</body>
+
+</html>
