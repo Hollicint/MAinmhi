@@ -27,13 +27,13 @@ app.get("/aboutus", (request, response) => {
     response.redirect("/about");
 });
 
-app.get("/contact", (request, response) => {
-    response.render("contact", { title: "contact" });
+app.get("/support", (request, response) => {
+    response.render("support", { title: "support" });
 });
 
 //redirect
-app.get("/contactus", (request, response) => {
-    response.redirect("/contact");
+app.get("/supportpage", (request, response) => {
+    response.redirect("/support");
 });
 
 
@@ -61,6 +61,15 @@ app.get("/login", (request, response) => {
 
 
 
+// Insurance Company User
+
+app.get("/insurance/clients_page", (request, response) => {
+    response.render("insurance/clients_page", { title: "Client Page" });
+});
+
+app.get("/insurance/clients_claim", (request, response) => {
+    response.render("insurance/clients_claim", { title: "clients claim" });
+});
 
 
 
