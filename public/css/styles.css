@@ -1,3 +1,74 @@
+.head{
+    background-color: #8C3061;
+    color: #FBF6E9;
+}
+
+
 body{
     background-color: antiquewhite;
+}
+
+.foot{
+    background-color: #8C3061;
+    color: #FBF6E9;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 160%;
+}
+
+
+/**************  INDEX **************/
+
+
+.nav-links {
+    background-color: #FFCF81;
+    padding: 10px;
+    text-align: center;
+}
+
+
+/* User Account */
+.user-account {
+    background-color: #3498db; /* Blue */
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+/* Insurance Company */
+.insurance {
+    background-color: #e74c3c; /* Red */
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+/**************  User Login page **************/
+.col-4{
+    background-color: #FFCF81;
+}
+
+
+.leftimage-col {
+    background-color: #FFCF81;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Right column (Form) */
+.rightSide-col {
+    background-color: #FBF6E9;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.full-height {
+    min-height: 100vh;
+    display: flex;
 }

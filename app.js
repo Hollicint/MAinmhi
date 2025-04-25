@@ -39,21 +39,30 @@ app.get("/supportpage", (request, response) => {
 
 
 
-//customers pages
-app.get("/claims", (request, response) => {
-    response.render("claims", { title: "claims" });
-});
+//User pages
 
-app.get("/insurance/insurance_profile", (request, response) => {
-    response.render("insurance/insurance_profile", { title: "Insurance" });
+
+app.get("/user/user_loginpage", (request, response) => {
+    response.render("user/user_loginpage", { title: "User Login" });
 });
 
 app.get("/user/user_profile", (request, response) => {
     response.render("user/user_profile", { title: "user profile" });
 });
+
 app.get("/user/pets_profile", (request, response) => {
     response.render("user/pets_profile", { title: "pets profile" });
 });
+
+app.get("/user/pets_accountCreation", (request, response) => {
+    response.render("user/pets_accountCreation", { title: "pets account creation" });
+});
+app.get("/user/claims", (request, response) => {
+    response.render("user/claims", { title: "claims" });
+});
+
+
+//logi * will have to go or be changed
 
 app.get("/login", (request, response) => {
     response.render("login", { title: "login" });
@@ -62,14 +71,21 @@ app.get("/login", (request, response) => {
 
 
 // Insurance Company User
-
-app.get("/insurance/clients_page", (request, response) => {
-    response.render("insurance/clients_page", { title: "Client Page" });
+app.get("/insurance/insurance_loginpage", (request, response) => {
+    response.render("insurance/insurance_loginpage", { title: "Insurance Login" });
 });
 
-app.get("/insurance/clients_claim", (request, response) => {
+app.get("/insurance/insurance_profile", (request, response) => {
+    response.render("insurance/insurance_profile", { title: "Insurance" });
+});
+
+app.get("/insurance/clients_list", (request, response) => {
+    response.render("insurance/clients_list", { title: "Client List" });
+});
+
+/*app.get("/insurance/clients_claim", (request, response) => {
     response.render("insurance/clients_claim", { title: "clients claim" });
-});
+})*/
 
 
 

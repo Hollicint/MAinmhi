@@ -1,24 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--head-->
-<%- include ("./partials/head.ejs") %>
+<%- include ("../partials/head.ejs") %>
 
 <body>
     <!--nav bar-->
-    <%- include ("partials/navbar/nav.ejs") %>
-    <h1>Welcome to M'Ainmhi</h1>
+    <!--
+    <%- include ("../partials/navbar/nav.ejs") %>
+    -->
 
-    <h3>Please To store your beloved pet medical information</h3><br>
+    <div class="container-fluid full-height"> 
 
+            <div class="col-4">
+                <h3>Pets Name</h3>
 
-    <h3>Claims</h3>
+            </div>
+            <div class="col-8 ">
 
-    <% var sMessage="Hello there from EJS" %>
-    <%= sMessage %>
+            
+                <h1>Claims</h1>
+            
+                <% var sMessage="Pets Claims" %>
+                <%= sMessage %>
+            
+                <br>  <br>
 
+                <li>
+                    <ol>claims 1</ol>
+                    <ol>claims 2</ol>
+                </li>
+
+            
+                <!-- Buttons while Code is being created to move around pages-->
+                <a href="/user/pets_profile"><button>Pets</button></a>
+                <a href="/"> <button>Home</button></a>
+
+            </div>
+    </div>       
+
+   
     
     <!--Footer-->
-    <%- include ("./partials/footer.ejs") %>%>
+    <%- include ("../partials/footer.ejs") %>%>
 
 </body>
 

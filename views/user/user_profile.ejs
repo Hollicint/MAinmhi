@@ -4,17 +4,41 @@
 <%- include ("../partials/head.ejs") %>
 
     <body>
-        <!--nav bar-->
-        <%- include ("../partials/navbar/user_nav.ejs") %>
 
-        <h1>Welcome to M'Ainmhi</h1>
+        
+         <!-- nav bar-->
+        <!--
+         <%- include ("../partials/navbar/user_nav.ejs") %>
+        -->
+        <div class="container-fluid full-height"> 
 
-        <h3>Please To store your beloved pet medical information</h3><br>
-        <h1>USER</h1><br>
-   
+            <div class="col-4">
+                <h3>Name</h3>
 
+            </div>
+
+            <div class="col-8 ">
+
+                <h1>Welcome to M'Ainmhi</h1>
+
+                <h3>Please To store your beloved pet medical information</h3><br>
+                <h1>USER</h1><br>
+
+                <br>
+                <img src="/images/profileImages/dog.png" alt="dog" class="rounded-circle" width="250" height="250"> <br>
+                <img src="/images/profileImages/cat.png" alt="Cat" class="rounded-circle" width="250" height="250"> <br>
+                <img src="/images/profileImages/paw.png" alt="Create an Account" class="rounded-circle" width="250" height="250"> Add a Pet</a>
+
+                <br> <br>
+                <!-- Buttons while Code is being created to move around pages-->
+                <a href="/user/pets_profile"><button> Pet Profile</button></a>
+                <a href="/user/user_loginpage"> <button>User Login</button></a>
+                <a href="/"> <button>Home</button></a>
+
+            </div>   
+        </div>
         <!--Footer-->
-        <%- include ("../partials/footer.ejs") %>
+        <%- include("../partials/footer.ejs") %>
 
     </body>
 
