@@ -4,42 +4,45 @@
 <%- include ("./partials/head.ejs") %>
 
 <body>
+     <!--Header Bar-->
+    <header class="head text-center p-3">
+        <h1>Welcome to M'Ainmhi</h1>
+    </header>    
 
-    <h1>Welcome to M'Ainmhi</h1>
-
-        <!--nav bar-->
+       
+            <!--nav bar-->
         <%- include ("partials/navbar/nav.ejs") %>
 
-    <h3>Please To store your beloved pet medical information</h3><br>
+
+        <h3>Please To store your beloved pet medical information</h3><br>
+
+        <% var sMessage="Choose User or Insurance Company path" %>
+        <%= sMessage %>
+
+        <br>
 
 
-    <% var sMessage="Login or Register" %>
-    <%= sMessage %>
-
-    <br>
-    
-    <form action="login" method="post">
-        <!--User and Password that will be checked if exists-->
-        <label for="username">Username</label>
-        <input type="text" name="username" placeholder="Username" class="displayBox" required> <br>
-        <label for="password">Password</label>
-        <input type="password" name="password" placeholder="Password"  class="displayBox" required> <br> <br>
-
-       
-       
-        <!--Submit button-->
-        <button type="submit">Enter </button>
-        <!-- Register location that will connect to DB -->
-        <a href="/regNewUser" id="regButton">Register</a>
-        <!--a href="/forgottenpass"> | Forgotten Password</a-->
-
-    </form>
+        <div class="row mt-3">
+            <div class="col-6 user-account">User Account <br>
+                <a href="/user/user_loginpage"><img src="images/accountsImages/UsersIcon.png" alt="icon"></a>
+            </div>
+            <div class="col-6 insurance">Insurance Company <br>
+                <a href="/insurance/insurance_loginpage"> <img src="images/accountsImages/InsuranceIcon.png" alt="icon"></a>
+            </div>
+        </div> 
 
 
-    
+
+
     <!--Footer-->
     <%- include ("./partials/footer.ejs") %>%>
 
 </body>
 
 </html>
+
+<!--
+image ref
+ https://icon-library.com/icon/pet-icon-png-15.html
+  https://www.flaticon.com/free-icon/insurance-company_9417371
+   -->
