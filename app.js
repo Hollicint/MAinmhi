@@ -1,17 +1,59 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
+// import this module
+const UserLoginDetail = require("./models/userlogindetail");
+const PetAccountDetail = require("./models/petaccountdetail");
+
 //create the Express app
 const app = express();
 
+//const { ConnectionPoolClosedEvent } = require("mongodb");
+
+const dbURI = "mongodb+srv://ComputerProject:GlpXTRDjQtYyOdfD@mainmhi.ag9zvki.mongodb.net/MAinmhiAppDb?retryWrites=true&w=majority&appName=mainmhi";
+mongoose.connect(dbURI)
+    .then((result) => app.listen(3000))
+    .catch((error) => console.log(error));
+
 //instruction with the view engine to be used
 app.set("view engine", "ejs")
+//middleware to allow access to static files
+app.use(express.static("public"));
 
+
+//test the creation of the data 
+app.get("/models/new-userlogindetail", (request, response) => {
+    const userlogindetail = new UserLoginDetail({
+        firstName: "Jane",
+        lastName: "Doe",
+        dateOfBirth: "20/01/1995",
+        email: "jane.doe@gmail.com",
+        phoneNum: "+353 085 123 9987"
+    });
+    userlogindetail.save()
+        .then((result) => response.send(result))
+        .catch((error) => console.log(error));
+});
+app.get("/models/new-petaccountdetail", (request, response) => {
+    const petaccountdetail = new PetAccountDetail({
+        petName: "Penny",
+        breed: "Cavahion",
+        dateOfBirth: "18/05/2021",
+        colour: "brawn"
+    });
+    petaccountdetail.save()
+        .then((result) => response.send(result))
+        .catch((error) => console.log(error));
+});
+
+
+
+
+//tells server to get ready
+app.use(express.urlencoded({ extended: true }));
 
 //listen for incoming requests
-app.listen(3000);
-
- //middleware to allow access to static files
- app.use(express.static("public"));
-
+//app.listen(3000);
 
 //route and response
 app.get("/", (request, response) => {
