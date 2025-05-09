@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head-->
+<%- include ("../partials/head.ejs") %>
+
+<body>
+    <!--nav bar-->
+    <!-- <%- include ("../partials/navbar/nav.ejs") %> -->
+
+    <div class="container-fluid full-height"> 
+
+            <div class="col-4">
+                <h3>Pets Name</h3>
+
+            </div>
+            <div class="col-8 ">
+
+            
+                <h1>Claims</h1>
+            
+                <% var sMessage="Pets Claims" %>
+                <%= sMessage %>
+            
+                <br>  <br>
+
+                <form action="/user/pets_profile" method="post" >
+                    
+                    <!--Register a new user-->
+                    <label for="claimTitle">Title: </label>
+                    <input type="text" name="claimTitle" placeholder="Title" class="displayBox" required> <br>
+                    <label for="claimDescription">Description: </label> <br>
+                    <textarea  rows="4" cols="50"> </textarea>  <br>
+                    <label for="areaOfIssue">Area Of Issue: </label>
+                    <select name="areaOfIssue" class="areaOfIssue">
+                        <option value="unselected">unselected </option>
+                        <option value="head">Head </option>
+                        <option value="back">Back </option>
+                        <optgroup label="Leg">
+                            <option value="frontRight">Leg Front Right </option>
+                            <option value="frontleft">Leg Front Left </option>
+                            <option value="backRight">Leg Back Right </option>
+                            <option value="backLeft">Leg Back Left </option>
+                        </optgroup>
+                        <optgroup label="paw">
+                            <option value="frontRight">Paw Front Right </option>
+                            <option value="frontleft">Paw Front Left </option>
+                            <option value="backRight">Paw Back Right </option>
+                            <option value="backLeft">Paw Back Left </option>
+                        </optgroup>
+                        <option value="tail">Tail </option>
+                    </select><br>
+                    <label for="incidentStartDate">Issue Date: </label>
+                    <input type="date" name="incidentStartDate" placeholder="Issue Date" required> <br>
+                    <label for="vetDate">Vet First visit Date: </label>
+                    <input type="date" name="vetDate" placeholder="Issue Date" required> <br>
+                    <label for="vetDetails">Vet Details: </label> <br>
+                    <textarea  rows="4" cols="50"> </textarea>  <br>
+                    <label for="dob">Date of Birth: </label>
+                    <input type="text" name="dob" placeholder="Date of Birth" class="displayBox" required> <br><br>
+                    <label for="claimImage">Image Upload</label><br>
+                        <input type="file">
+                        <!--input type="submit"--><br>
+                    <label for="claimDocument">Document Upload</label><br>
+                        <input type="file">
+                        <!--input type="submit"--><br><br>
+                    <label for="claimStatus">Claim Status</label>
+                    <select name="claimStatus" id="claimStatus">
+                        <option value="claimUnselected">unselected</option>
+                        <option value="claimReady">Ready</option>
+                        <option value="claimworking">Working on</option>
+                        <option value="claimWaiting">Waiting updte</option>
+                    </select>    <br><br>
+                    <button type="submit">Create Claim</button>
+                </form>
+
+            <br>
+                <!-- Buttons while Code is being created to move around pages-->
+                <a href="/user/pets_profile"><button>Pets</button></a>
+                <a href="/"> <button>Home</button></a>
+
+            </div>
+    </div>       
+
+   
+    
+    <!--Footer-->
+    <%- include ("../partials/footer.ejs") %>%>
+
+</body>
+
+</html>

@@ -162,14 +162,27 @@ app.get("/user/reg_userpage", (request, response) => {
 });
 
 // Post Request
-app.post("/user/reg_userpage",(request, response) => {
-   const registerUser = new RegisterUser(request.body);
-   registerUser.save()
-   .then((result) => {
-         response.redirect("/user/user_loginpage") 
-        })
-   .catch((error) => console.log(error));
-});
+app.post("/user/reg_userpage",async (request, response) => {
+    try{
+        const user = await RegisterUser(request.body);
+        const userSaved = await user.save();
+        //User is saved in session
+        request.session.user  = userSaved;
+      //  response.redirect("/user/user_profile");
+        response.redirect("/user/reg_petpage");
+
+    }catch(error){
+        console.error("Error with registration", error);
+        response.status(500).send("Error with registration");
+    }
+
+    //const registerUser = new RegisterUser(request.body);
+   //registerUser.save()
+   //.then((result) => {
+   //      response.redirect("/user/user_loginpage") 
+   //     })
+   //.catch((error) => console.log(error));
+});  
 
 
 //User Profile
@@ -179,22 +192,62 @@ app.get("/user/user_profile", isAuthen, (request, response) => {
 
 
 
-
-
 // Pet Create Account Page
-app.get("/user/pets_accountCreation", (request, response) => {
-    response.render("user/pets_accountCreation", { title: "pets account creation" });
+app.get("/user/reg_petpage", (request, response) => {
+    response.render("user/reg_petpage", { title: "Pet registration" });
 });
 
+app.post("/user/reg_petpage", async (request, response) => {
+    try{
+        // const petData = request.body;
+        if(!request.session.user) {
+            return response.redirect("/user/user_loginpage");
+        }
+
+        const pet = new PetAccountDetail({
+            petName: request.body.petName,
+            breed: request.body.breed,
+            colour: request.body.colour,
+            dateOfBirth: request.body.dateOfBirth,
+            microchipping: request.body.microchipping,
+            microchippingNum: request.body.microchippingNum,
+            policyNum: request.body.policyNum,
+            userId: request.session.user._id
+
+        });
+        await pet.save();
+        response.redirect("/user/user_profile");
+
+    }catch(error){
+        console.error("Error with registration", error);
+        response.status(500).send("Error with registration");
+    }
+});
 
 // Pet Profile
-app.get("/user/pets_profile", (request, response) => {
-    response.render("user/pets_profile", { title: "pets profile" });
+app.get("/user/pets_profile",isAuthen, async (request, response) => {
+
+    try{
+        const pets  = await PetAccountDetail.find({userId: request.session.user._id});
+        
+        response.render("user/pets_profile", {
+             title: "pets profile",
+             pets: pets,
+             user: request.session.user
+        });
+
+    }catch(error){
+        console.error("Error with registration", error);
+        response.status(500).send("Error with registration");
+    }
+
+
+   // response.render("user/pets_profile", { title: "pets profile" });
 });
 
 // Claims Page
-app.get("/user/claims", (request, response) => {
-    response.render("user/claims", { title: "claims" });
+app.get("/user/new_claims", (request, response) => {
+    response.render("user/new_claims", { title: "claims" });
 });
 
 
