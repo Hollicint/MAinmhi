@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head-->
+<%- include ("../partials/head.ejs") %>
+
+    <body>
+        <!--nav bar-->
+        <!--%- include ("../partials/navbar/user_nav.ejs") % 
+
+        <h1>Welcome to M'Ainmhi</h1>
+          <h1>USER</h1><br>
+        -->
+
+        <div class="container-fluid full-height">
+
+            <div class="col-4 leftimage-col">
+                
+                <img src="/images/accountsImages/UsersIcon.png" alt="icon">
+            </div>
+            
+            
+            <div class="col-8 rightSide-col">
+                <h3>Pet Account Registration</h3> <br>
+
+                <form action="" method="post">
+                    <!--User and Password that will be checked if exists-->
+                    <label for="petName">Pets Name</label>
+                    <input type="text" name="petName" placeholder="Pets Name" class="displayBox" required> <br>
+                    <label for="breed">Pets breed</label>
+                    <input type="text" name="breed" placeholder="Pets Breed" class="displayBox" required> <br>
+                    <label for="colour">Pets Colour</label>
+                    <input type="text" name="colour" placeholder="Pets Colour" class="displayBox" required> <br>
+                    <label for="dateOfBirth">Pets DOB</label>
+                    <input type="text" name="dateOfBirth"  placeholder="Pets DOB" class="displayBox" required> <br>
+
+                    <label for="microchipping">Microchipping</label>
+                    <select name="microchipping" class="microchipping">
+                        <option value="yes">Yes </option>
+                        <option value="no">No </option>
+                    </select>
+                    <br>
+                    <label for="microchippingNum">Microchipping Number</label>
+                    <input type="text" name="microchippingNum"  placeholder="Microchipping Number" class="displayBox" required> <br>
+                    <label for="policyNum">Policy Number</label>
+                    <input type="text" name="policyNum"  placeholder="Policy Number" class="displayBox" required> <br>
+                
+                    <!--Submit button-->
+                    <button type="submit">Enter </button>
+     
+               </form>
+                <br>
+                <!-- Buttons while Code is being created to move around pages-->
+                <a href="/"> Home</a>
+                <!-- Register location that will connect to DB -->
+                <a href="/regNewUser" id="regButton">Register</a>
+                <!--a href="/forgottenpass"> | Forgotten Password</a -->
+           
+                <br><br>
+
+                <a href="/user/user_profile"> <button>User Profile</button></a>
+
+             </div>
+        </div>
+
+        <!--Footer-->
+        <%- include("../partials/footer.ejs") %>
+
+    </body>
+
+</html>
