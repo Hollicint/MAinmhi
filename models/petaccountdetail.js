@@ -5,7 +5,15 @@ const petDetailSchema = new Schema({
         type: String,
         required: true
     },
+    petType:{
+        type: String,
+        required: true
+    },
     breed: {
+        type: String,
+        required: true
+    },
+    gender: {
         type: String,
         required: true
     },
@@ -26,6 +34,10 @@ const petDetailSchema = new Schema({
         required: true
     },
     policyNum: {
+        type: String,
+        required: true
+    },
+    insuranceCompanyName: {
         type: String,
         required: true
     },
