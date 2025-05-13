@@ -5,62 +5,122 @@
 
     <body>
         <!--nav bar-->
-        <!-- <%- include ("../partials/navbar/nav.ejs") %> -->
-
-        <div class="container-fluid full-height">
+        <!--
+        <%- include ("../partials/navbar/user_nav.ejs") %>
+        -->
+        <div class="container-fluid full-height"> 
 
             <div class="col-4">
-                <h3>Pets Name</h3> <br>
+              
                 <img src="/images/profileImages/lizard.png" alt="">
                 <br>
+                
+                
+                <% if (pets.length > 0) { %>
+                    <% pets.forEach(pet => { %>
+                        <h3>Pets Name: <%= pet.petName %> </h3>
+                         <h4>Pets Type: <%= pet.petType %> </h4>
+                        <h4>Pets Breed: <%= pet.breed %> </h4>
+                        <h4>Pets Gender: <%= pet.gender %> </h4>
+                        <h4>D.O.B:  <%= pet.dateOfBirth %> </h4>
+                        <h4>Pets Colour: <%= pet.colour %> </h4>
+                        <h4>Microchipping: <%= pet.microchipping %> </h4>
+                        <h4>Microchipping Number:  <%= pet.microchippingNum %> </h4>
+                        <h4>Policy Number: <%= pet.policyNum %> </h4>
+                        <h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4>
+                        <% }); %>    
+                <% } else { %>
+                    <p>You have no pets registered.</p>
+                <% } %>
+                <h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3>
+                <br>
+                <a href="/user/user_profile"> <button>User Profile</button></a><br>  
+                <a href="/logout"><button>Log out of account</button></a>
 
-                <% if (pets.length> 0) { %>
-                    <% pets.forEach(pet=> { %>
-                        <h3>Pets Name: <%= pet.petName %>
-                        </h3>
-                        <h4>Pets Type: <%= pet.petType %>
-                        </h4>
-                        <h4>Pets Breed: <%= pet.breed %>
-                        </h4>
-                        <h4>Pets Gender: <%= pet.gender %>
-                        </h4>
-                        <h4>D.O.B: <%= pet.dateOfBirth %>
-                        </h4>
-                        <h4>Pets Colour: <%= pet.colour %>
-                        </h4>
-                        <h4>Microchipping: <%= pet.microchipping %>
-                        </h4>
-                        <h4>Microchipping Number: <%= pet.microchippingNum %>
-                        </h4>
-                        <h4>Policy Number: <%= pet.policyNum %>
-                        </h4>
-                        <h4>Insurance Company: <%= pet.insuranceCompanyName %>
-                        </h4>
-                        <% }); %>
-                            <% } else { %>
-                                <p>You have no pets registered.</p>
-                                <% } %>
-                                    <br>
-                                    <a href="/logout"><button>Log out of account</button></a>
-                                    <br>
-                                    <a href="/user/pets_profile"><button>Pets</button></a>
+                  
+                
+
             </div>
             <div class="col-8 ">
-
-
-                <h1>Claims</h1>
-
-              <!--testing function
-               <% var sMessage="Pets Claims" %>
-                    <%= sMessage %>
-                --> 
-                        <br> <br>
-                    
+                <h1>
+                        <% pets.forEach(pet => { %>
+                        <h1> <%= pet.petName %>'s Account </h1>
+                        <% }); %>    
+               
+                <h2>Start your claim creation and storage now!</h2><br>
                 
-                        <br>
 
-                  <form  id="claimForm" action="/user/pets_profile" method="post">
-                     <table>
+
+
+                <div id="claimDisplay">
+                   <table>
+                         <tr>
+                             <th>
+                                 <label for="claimTitle">Title: </label>
+                                 <%= claim.claimTitle %>   
+                             </th>
+                         </tr>
+                         <tr>
+                             <th>
+                                 <label for="claimDescription">Description: </label><br>
+                                 <%= claim.claimDescription %>
+                             </th>
+                         </tr>
+                         <tr>
+                             <th>
+                                 <label for="areaOfIssue">Area Of Issue: </label>
+                                 <%= claim.areaOfIssue %>
+                             </th>
+                         </tr>
+                         <tr>
+                             <th>
+                                 <label for="incidentStartDate">Issue Date: </label>
+                                 <%= claim.incidentStartDate %>
+                             </th>
+                         </tr>
+                         <tr>
+                            <th>
+                                <label for="vetDate">Vet First visit Date: </label>
+                                <%= claim.vetDate %>
+                            </th>
+                         </tr>
+                         <tr>
+                            <th>
+                                <label for="vetDetail">Vet Details: </label> <br>
+                                <%= claim.vetDetail %>
+                            </th>
+                         </tr>
+                         <tr>
+                            <th>
+                                <!--label for="claimImage">Image Upload</label><br>
+                                 <input type="file"-->
+                            </th>
+                         </tr>
+                         <tr>
+                            <th> <!--label for="claimDocument">Document Upload</label><br>
+                                <input type="file"-->
+                            </th>
+                         </tr>
+                         <tr>
+                            <th>
+                                <label for="claimStatus">Claim Status</label>
+                                <%= claim.claimStatus %>
+                            </th>
+                         </tr>
+                         <tr>
+                            <th>
+                                <label for="claimAmount">Claim Cost: </label>
+                                <%= claim.claimAmount %>
+                            </th>
+                         </tr>
+                         
+                     </table>
+                </div>
+        
+                
+                <div id="editClaim" hidden>
+                    <form action="/user/pets_profile" method="post">
+                                             <table>
                          <tr>
                              <th>
                                  <label for="claimTitle">Title: </label>
@@ -161,19 +221,29 @@
                          </tr>
                          <tr>
                             <td>
-                                <button type="submit">Save Claim</button>
+                                <button id="saveClaim">Save Changes</button>
                             </td>
                          </tr>
                      </table>
-                 </form>
+                    </form>
 
+                </div>
+
+
+                <br>
+
+
+        
+        
             </div>
-        </div>
+        </div>   
 
 
 
+       
+        
         <!--Footer-->
-        <%- include ("../partials/footer.ejs") %>%>
+        <%- include ("../partials/footer.ejs") %>
 
     </body>
 

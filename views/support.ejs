@@ -3,36 +3,43 @@
 <!--head-->
 <%- include ("./partials/head.ejs") %>
 
-<body>
+     <body>
 
-     <!--Header Bar-->
-     <header class="head text-center p-3">
-          <h1>Welcome to M'Ainmhi</h1>
-     </header> 
+          <!--Header Bar-->
+          <header class="head text-center p-3">
+               <h1>Welcome to M'Ainmhi</h1>
+          </header>
 
           <!--nav bar-->
           <%- include ("partials/navbar/nav.ejs") %>
+               <div id="aboutContent">
+                    <h1>Support </h1> <br>
+                     <h3>Form</h3>
+                     <form action="">
+                         <label for="fname">First name:</label>
+                         <input type="text" id="fname" name="fname"><br>
+                         <label for="lname">Last name:</label>
+                         <input type="text" id="lname" name="lname" ><br>
+                         <label for="lname">Message:</label><br>
+                         <textarea id="message" name="message" rows="4" cols="50"> 
+                         </textarea><br><br>
+                         <input type="submit" value="Submit">
+                     </form><br><br>
+                     <h2>Contact Details</h2>
+                     <h3>Support Email: info@mainmhi.com</h3>
+                     <h3>IT Email: support@mainmhi.com</h3>
+                     
+                     <h3>Contact Number: +000 000 0000</h3>
+                     <img src="/images/aboutImages/map.png" alt="">
 
-    <h1>Support </h1>
-
-
-    <% var sMessage="Hello there from EJS" %>
-    <%= sMessage %>
-    <br>
-
-
-    <h3>Form</h3>
-    <h3>Email</h3>
-    <h3>Contact Number</h3>
+               </div>
 
 
 
 
+               <!--Footer-->
 
-
-   <!--Footer-->
-
-    <%- include ("./partials/footer.ejs") %>
-</body>
+               <%- include ("./partials/footer.ejs") %>
+     </body>
 
 </html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ("../partials/head.ejs") %>
+<body>
+
+    <div class="container-fluid full-height"> 
+         <div class="col-4"><!--https://www.pexels.com/photo/text-on-red-surface-9180717/-->
+             <img src="/images/profileImages/Admin.png" alt=""><br><br> 
+            <h3>Name: Terry Berry </h3>
+            <h4>Email: terry.berry@mainmhil.com </h4>
+            <h4>Ext: 9091 </h4>
+
+            <br><br>
+            <a href="\"><button>Log off</button></a>
+             
+         </div>
+         <div class="col-8 ">
+               <!--h2>Admin Page</h2><br-->
+                <div class="popup">
+                    <span class="closepopup" onclick="this.parentElement.style.display='none';">&times;</span>
+                     Unlock request
+                </div><br>
+                <br>
+
+                <table>
+                    <h2>Unlock User</h2><br>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Locked</th>
+                        <th>Unlocked</th>
+                        <th>Archive Account</th>
+
+                    </tr>
+                    <tr>
+                        <td>Linda Green </td>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        <td> 
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                      
+                        <td><button>Archive</button></td>
+
+                    </tr>
+                        <td>John Carter </td>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        <th> 
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                        
+                        <td><button>Archive</button></td>
+                   
+
+                </table>
+                <br>
+
+               
+
+             <table>
+                 <h2>Reports</h2><br>
+                    <tr>
+                        <th>User List</th>  
+                        <th>Company List </th>  
+                        <th>Claim List </th>     
+                    </tr>
+                    <tr>
+                        <td><button>generate</button></td>
+                         <td><button>generate</button></td>  
+                          <td><button>generate</button></td>  
+                    </tr>
+                  
+             </table>
+
+
+
+         </div>
+    </div>
+
+
+
+
+ 
+    <!--Footer-->
+    <%- include ("../partials/footer.ejs") %>%>
+</body>
+</html>

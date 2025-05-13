@@ -17,10 +17,18 @@ const regUserSchema= new Schema({
         type: String,
         required: true
     },
-    dob: {
+    dateOfBirth: {
         type: String,
         required: true
     },
+    address: {
+        type: String,
+        required: true
+    },
+    //paymentType: {
+     //   type: String,
+     //   required: true
+    //},
     username: {
         type: String,
         required: true

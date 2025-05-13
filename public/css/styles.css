@@ -5,7 +5,7 @@
 
 
 body{
-    background-color: antiquewhite;
+    background-color: white;
 }
 
 .foot{
@@ -18,8 +18,10 @@ body{
     text-align: center;
     font-size: 160%;
 }
-
-
+/**************  about **************/
+#aboutContent{
+  text-align: center;
+}
 /**************  INDEX **************/
 
 
@@ -44,6 +46,9 @@ body{
     padding: 15px;
     text-align: center;
 }
+
+
+
 
 /**************  User Login page **************/
 .col-4{
@@ -72,3 +77,125 @@ body{
     min-height: 100vh;
     display: flex;
 }
+
+/************ Pet Profile Page ***********/
+
+.createPetAccount {
+    color: black;
+    padding: 15px;
+    text-align: center;
+}
+
+#claimDisplay th {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: center;
+  background-color: #8C3061;
+  color: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+#claimDisplay td {
+  padding: 8px;
+  font-size: 30px;
+  text-align: left;
+  border-bottom: 1px solid #DDD;
+  background-color: white;
+  
+}
+#claimDisplay:hover td{
+  background-color: #D6EEEE;
+}
+/************ Insurance User Profile Page ***********/
+.popup{
+    padding: 25px;
+    background-color: rgb(217, 55, 46);
+    color: white;
+}
+.closepopup{
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.closepopup:hover {
+  color: black;
+}
+
+
+
+/*************ADMIN Side********************/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  font-size: 30px;
+  text-align: left;
+  border-bottom: 1px solid #DDD;
+}
+/* tr:hover {background-color: #D6EEEE;}*/

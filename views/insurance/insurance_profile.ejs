@@ -12,24 +12,58 @@
         <div class="container-fluid full-height"> 
 
             <div class="col-4">
-                <h1>Insurances</h1><br>
+
+                <h2>Ernser LLC Insurance Ltd</h2>
+                <img src="/images/profileImages/man.png" alt="icon">
+                <!--https://www.pexels.com/photo/man-wearing-white-dress-shirt-and-black-blazer-2182970/-->
+                <h3>Name: John Carter</h3>
+                <h3>Position: Claims support</h3>
+                <h3>Staff Number: 569000 </h3>
+                <br>
+                <h3>Email: j.carter@ernserltd.com</h3>
+                <h3>Ext Number: 1401</h3>
+                
+                <br>
+                 <a href="/"><button>Log Off</button></a>
             </div>
             <div class="col-8 ">
                 <h1>Welcome to M'Ainmhi</h1>
+                <div class="popup">
+                    <span class="closepopup" onclick="this.parentElement.style.display='none';">&times;</span>
+                    Policy Holder has submitted a new claim
+                </div><br>
 
-        
-      
-        
+                <div>
+                    <table id="claimDisplay">
+                         <tr>
+                            <th> Policy Holder  </th>
+                            <th> Number of Pets  </th>
+                            <th> Open Claims  </th>
+                            <th> Claim Status </th>
+                            <th> View Claim </th>
+                        </tr>
+                            <td>Linda Green</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>New Claim</td>
+                            <td><a href="/insurance/linda_green">Claims</a></td>
+                        <tr>
+                            <!--td colspan="10">No claims submitted.</td--  >
+                        </tr>
+                    </table>
+
+
+                </div>
                 <br><br>
         
         <!-- Buttons while Code is being created to move around pages-->
 
-                <a href="/insurance/clients_list"><button>Clients list</button></a>
+                <!--a href="/insurance/clients_list"><button>Clients list</button></a-->
         
             </div>
         </div>
 
-       
+
 
         <!--Footer-->
         <%- include ("../partials/footer.ejs") %>

@@ -1,19 +1,23 @@
+//configurations
 const express = require("express");
 const mongoose = require("mongoose");
 
-// import this module
+// import connected to DB
 const UserLoginDetail = require("./models/userlogindetail");
 const RegisterUser = require("./models/registeruser");
 const PetAccountDetail = require("./models/petaccountdetail");
+const ClaimDetail = require("./models/claimsdetail");
 
 //create the Express app
 const app = express();
 //create session logs
 const session = require("express-session");
+const { result } = require("lodash");
 
 //load environment 
 require('dotenv').config();
 
+//session configurations
 app.use(
     session({
            // securing the password as its expose if hardcoded moved to its own file .env    
@@ -152,10 +156,11 @@ app.post("/user/user_loginpage", async  (request, response) => {
 
 // log off account
 app.get("/logout", (request, response) => {
-    request.session.destroy(() => { response.redirect("/user/user_loginpage");  });
+    //request.session.destroy(() => { response.redirect("/user/user_loginpage");  });
+    request.session.destroy(() => { response.redirect("/");  });
 });
 
-
+// User register get
 app.get("/user/reg_userpage", (request, response) => {
     response.render("user/reg_userpage", { title: "User Reg" });
 
@@ -206,12 +211,15 @@ app.post("/user/reg_petpage", async (request, response) => {
 
         const pet = new PetAccountDetail({
             petName: request.body.petName,
+            petType: request.body.petType,
             breed: request.body.breed,
+            gender: request.body.gender,
             colour: request.body.colour,
             dateOfBirth: request.body.dateOfBirth,
             microchipping: request.body.microchipping,
             microchippingNum: request.body.microchippingNum,
             policyNum: request.body.policyNum,
+            insuranceCompanyName: request.body.insuranceCompanyName,
             userId: request.session.user._id
 
         });
@@ -229,8 +237,41 @@ app.get("/user/pets_profile",isAuthen, async (request, response) => {
 
     try{
         const pets  = await PetAccountDetail.find({userId: request.session.user._id});
-        
+        const claimsdetail = await ClaimDetail.find({});
+
         response.render("user/pets_profile", {
+             title: "pets profile",
+             pets: pets,
+             user: request.session.user,
+             claimsdetail: claimsdetail
+        });
+
+    }catch(error){
+        console.error("Error with pet profile details", error);
+        response.status(500).send("Error with pet profile");
+    }
+
+
+   // response.render("user/pets_profile", { title: "pets profile" });
+});
+
+app.post("/user/pets_profile", (request, response) => {
+   // console.log(request.body);
+   const claimdetail = new ClaimDetail(request.body);
+   claimdetail.save()
+    .then((result)=> {response.redirect("/user/pets_profile")})
+    .catch((error)=> console.log(error));
+});
+
+/////////////////////////////////////////////////
+
+// Claims Page
+app.get("/user/new_claims", isAuthen, async (request, response) => {
+   // response.render("user/new_claims", { title: "claims" });
+   try{
+        const pets  = await PetAccountDetail.find({userId: request.session.user._id});
+        
+        response.render("user/new_claims", {
              title: "pets profile",
              pets: pets,
              user: request.session.user
@@ -240,16 +281,22 @@ app.get("/user/pets_profile",isAuthen, async (request, response) => {
         console.error("Error with registration", error);
         response.status(500).send("Error with registration");
     }
-
-
-   // response.render("user/pets_profile", { title: "pets profile" });
 });
 
-// Claims Page
-app.get("/user/new_claims", (request, response) => {
-    response.render("user/new_claims", { title: "claims" });
+
+app.get("/user/pets_profile:id", (request, response) => {
+    const claimId = request.params.id;
+    ClaimDetail.findById(claimId)
+     .then(result => response.render("claim", {claim: result, claimTitle: "Claim Details"}))
+     .catch((error)=> console.log(error));
 });
 
+// directed claims
+app.get("/user/view_claim", (request, response) => {
+     response.render("user/view_claim", { title: "View Claim" });
+});
+
+/////////////////////////////////////////////////
 
 //logi * will have to go or be changed
 
@@ -258,7 +305,7 @@ app.get("/login", (request, response) => {
 });
 
 //////////////////////////////////////////////////////////////////
-// Insurance Company page
+// Insurance Company 
 
 
 // Insurance Company User
@@ -278,8 +325,23 @@ app.get("/insurance/clients_list", (request, response) => {
     response.render("insurance/clients_claim", { title: "clients claim" });
 })*/
 
+//////////////////////////////////////////////////////////////////
+// Admin
+
+app.get("/admin/admin_profile", (request, response) => {
+    response.render("admin/admin_profile", { title: "Admin" });
+});
 
 
+////////////////////////////////////////
+// test page
+
+app.get("/insurance/linda_green", (request, response) => {
+    response.render("insurance/linda_green", { title: "Linda Green" });
+});
+app.get("/insurance/test_views", (request, response) => {
+    response.render("insurance/test_views", { title: "Linda Green" });
+});
 
 /////////////////////////////////////////////
 
