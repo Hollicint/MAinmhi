@@ -8,26 +8,40 @@
         <!--
         <%- include ("../partials/navbar/insurance_nav.ejs") %>
          -->
- 
-        <div class="container-fluid full-height"> 
+
+        <div class="container-fluid full-height">
 
             <div class="col-4">
+                <img src="/images/profileImages/man.png" alt=""><br><br>
+                <h3>Name: <%= insurerUser.staffFirstName %>
+                        <%= insurerUser.staffLastName %>
+                </h3>
+                <h4>Email: <%= insurerUser.staffEmailAddress %>
+                </h4>
+                <h4>Contant Number: <%= insurerUser.staffContactNumber %>
+                </h4>
+                <h4>Staff Number: <%= insurerUser.staffNumber %>
+                </h4>
+                <h4>Position: <%= insurerUser.staffRole %>
+                </h4>
+                <br><br>
 
-                <h2>Ernser LLC Insurance Ltd</h2>
-                <img src="/images/profileImages/man.png" alt="icon">
-                <!--https://www.pexels.com/photo/man-wearing-white-dress-shirt-and-black-blazer-2182970/-->
-                <h3>Name: John Carter</h3>
-                <h3>Position: Claims support</h3>
-                <h3>Staff Number: 569000 </h3>
-                <br>
-                <h3>Email: j.carter@ernserltd.com</h3>
-                <h3>Ext Number: 1401</h3>
-                
-                <br>
-                 <a href="/"><button>Log Off</button></a>
+                <h2>Company Informaiton</h2><br>
+                 <% if (company) { %>
+                    <h4>Company Name: <%= company.insuranceCompanyName %> </h4>
+                    <h4>Company Support Email: <%= company.insuranceCompanyEmail %> </h4>
+                    <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
+                     <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
+                 <% } else { %>
+                    <p>You have no company registered.</p>
+                <% } %>    
+              
+                    
+                 <br><br>
+                 <a href="/logout"><button>Log Off</button></a>
             </div>
             <div class="col-8 ">
-                <h1>Welcome to M'Ainmhi</h1>
+                <h1>Welcome to M'Ainmhi <%= insurerUser.staffFirstName %>!</h1>
                 <div class="popup">
                     <span class="closepopup" onclick="this.parentElement.style.display='none';">&times;</span>
                     Policy Holder has submitted a new claim
@@ -35,31 +49,32 @@
 
                 <div>
                     <table id="claimDisplay">
-                         <tr>
-                            <th> Policy Holder  </th>
-                            <th> Number of Pets  </th>
-                            <th> Open Claims  </th>
+                        <tr>
+                            <th> Policy Holder </th>
+                            <th> Number of Pets </th>
+                            <th> Open Claims </th>
                             <th> Claim Status </th>
                             <th> View Claim </th>
                         </tr>
-                            <td>Linda Green</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>New Claim</td>
-                            <td><a href="/insurance/linda_green">Claims</a></td>
+
+                        <td>Linda Green</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>New Claim</td>
+                        <td><a href="">Claims</a></td>
                         <tr>
-                            <!--td colspan="10">No claims submitted.</td--  >
+                            <!--td colspan="10">No claims submitted.</td-->
                         </tr>
                     </table>
 
 
                 </div>
                 <br><br>
-        
-        <!-- Buttons while Code is being created to move around pages-->
+
+                <!-- Buttons while Code is being created to move around pages-->
 
                 <!--a href="/insurance/clients_list"><button>Clients list</button></a-->
-        
+
             </div>
         </div>
 

@@ -3,10 +3,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 // import connected to DB
-const UserLoginDetail = require("./models/userlogindetail");
+//const UserLoginDetail = require("./models/userlogindetail");
 const RegisterUser = require("./models/registeruser");
 const PetAccountDetail = require("./models/petaccountdetail");
 const ClaimDetail = require("./models/claimsdetail");
+const RegisterInsurer = require("./models/registerinsurer");
+const RegisterInsuranceCompany = require("./models/registerinsurancecompany")
 
 //create the Express app
 const app = express();
@@ -57,6 +59,13 @@ function isAuthen(request, response, next) {
         return next();
     }
     response.redirect("/user/user_loginpage");
+}
+
+function isInsurerAuthen(request, response, next) {
+    if (request.session.insurerUser) {
+        return next();
+    }
+    response.redirect("/insurance/insurance_loginpage");
 }
 
 
@@ -154,11 +163,7 @@ app.post("/user/user_loginpage", async  (request, response) => {
     
 });
 
-// log off account
-app.get("/logout", (request, response) => {
-    //request.session.destroy(() => { response.redirect("/user/user_loginpage");  });
-    request.session.destroy(() => { response.redirect("/");  });
-});
+
 
 // User register get
 app.get("/user/reg_userpage", (request, response) => {
@@ -195,6 +200,8 @@ app.get("/user/user_profile", isAuthen, (request, response) => {
     response.render("user/user_profile", { title: "user profile",  user: request.session.user });
 });
 
+////////////////////////////////////////////////////////////////
+//Pet Side
 
 
 // Pet Create Account Page
@@ -264,6 +271,7 @@ app.post("/user/pets_profile", (request, response) => {
 });
 
 /////////////////////////////////////////////////
+//Claim Side
 
 // Claims Page
 app.get("/user/new_claims", isAuthen, async (request, response) => {
@@ -308,22 +316,136 @@ app.get("/login", (request, response) => {
 // Insurance Company 
 
 
+// Insurance register
+app.get("/insurance/reg_insuranceCompany", (request, response) => {
+    response.render("insurance/reg_insuranceCompany", { title: "insurance Company Registration" });
+});
+
+
+// Post Request
+app.post("/insurance/reg_insuranceCompany",async (request, response) => {
+    try{
+
+        //if (!request.session.insurerUser) {
+        //    return response.redirect("/insurance/insurance_loginpage");
+        //}
+        const{
+            staffFirstName, staffLastName, staffEmailAddress, 
+            staffContactNumber,staffNumber,
+            staffRole, username, password, 
+            insuranceCompanyName, insuranceCompanyEmail,
+            insuranceCompanyContact, insuranceCompanyAddress,
+        } = request.body;
+
+
+        const newInsurerCompany = new RegisterInsuranceCompany({
+           insuranceCompanyName, insuranceCompanyEmail,
+           insuranceCompanyContact, insuranceCompanyAddress,
+          // insurerId: savedInsurerUser._id
+       });
+       
+       const company = await newInsurerCompany.save();
+      
+
+        const insurerUser = await RegisterInsurer({
+            staffFirstName, staffLastName, staffEmailAddress, 
+            staffContactNumber,staffNumber,
+             staffRole, username, password,
+          company: company._id,
+        });
+        const savedInsurerUser = await insurerUser.save();
+
+        
+
+      // const newInsurerCompany = new RegisterInsuranceCompany({
+      //     insuranceCompanyName, insuranceCompanyEmail,
+      //     insuranceCompanyContact, insuranceCompanyAddress,
+      //    // insurerId: savedInsurerUser._id
+      // });
+       
+      // const company = await newInsurerCompany.save();
+      
+            
+       //const savedInsurerUser = await insurerUser.save();
+       // request.session.insurerUser  = savedInsurerUser;
+
+       savedInsurerUser.company = company._id;
+       await savedInsurerUser.save();
+       request.session.insurerUser = await RegisterInsurer.findById(savedInsurerUser._id).populate('company');
+       response.redirect("/insurance/insurance_profile");
+
+    }catch(error){
+        console.error("Error with registration", error);
+        response.status(500).send("Error with registration");
+    }
+
+});  
+
+
 // Insurance Company User
 app.get("/insurance/insurance_loginpage", (request, response) => {
-    response.render("insurance/insurance_loginpage", { title: "Insurance Login" });
+    response.render("insurance/insurance_loginpage", { title: "insurance Login"});
 });
 
-app.get("/insurance/insurance_profile", (request, response) => {
-    response.render("insurance/insurance_profile", { title: "Insurance" });
+app.post("/insurance/insurance_loginpage", async (request, response) => {
+    
+    const{username,password} = request.body;
+
+    try{
+        const insurerUser = await RegisterInsurer.findOne({ username, password }).populate("company");;
+      //  console.log("Login correct", savedInsurerUser);
+
+        if(insurerUser){
+            request.session.insurerUser = insurerUser;
+            response.redirect("/insurance/insurance_profile");
+        }else{
+            response.status(401).send("insurance Login invalid");
+        }   
+    }catch(error){
+        console.error("Error with Insurance Login", error);
+        response.status(500).send("Error with Insurance Login");
+    }
+
 });
 
-app.get("/insurance/clients_list", (request, response) => {
-    response.render("insurance/clients_list", { title: "Client List" });
+
+// Insurance User Profile page
+app.get("/insurance/insurance_profile", isInsurerAuthen, async (request, response) => {
+
+    try{
+        
+        if(!request.session.insurerUser){
+            return response.redirect("/insurance/insurance_loginpage");
+        }
+
+        const insurerUser = await RegisterInsurer.findById(request.session.insurerUser._id).populate("company");
+        console.log(insurerUser);
+        
+        if(!insurerUser){
+            return response.status(404).send("User not found");
+        }
+
+      
+
+        response.render("insurance/insurance_profile", {
+             title: "Insurer profile",
+             insurerUser,
+             company: insurerUser.company
+             //insurerUser: request.session.insurerUser,
+             //company: request.session.insurerUser.company
+           // insurerUser: savedInsurerUser
+         });
+        // response.redirect("/insurance/insurance_profile");
+
+    }catch(error){
+        console.error(error);
+        response.status(500).send("Login error");
+    }
+    
+    
 });
 
-/*app.get("/insurance/clients_claim", (request, response) => {
-    response.render("insurance/clients_claim", { title: "clients claim" });
-})*/
+
 
 //////////////////////////////////////////////////////////////////
 // Admin
@@ -333,19 +455,14 @@ app.get("/admin/admin_profile", (request, response) => {
 });
 
 
-////////////////////////////////////////
-// test page
-
-app.get("/insurance/linda_green", (request, response) => {
-    response.render("insurance/linda_green", { title: "Linda Green" });
-});
-app.get("/insurance/test_views", (request, response) => {
-    response.render("insurance/test_views", { title: "Linda Green" });
-});
 
 /////////////////////////////////////////////
 
-
+// log off account
+app.get("/logout", (request, response) => {
+    //request.session.destroy(() => { response.redirect("/user/user_loginpage");  });
+    request.session.destroy(() => { response.redirect("/");  });
+});
 
 //404 page
 app.use((request, response) => {
