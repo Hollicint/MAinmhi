@@ -4,46 +4,36 @@
 <%- include ("../partials/head.ejs") %>
 
     <body>
-        <!--nav bar-->
-        <!--
-        <%- include ("../partials/navbar/user_nav.ejs") %>
-         <h1>Welcome to M'Ainmhi</h1>
-        -->
+        
         <div class="container-fluid full-height">
 
             <div class="col-4 leftimage-col">
                 <img src="/images/accountsImages/InsuranceIcon.png" alt="icon">
             </div>
 
+
             <div class="col-8 rightSide-col">
                 <h3>Insurance Login Page</h3><br>
        
-        
-                <!--form action="login" method="post"-->
-                <div>
+                
+                <div id="companyLoginSection">
+                    <form action="/insurance/insurance_loginpage" method="post">
                     <!--User and Password that will be checked if exists-->
-                    <label for="username">Username</label>
-                    <input type="text" name="username" placeholder="Username" class="displayBox" required> <br>
-                    <label for="password">Password</label>
-                    <input type="password" name="password" placeholder="Password"  class="displayBox" required> <br> <br>
-            
+                        <label for="username">Username</label>
+                        <input type="text" name="username" placeholder="Username" class="displayBox" required> <br>
+                        <label for="password">Password</label>
+                        <input type="password" name="password" placeholder="Password"  class="displayBox" required> <br> <br>
+                        <!--Submit button-->
+                        <button type="submit">Enter</button>
+                   </form>
+
+                   <br>
+                   <!-- a href="/insurance/reg_insuranceUser">Register account</a-->
+                   <a href="/insurance/reg_insuranceCompany">Register account</a>
                    
-                   
-                    <!--Submit button-->
-                    <!--button type="submit">Enter </button-->
-                    <a href="/insurance/insurance_profile"><button>Enter</button></a>
-                    <!-- Register location that will connect to DB -->
-                    <a href="/regNewUser" id="regButton">Register</a>
-                    <!--a href="/forgottenpass"> | Forgotten Password</a --> <br> <br>
-                    <br>
-                    <a href="/"><button>Home</button> </a>
                  </div>   
                 
-     <!-- Buttons while Code is being created to move around pages-->
-
-                <!--a href="/insurance/insurance_profile"><button>ICU Profile</button></a-->
-
-
+     
             </div>
         </div>    
 
