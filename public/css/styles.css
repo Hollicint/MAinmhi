@@ -9,6 +9,8 @@ body{
 }
 
 .foot{
+    column-count: 2;
+    column-gap: 50px;
     background-color: #8C3061;
     color: #FBF6E9;
     position: fixed;
@@ -199,3 +201,9 @@ th, td {
   border-bottom: 1px solid #DDD;
 }
 /* tr:hover {background-color: #D6EEEE;}*/
+
+
+/*************** Claim *********************/
+.editClaimSection{
+  display: none;
+}

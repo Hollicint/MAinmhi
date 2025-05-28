@@ -32,7 +32,7 @@ app.use(
           // reset
         rolling: true,
           // 1 min of none active it will reset 
-        maxAge: 60000,
+       cookie:{ maxAge: 60000}
 
     })
 );
@@ -72,34 +72,6 @@ function isInsurerAuthen(request, response, next) {
 //listen for incoming requests
 //app.listen(3000);
 
-
-//////////////////////////
-
-//test the creation of the data 
-
-//app.get("/models/new-userlogindetail", (request, response) => {
-//    const userlogindetail = new UserLoginDetail({
-//        firstName: "Jane",
-//        lastName: "Doe",
-//        dateOfBirth: "20/01/1995",
-//        email: "jane.doe@gmail.com",
-//        phoneNum: "+353 085 123 9987"
-//    });
-//    userlogindetail.save()
-//        .then((result) => response.send(result))
-//        .catch((error) => console.log(error));
-//});
-//app.get("/models/new-petaccountdetail", (request, response) => {
-//    const petaccountdetail = new PetAccountDetail({
-//        petName: "Penny",
-//        breed: "Cavahion",
-//        dateOfBirth: "18/05/2021",
-//        colour: "brawn"
-//    });
-//    petaccountdetail.save()
-//        .then((result) => response.send(result))
-//        .catch((error) => console.log(error));
-//});
 
 //////////////////////////////////////////////////
 
@@ -186,18 +158,28 @@ app.post("/user/reg_userpage",async (request, response) => {
         response.status(500).send("Error with registration");
     }
 
-    //const registerUser = new RegisterUser(request.body);
-   //registerUser.save()
-   //.then((result) => {
-   //      response.redirect("/user/user_loginpage") 
-   //     })
-   //.catch((error) => console.log(error));
 });  
 
 
 //User Profile
-app.get("/user/user_profile", isAuthen, (request, response) => {
-    response.render("user/user_profile", { title: "user profile",  user: request.session.user });
+app.get("/user/user_profile", isAuthen, async (request, response) => {
+   try{
+    // show the login user and the pet connected to that
+        const user = request.session.user;
+       //const user = await RegisterInsurer.findById(request.session.user._id);
+        const pets  = await PetAccountDetail.find({userId: user._id});
+        response.render("user/user_profile", { 
+            title: "user profile", 
+             user: user,
+             pets: pets
+        });
+
+
+   }catch(error){
+        console.error("Error with displaying data", error);
+        response.status(500).send("Error with data");
+   }
+
 });
 
 ////////////////////////////////////////////////////////////////
@@ -262,6 +244,7 @@ app.get("/user/pets_profile",isAuthen, async (request, response) => {
    // response.render("user/pets_profile", { title: "pets profile" });
 });
 
+/*
 app.post("/user/pets_profile", (request, response) => {
    // console.log(request.body);
    const claimdetail = new ClaimDetail(request.body);
@@ -270,12 +253,40 @@ app.post("/user/pets_profile", (request, response) => {
     .catch((error)=> console.log(error));
 });
 
+
+app.post("/user/pets_profile", (request, response) => {
+    const petaccountdetail = new PetAccountDetail(request.body);
+    petaccountdetail.save("/user/pets_profile")
+     .then(result => response.render())
+     .catch((error)=> console.log(error));
+});
+
+*/
+
+//app.post("/user/pets_profile", (request, response) => {
+//    try{
+//        const claimdetail = new ClaimDetail(request.body);
+//        claimdetail.save()
+//         .then((result)=> {response.redirect("/user/pets_profile")})
+//         .catch((error)=> console.log(error));
+//
+//        const petaccountdetail = new PetAccountDetail(request.body);
+//        petaccountdetail.save("/user/pets_profile")
+//         .then(result => response.render())
+//         .catch((error)=> console.log(error));
+//
+//    }catch(error){
+//        console.error("Error with claims and  pet details displaying", error);
+//        response.status(500).send("Error with claims and  pet details displaying");
+//    }
+//    
+//});
+
 /////////////////////////////////////////////////
 //Claim Side
 
 // Claims Page
 app.get("/user/new_claims", isAuthen, async (request, response) => {
-   // response.render("user/new_claims", { title: "claims" });
    try{
         const pets  = await PetAccountDetail.find({userId: request.session.user._id});
         
@@ -291,18 +302,113 @@ app.get("/user/new_claims", isAuthen, async (request, response) => {
     }
 });
 
+// display the claims on pet profile
 
-app.get("/user/pets_profile:id", (request, response) => {
+app.get("/user/pets_profile/:id", (request, response) => {
     const claimId = request.params.id;
     ClaimDetail.findById(claimId)
-     .then(result => response.render("claim", {claim: result, claimTitle: "Claim Details"}))
+     .then(result => response.render("claim", {
+        claim: result, 
+        claimTitle: "Claim Details"
+    }))
      .catch((error)=> console.log(error));
 });
 
-// directed claims
-app.get("/user/view_claim", (request, response) => {
-     response.render("user/view_claim", { title: "View Claim" });
+
+//app.get("/user/pets_profile/:id", isAuthen, async (request, response) => {
+//      try{
+//        const petId = request.params.id;
+//        const pet  = await PetAccountDetail.findOne({petId:petId, userId: request.session.user._id});
+//        
+//        const claims = await ClaimDetail.find({petId: petId});
+//
+//        response.render("user/pets_profile", {
+//             title: "pets profile",
+//             pet,
+//             claimsdetail: claims,
+//             user: request.session.user
+//        });
+//
+//    }catch(error){
+//        console.error("Error with registration", error);
+//        response.status(500).send("Error with registration");
+//    }
+//});
+
+
+
+
+
+
+
+
+//Display
+app.get("/user/view_claims/:id", isAuthen, async (request, response) => {
+
+    try{
+
+        const claimId = request.params.id;
+
+        const pets  = await PetAccountDetail.find({userId: request.session.user._id});
+    
+       // const claimsdetail  = await ClaimDetail.find({userId: request.session.user._id});
+
+        const claim = await ClaimDetail.findById(claimId);
+
+        response.render("user/view_claims", { 
+            title: "View Claim",
+            //pets: pets,
+            pets,
+            claim,
+            user: request.session.user,
+           // claimsdetail: claimsdetail
+        });
+
+    }catch(error){
+        console.error("View error", error);
+        response.status(500).send("Error with view");
+    }
+
+    
 });
+
+// Edit Claim and display updated content
+app.post("/user/view_claims/:id", isAuthen, async (request, response) => {
+    try{
+        const claimId = request.params.id;
+        const updatedClaimData = { 
+            claimTitle:  request.body.claimTitle,
+            claimDescription:  request.body.claimDescription,
+            areaOfIssue:  request.body.areaOfIssue,
+            incidentStartDate: request.body.incidentStartDate,
+            vetDate: request.body.vetDate,
+            vetDetail: request.body.vetDetail,
+            claimStatus: request.body.claimStatus,
+            claimAmount: request.body.claimAmount
+        };
+        await  ClaimDetail.findOneAndUpdate({_id: claimId}, updatedClaimData );
+        
+        //await  ClaimDetail.findOneAndUpdate(claimId, updatedClaimData );
+
+       // const pets  = await PetAccountDetail.find({userId: request.session.user._id});
+        const updatedClaim = await ClaimDetail.findById(claimId);
+        
+        response.render("user/view_claims", { 
+            title: "View Claim",
+            pets: await PetAccountDetail.find({userId: request.session.user._id}),
+            claim: updatedClaim,
+            user: request.session.user,
+        });
+                  
+    }catch(error){
+        console.error("Edit error", error);
+        response.status(500).send("Error with Edit");
+    }
+
+});
+
+
+
 
 /////////////////////////////////////////////////
 
@@ -323,6 +429,11 @@ app.get("/insurance/reg_insuranceCompany", (request, response) => {
 
 
 // Post Request
+/*
+    Collecting both the insurance User and the company details
+    storing them in two different schemas 
+*/
+
 app.post("/insurance/reg_insuranceCompany",async (request, response) => {
     try{
 
@@ -345,30 +456,16 @@ app.post("/insurance/reg_insuranceCompany",async (request, response) => {
        });
        
        const company = await newInsurerCompany.save();
-      
-
+    
         const insurerUser = await RegisterInsurer({
             staffFirstName, staffLastName, staffEmailAddress, 
             staffContactNumber,staffNumber,
              staffRole, username, password,
           company: company._id,
         });
-        const savedInsurerUser = await insurerUser.save();
 
-        
 
-      // const newInsurerCompany = new RegisterInsuranceCompany({
-      //     insuranceCompanyName, insuranceCompanyEmail,
-      //     insuranceCompanyContact, insuranceCompanyAddress,
-      //    // insurerId: savedInsurerUser._id
-      // });
-       
-      // const company = await newInsurerCompany.save();
-      
-            
-       //const savedInsurerUser = await insurerUser.save();
-       // request.session.insurerUser  = savedInsurerUser;
-
+       const savedInsurerUser = await insurerUser.save();
        savedInsurerUser.company = company._id;
        await savedInsurerUser.save();
        request.session.insurerUser = await RegisterInsurer.findById(savedInsurerUser._id).populate('company');
@@ -419,7 +516,7 @@ app.get("/insurance/insurance_profile", isInsurerAuthen, async (request, respons
         }
 
         const insurerUser = await RegisterInsurer.findById(request.session.insurerUser._id).populate("company");
-        console.log(insurerUser);
+      //  console.log(insurerUser);
         
         if(!insurerUser){
             return response.status(404).send("User not found");

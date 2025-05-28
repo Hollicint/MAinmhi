@@ -5,11 +5,7 @@
 
     <body>
 
-        
-         <!-- nav bar-->
-        <!--
-         <%- include ("../partials/navbar/user_nav.ejs") %>
-        -->
+
         <div class="container-fluid full-height"> 
 
             <div class="col-4">
@@ -19,15 +15,10 @@
                 <h4>Contant Number: <%= user.contactNumber %> </h4>
                 <h4>D.O.B: <%= user.dateOfBirth %></h4>
                 <h4>Address: <%= user.address %></h4>
-                <!--h4>Payment Method: <%= user.paymentType %></h4-->
+              
                 
                 <br>
                 <a href="/logout"><button>Log out of account</button></a><br>
-                <!-- Buttons while Code is being created to move around pages-->
-                <!--< a href="/user/pets_profile"><button> Pet Profile</button></a>-->
-                <!--a href="/user/user_loginpage"> <button>User Login</button></a><br-->
-                <!--a href="/"> <button>Home</button></a-->
-            
             </div>
 
             <div class="col-8 ">
@@ -45,10 +36,35 @@
                 <br>
                  <div class="col-6 createPetAccount"><br> 
                      <h1> <%= user.firstName %>'s Pet Accounts </h1><br>
-                 <a href="/user/pets_profile"><img src="/images/profileImages/lizard.png" alt="dog" class="rounded-circle" width="250" height="250"><br>  <br></a>
-                <img src="/images/profileImages/snake.png" alt="Cat" class="rounded-circle" width="250" height="250"> <br> </a>
-                
-                <a href="/user/reg_petpage"><img src="/images/profileImages/paw.png" alt="Create an Account" class="rounded-circle" width="250" height="250"></a>
+                     <br>
+                     <% if (pets.length > 0) { %>
+                         <div class="row mt-3"> 
+                        <% pets.forEach(pet => { %>
+                        
+                            <div class="col-6 pet-account"> 
+
+                            <h3>Pets Name: <%= pet.petName %> </h3>
+                            <a href="/user/pets_profile"><img src="/images/profileImages/lizard.png" alt="<%= pet.petType %>" class="rounded-circle" width="250" height="250"></a>
+                            </div>   
+                            <% }); %>    
+                        <br>
+                            <div class="col-6 pet-account">
+                            <h3>Add a Pet  </h3>
+                            <a href="/user/reg_petpage"><img src="/images/profileImages/snake.png" alt="New Account" class="rounded-circle" width="250" height="250"></a> 
+                            </div>
+                        <br>
+                         <% } else { %>
+                            <div class="col-6 pet-account">
+                            <h3>No Pet registered yet </h3>
+                             <a href="/user/reg_petpage"><img src="/images/profileImages/paw.png" alt="New Account" class="rounded-circle" width="250" height="250"></a>
+                            </div>    
+                        </div> 
+                         
+                   
+                    <% } %>
+                     <br>
+               
+               
                  </div>
 
                 <br> <br>

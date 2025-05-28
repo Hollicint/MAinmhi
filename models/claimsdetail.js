@@ -41,19 +41,17 @@ const claimDetailSchema = new Schema({
         type: Number,
         required: true
     },
-  
+    
     //userId: {
     //    type: mongoose.Schema.Types.ObjectId,
     //    //ref: "registeruser",
     //    ref: "User",
     //    required: true
     //}
-    // petId: {
-    //    type: mongoose.Schema.Types.ObjectId,
-    //    //ref: "registeruser",
-    //    ref: "PetAccountDetail",
-    //    required: true
-    //}
+     petId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "PetAccountDetail",
+    }
 }, { timestamps: true });
 
 // creating the userlogindetail model entry
