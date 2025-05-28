@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head-->
+<%- include ("../partials/head.ejs") %>
+
+    <body>
+        <div class="container-fluid full-height"> 
+
+            <div class="col-4">
+              
+                <img src="/images/profileImages/lizard.png" alt="">
+                <br>
+                
+                
+                <% if (pets.length > 0) { %>
+                    <% pets.forEach(pet => { %>
+                        <h3>Pets Name: <%= pet.petName %> </h3>
+                         <h4>Pets Type: <%= pet.petType %> </h4>
+                        <h4>Pets Breed: <%= pet.breed %> </h4>
+                        <h4>Pets Gender: <%= pet.gender %> </h4>
+                        <h4>D.O.B:  <%= pet.dateOfBirth %> </h4>
+                        <h4>Pets Colour: <%= pet.colour %> </h4>
+                        <h4>Microchipping: <%= pet.microchipping %> </h4>
+                        <h4>Microchipping Number:  <%= pet.microchippingNum %> </h4>
+                        <h4>Policy Number: <%= pet.policyNum %> </h4>
+                        <h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4>
+                        <% }); %>    
+                <% } else { %>
+                    <p>You have no pets registered.</p>
+                <% } %>
+                <h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3>
+                <br>
+                <a href="/user/pets_profile"> <button>Pets Profile</button></a><br>  
+                <a href="/logout"><button>Log out of account</button></a>
+
+                  
+                
+
+            </div>
+            <div class="col-8 ">
+                <h1>
+                        <% pets.forEach(pet => { %>
+                        <h1> <%= pet.petName %>'s Account </h1>
+                        <% }); %>    
+               <!--
+                        View Individaul claim, if it doesnt exist no claim message will appear
+               -->
+                <div class="viewClaimSection">
+                    <% if (claim) { %>
+                        <table>
+                            <tr> <td> <label for="claimTitle">Title: <%= claim.claimTitle %></label></td></tr>
+                            <tr><td> <label for="claimDescription">Description: <%= claim.claimDescription %></label></td></tr>
+                            <tr><td> <label for="areaOfIssue">Area Of Issue: <%= claim.areaOfIssue %></label></td></tr>
+                            <tr> <td> <label for="incidentStartDate">Issue Date: <%= claim.incidentStartDate %></label></td></tr>
+                            <tr><td> <label for="vetDate">Vet First visit Date: <%= claim.vetDate %></label></td></tr>
+                            <tr> <td> <label for="vetDetail">Vet Details: <%= claim.vetDetail %></label></td></tr>
+                            <tr> <td> <label for="claimStatus">Claim Status: <%= claim.claimStatus %></label></td></tr>
+                            <tr><td> <label for="claimAmount">Claim Cost: <%= claim.claimAmount %></label></td></tr>                                                                                                        
+                        </table>
+                          <button  id="editClaim">Edit</button>
+                    <% } else { %>
+                            <h4>No claims submitted.</h4>
+                    <% } %>
+                      
+
+                </div>
+                <br><br>
+                <div class="editClaimSection"  >
+                    <form action="/user/view_claims/<%= claim._id %>" method="post">
+                        
+                        <table>
+                            <input type="text" required name="id" value="<%= claim._id %>" hidden><br>
+                         <tr>
+                             <td>
+                                 <label for="claimTitle">Title: </label>
+                                 <input type="text" name="claimTitle" class="displayBox" value="<%= claim.claimTitle %>" > <br>
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <label for="claimDescription">Description: </label><br>
+                                 <textarea name="claimDescription" rows="4" cols="50"  > <%= claim.claimDescription %> </textarea>
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <label for="areaOfIssue">Area Of Issue: </label>
+                                 <select name="areaOfIssue" class="areaOfIssue" >  
+                                     <option value="unselected"> </option>
+                                     <optgroup label="Face">
+                                         <option value="nose" <%= (claim.areaOfIssue === 'nose') ? 'selected' : '' %>>Nose </option>
+                                         <option value="teeth"<%= (claim.areaOfIssue === 'teeth') ? 'selected' : '' %>>Teeth </option>
+                                         <option value="tongue"<%= (claim.areaOfIssue === 'tongue') ? 'selected' : '' %>>Tongue </option>
+                                         <option value="throat"<%= (claim.areaOfIssue === 'throat') ? 'selected' : '' %>>Throat </option>
+                                         <option value="rightEye"<%= (claim.areaOfIssue === 'rightEye') ? 'selected' : '' %>>Right Eye</option>
+                                         <option value="leftEye"<%= (claim.areaOfIssue === 'leftEye') ? 'selected' : '' %>>Left Eye</option>
+                                     </optgroup>
+                                     <optgroup label="Head">
+                                         <option value="rightEar" <%= (claim.areaOfIssue === 'rightEar') ? 'selected' : '' %>>Right Ear</option>
+                                         <option value="leftEar" <%= (claim.areaOfIssue === 'leftEar') ? 'selected' : '' %>>Left Ear</option>
+                                         <option value="backOfNeck"<%= (claim.areaOfIssue === 'backOfNeck') ? 'selected' : '' %>>Back of Neck </option>
+                                         <option value="frontOfNeck"<%= (claim.areaOfIssue === 'frontOfNeck') ? 'selected' : '' %>>Front of Neck </option>
+                                         <option value="backOfHead "<%= (claim.areaOfIssue === 'backOfHead') ? 'selected' : '' %>>Back of Head </option>
+                                     </optgroup>
+                                     <optgroup label="Back">
+                                         <option value="body"<%= (claim.areaOfIssue === 'body') ? 'selected' : '' %>>Body </option>
+                                         <option value="stomach"<%= (claim.areaOfIssue === 'stomach') ? 'selected' : '' %>>Stomach </option>
+                                         <option value="tail"<%= (claim.areaOfIssue === 'tail') ? 'selected' : '' %>>Tail </option>
+                                     </optgroup>
+                                     <optgroup label="Leg">
+                                         <option value="frontRight"<%= (claim.areaOfIssue === 'frontRight') ? 'selected' : '' %>>Leg Front Right </option>
+                                         <option value="frontleft"<%= (claim.areaOfIssue === 'frontleft') ? 'selected' : '' %>>Leg Front Left </option>
+                                         <option value="backRight"<%= (claim.areaOfIssue === 'backRight') ? 'selected' : '' %>>Leg Back Right </option>
+                                         <option value="backLeft"<%= (claim.areaOfIssue === 'backLeft') ? 'selected' : '' %>>Leg Back Left </option>
+                                     </optgroup>
+                                     <optgroup label="Foot">
+                                         <option value="frontRight"<%= (claim.areaOfIssue === 'frontRight') ? 'selected' : '' %>>Front Foot Right </option>
+                                         <option value="frontleft"<%= (claim.areaOfIssue === 'frontleft') ? 'selected' : '' %>>Front Foot Left </option>
+                                         <option value="backRight"<%= (claim.areaOfIssue === 'backRight') ? 'selected' : '' %>>Back Foot Right </option>
+                                         <option value="backLeft"<%= (claim.areaOfIssue === 'backLeft') ? 'selected' : '' %>>Back Foot Left </option>
+                                     </optgroup>
+                                 </select>
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <label for="incidentStartDate">Issue Date: </label>
+                                 <input type="date" name="incidentStartDate" placeholder="Issue Date" value="<%= claim.incidentStartDate.toISOString().split('T')[0] %>" > <br>
+                             </td>
+                         </tr>
+                         <tr>
+                            <td>
+                                <label for="vetDate">Vet First visit Date: </label>
+                                <input type="date" name="vetDate" placeholder="Issue Date" value="<%= claim.vetDate.toISOString().split('T')[0] %>" > <br>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td>
+                                <label for="vetDetail">Vet Details: </label> <br>
+                                <textarea  name="vetDetail" rows="4" cols="50"  > <%= claim.vetDetail %></textarea>  <br>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td>
+                                <!--label for="claimImage">Image Upload</label><br>
+                                 <input type="file"-->
+                            </td>
+                         </tr>
+                         <tr>
+                            <td> <!--label for="claimDocument">Document Upload</label><br>
+                                <input type="file"-->
+                            </td>
+                         </tr>
+                         <tr>
+                            <td>
+                                <label for="claimStatus">Claim Status</label>
+                                 <select name="claimStatus" id="claimStatus" >
+                                    <option value="claim Unselected"  <%= claim.claimStatus === 'claim Unselected' ? 'selected' : '' %>>unselected</option>
+                                    <option value="claim Ready"  <%= claim.claimStatus === 'claim Ready'? 'selected' : '' %>>Ready</option>
+                                    <option value="claim Working"  <%= claim.claimStatus === 'claim Working' ? 'selected' : '' %>>Working on</option>
+                                    <option value="claim Waiting" <%= claim.claimStatus === 'claim Waiting' ? 'selected' : '' %>>Waiting update</option>
+                                    <option value="claim Complete" <%= claim.claimStatus === 'claim Complete' ? 'selected' : '' %>>Complete </option>
+            
+                                </select>    <br>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td>
+                                 <label for="claimAmount">Claim Cost: </label>
+                                 <input type="number" name="claimAmount"  value="<%= claim.claimAmount %>" > <br>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td>
+                                <button id="saveClaim">Save Claim</button>
+                            </td>
+                         </tr>
+                     </table>
+                    </form>
+                </div>
+                
+
+
+
+        
+                
+            
+
+
+
+
+        
+        
+            </div>
+        </div>   
+
+
+
+       
+        
+        <!--Footer-->
+        <%- include ("../partials/footer.ejs") %>
+        <script  src="/js/claims.js"></script>
+    </body>
+
+</html>

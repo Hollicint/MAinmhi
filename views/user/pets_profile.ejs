@@ -3,6 +3,7 @@
 <!--head-->
 <%- include ("../partials/head.ejs") %>
 
+
     <body>
         <!--nav bar-->
         <!--
@@ -15,7 +16,7 @@
                 <img src="/images/profileImages/lizard.png" alt="">
                 <br>
                 
-                
+            
                 <% if (pets.length > 0) { %>
                     <% pets.forEach(pet => { %>
                         <h3>Pets Name: <%= pet.petName %> </h3>
@@ -43,9 +44,9 @@
             </div>
             <div class="col-8 ">
                 <h1>
-                        <% pets.forEach(pet => { %>
+                       <% pets.forEach(pet => { %>
                         <h1> <%= pet.petName %>'s Account </h1>
-                        <% }); %>    
+                        <% }); %>     
                
                 <h2>Start your claim creation and storage now!</h2><br>
                 
@@ -66,7 +67,7 @@
                             <th> Claims Cost </th>
                             <th> Claims Status </th>
                             <th> View Claims  </th>
-                            <th> Edit Claims  </th>
+                            
                             <th>Submit Claim</th>
                             <!--th> Archive Claims  </th-->
                         </tr>
@@ -80,13 +81,11 @@
                            <td><%= claim.claimAmount %></td>
                            <td><%= claim.claimStatus %></td>
 
-                           <td><a href="/user/view_claim">View </a></td>
+                           <td><a href="/user/view_claims/<%= claim._id %>"><button>View / Edit</button> </a></td>
 
-                            <!--td><a href="/user/claim._id">View</a></td-->
-
-                           <td><a href=""><button id="editClaim">Edit</button></a></td>
-                           <td><button>Submit</button></td>
-                           <!--td><a href="">Archive</a></td-->
+                           <!--td><button id="editClaim">Edit</button></td-->
+                           <td><button id="sendBtnICU" onclick="alert('Sent Claim')">Submit</button></td>
+                           
                         </tr>
                             <% }); %>
                         <% } else { %>
@@ -117,6 +116,7 @@
         <!--Footer-->
         <%- include ("../partials/footer.ejs") %>
 
+         <script  src="/js/claims.js"></script>
     </body>
 
 </html>

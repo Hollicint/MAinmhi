@@ -46,7 +46,7 @@ const petDetailSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         //ref: "registeruser",
         ref: "User",
-        required: true
+       // required: true
     }
 }, { timestamps: true });
 
