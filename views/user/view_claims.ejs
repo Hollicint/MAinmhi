@@ -54,6 +54,31 @@
                             <tr> <td> <label for="incidentStartDate">Issue Date: <%= claim.incidentStartDate %></label></td></tr>
                             <tr><td> <label for="vetDate">Vet First visit Date: <%= claim.vetDate %></label></td></tr>
                             <tr> <td> <label for="vetDetail">Vet Details: <%= claim.vetDetail %></label></td></tr>
+
+                            <tr><td><label for="claimImage">Cliam Images:</label><br>
+                                
+                                <% if (claim.claimImage.length > 0) { %>
+                                     <% claim.claimImage.forEach(image => { %>
+                                         <a href="/file/<%= image.file %>" download><%= image.file %></a><br>
+                                      <% }); %>      
+                                <% } else { %>
+                                    <p>You have no image.</p>
+                                <% } %>
+                            
+                            </td></tr>
+            	            <tr><td><label for="claimDocument">Cliam Document: </label>
+                                <% if (claim.claimDocument.length > 0) { %>
+                                     <% claim.claimDocument.forEach(document => { %>
+                                         <a href="/file/<%= document.file %>" download><%= document.file %></a><br>
+                                      <% }); %>      
+                                <% } else { %>
+                                    <p>You have no document.</p>
+                                <% } %>
+                            
+                            
+                            </td></tr>
+
+
                             <tr> <td> <label for="claimStatus">Claim Status: <%= claim.claimStatus %></label></td></tr>
                             <tr><td> <label for="claimAmount">Claim Cost: <%= claim.claimAmount %></label></td></tr>                                                                                                        
                         </table>
@@ -66,14 +91,14 @@
                 </div>
                 <br><br>
                 <div class="editClaimSection"  >
-                    <form action="/user/view_claims/<%= claim._id %>" method="post">
+                    <form action="/user/view_claims/<%= claim._id %>" method="post" enctype="multipart/form-data">
                         
                         <table>
                             <input type="text" required name="id" value="<%= claim._id %>" hidden><br>
                          <tr>
                              <td>
-                                 <label for="claimTitle">Title: </label>
-                                 <input type="text" name="claimTitle" class="displayBox" value="<%= claim.claimTitle %>" > <br>
+                                <label for="claimTitle">Title: </label>
+                                <input type="text" name="claimTitle" class="displayBox" value="<%= claim.claimTitle %>" > <br>
                              </td>
                          </tr>
                          <tr>
@@ -142,13 +167,13 @@
                          </tr>
                          <tr>
                             <td>
-                                <!--label for="claimImage">Image Upload</label><br>
-                                 <input type="file"-->
+                                <label for="claimImage">Image Upload</label><br>
+                                 <input type="file" name="claimImage" accept="image/*"  multiple >
                             </td>
                          </tr>
                          <tr>
-                            <td> <!--label for="claimDocument">Document Upload</label><br>
-                                <input type="file"-->
+                            <td> <label for="claimDocument">Document Upload</label><br>
+                                <input type="file" name="claimDocument" accept=".pdf,.doc,.docx" multiple>
                             </td>
                          </tr>
                          <tr>

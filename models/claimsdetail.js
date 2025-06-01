@@ -25,14 +25,6 @@ const claimDetailSchema = new Schema({
         type: String,
         required: true
     },
-// claimImage: {
-//     type: String,
-//     required: true
-// },
-// claimDocument: {
-//     type: String,
-//     required: true
-// },
     claimStatus: {
         type: String,
         required: true
@@ -41,6 +33,14 @@ const claimDetailSchema = new Schema({
         type: Number,
         required: true
     },
+    claimImage: [{
+        file: String,
+        fileId:mongoose.Schema.Types.ObjectId,
+     }],
+    claimDocument: [{
+         file: String,
+         fileId: mongoose.Schema.Types.ObjectId,
+     }],
     
     //userId: {
     //    type: mongoose.Schema.Types.ObjectId,
