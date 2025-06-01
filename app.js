@@ -1,6 +1,18 @@
 //configurations
 const express = require("express");
+//create the Express app
+const app = express();
+
 const mongoose = require("mongoose");
+// Imports for GRIDFS
+ //middleware  for files 
+const multer  = require('multer');
+ //storage engine
+const {GridFsStorage} = require('multer-gridfs-storage');
+const { GridFSBucket } = require("mongodb");
+const path = require("path");
+const bodyParser = require('body-parser')
+//app.use(express.json());
 
 // import connected to DB
 //const UserLoginDetail = require("./models/userlogindetail");
@@ -10,11 +22,12 @@ const ClaimDetail = require("./models/claimsdetail");
 const RegisterInsurer = require("./models/registerinsurer");
 const RegisterInsuranceCompany = require("./models/registerinsurancecompany")
 
-//create the Express app
-const app = express();
+
 //create session logs
 const session = require("express-session");
 const { result } = require("lodash");
+const { request } = require("http");
+
 
 //load environment 
 require('dotenv').config();
@@ -38,18 +51,127 @@ app.use(
 );
 
 
-// Mongodb connection ** Will have to move and encrpted this
-const dbURI = "mongodb+srv://ComputerProject:GlpXTRDjQtYyOdfD@mainmhi.ag9zvki.mongodb.net/MAinmhiAppDb?retryWrites=true&w=majority&appName=mainmhi";
-mongoose.connect(dbURI)
+// Mongodb connection
+const dbURI = process.env.mongo_db;
+
+
+
+/*
+connecting mongoose to the db on mongodb
+Creating a bucket to be able to store files for GRIDFS
+
+ ** https://www.npmjs.com/package/multer-gridfs-storage
+
+
+https://mongodb.github.io/node-mongodb-native/3.4/tutorials/gridfs/streaming/
+https://www.mongodb.com/docs/manual/core/gridfs/
+https://www.mongodb.com/docs/drivers/java/sync/v4.3/fundamentals/gridfs/
+
+had to put the whole code in the bracket to work
+
+*/
+/*
+mongoose.connect(dbURI) // connects DB
+    .then(()=>{  // start after connection
+
+        const myDb = mongoose.connection.db;
+        // creating a bucket and giving it a name
+        const bucket = new GridFSBucket(myDb, {
+            bucketName: 'ClaimFiles'
+        });
+        //connecting it to the appilcation to be able to use
+        app.locals.gridFSBucket = bucket;
+        app.listen(3000);
+        //app.listen(3000,()=> console.log('Server running'));
+    })
+
+    .catch((error) => console.log(error)); //listen for errors
+
+/*
+ Creating storage for GRIDFS
+  - file upload will need to be unqiue in its naming
+  - checking the type of image and document being uploaded
+
+  ** https://kn8.hashnode.dev/image-uploads-and-storage-in-mongodb-a-step-by-step-guide-with-multer-and-gridfs
+*/
+/*
+const storage = new GridFsStorage({
+  url: dbURI,
+  file: (request, file) => {
+        // file name must be unqiue
+        const filename = `${Date.now()}_${file.originalname}`;
+        return{
+            bucketName: 'ClaimFiles',
+            filename: filename
+        };
+    } 
+});
+
+//const doc_img_Filter = (request,file, callback) =>{
+const upload = multer({  storage, fileFilter: (request,file, callback) =>{
+
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|pdf|doc|docx)$/)) {
+        request.fileValidationError = "Invalid file format";
+        return callback(new Error("Invalid file error"),false);
+    }
+    callback(null,true);
+    }
+});
+
+//const upload = multer({ storage, fileFilter: doc_img_Filter });
+
+*/
+
+mongoose.connect(dbURI) // connects DB
+    .then(()=>{  // start after connection
+
+        const myDb = mongoose.connection.db;
+        // creating a bucket and giving it a name
+        const bucket = new GridFSBucket(myDb, {
+            bucketName: 'ClaimFiles'
+        });
+        //connecting it to the appilcation to be able to use
+        app.locals.gridFSBucket = bucket;
+/*
+ Creating storage for GRIDFS
+  - file upload will need to be unqiue in its naming
+  - checking the type of image and document being uploaded
+
+  ** https://kn8.hashnode.dev/image-uploads-and-storage-in-mongodb-a-step-by-step-guide-with-multer-and-gridfs
+*/
+        const storage = new GridFsStorage({
+          db: mongoose.connection,
+          file: (request, file) => {
+                // file name must be unqiue
+                const filename = `${Date.now()}_${file.originalname}`;
+                return{
+                    bucketName: 'ClaimFiles',
+                    filename
+                };
+            } 
+        });
+        const upload = multer({  storage, fileFilter: (request,file, callback) =>{
+        
+            if (!file.originalname.match(/\.(jpg|jpeg|png|gif|pdf|doc|docx)$/)) {
+                request.fileValidationError = "Invalid file format";
+                return callback(new Error("Invalid file error"),false);
+            }
+            callback(null,true);
+            }
+        });
+  
+  
+/* original connection
+mongoose.connect(dbURI) // connects DB
     .then((result) => app.listen(3000)) // listen for incoming requests
     .catch((error) => console.log(error)); //listen for errors
+*/
+
 
 //instruction with the view engine to be used
 app.set("view engine", "ejs")
 //Retrieves data to server
 app.use(express.urlencoded({ extended: true }));
-
-
 
 //middleware to allow access to static files
 app.use(express.static("public"));
@@ -226,8 +348,8 @@ app.get("/user/pets_profile",isAuthen, async (request, response) => {
 
     try{
         const pets  = await PetAccountDetail.find({userId: request.session.user._id});
+        //const claimsdetail = await ClaimDetail.find({userId: request.session.user._id});
         const claimsdetail = await ClaimDetail.find({});
-
         response.render("user/pets_profile", {
              title: "pets profile",
              pets: pets,
@@ -244,43 +366,6 @@ app.get("/user/pets_profile",isAuthen, async (request, response) => {
    // response.render("user/pets_profile", { title: "pets profile" });
 });
 
-/*
-app.post("/user/pets_profile", (request, response) => {
-   // console.log(request.body);
-   const claimdetail = new ClaimDetail(request.body);
-   claimdetail.save()
-    .then((result)=> {response.redirect("/user/pets_profile")})
-    .catch((error)=> console.log(error));
-});
-
-
-app.post("/user/pets_profile", (request, response) => {
-    const petaccountdetail = new PetAccountDetail(request.body);
-    petaccountdetail.save("/user/pets_profile")
-     .then(result => response.render())
-     .catch((error)=> console.log(error));
-});
-
-*/
-
-//app.post("/user/pets_profile", (request, response) => {
-//    try{
-//        const claimdetail = new ClaimDetail(request.body);
-//        claimdetail.save()
-//         .then((result)=> {response.redirect("/user/pets_profile")})
-//         .catch((error)=> console.log(error));
-//
-//        const petaccountdetail = new PetAccountDetail(request.body);
-//        petaccountdetail.save("/user/pets_profile")
-//         .then(result => response.render())
-//         .catch((error)=> console.log(error));
-//
-//    }catch(error){
-//        console.error("Error with claims and  pet details displaying", error);
-//        response.status(500).send("Error with claims and  pet details displaying");
-//    }
-//    
-//});
 
 /////////////////////////////////////////////////
 //Claim Side
@@ -297,10 +382,83 @@ app.get("/user/new_claims", isAuthen, async (request, response) => {
         });
 
     }catch(error){
-        console.error("Error with registration", error);
-        response.status(500).send("Error with registration");
+        console.error("Error with creating claim", error);
+        response.status(500).send("Error with creating claim");
     }
 });
+
+// Post new claims to recieve files 
+// so far i got sent to 404 page and no claims save to db
+
+
+app.post("/user/new_claims", isAuthen, upload.fields([{ name: 'claimImage', maxCount: 5 }, { name: 'claimDocument', maxCount: 10 }]), async (request, response) => {
+   try{
+        const{body, files} = request;
+       // help view the file input
+       // console.log("Files entered", files);
+
+        if(request.fileValidationError){
+            return response.status(400).send(request.fileValidationError);
+        }
+
+        //const files = request.files;
+
+        const newClaim = new ClaimDetail({ 
+            claimTitle:  request.body.claimTitle,
+            claimDescription:  request.body.claimDescription,
+            areaOfIssue:  request.body.areaOfIssue,
+            incidentStartDate: request.body.incidentStartDate,
+            vetDate: request.body.vetDate,
+            vetDetail: request.body.vetDetail,
+            claimStatus: request.body.claimStatus,
+            claimAmount: request.body.claimAmount,
+            claimImage: (files.claimImage || []).map(file => ({
+                file: file.filename,
+                fileId: file.id,
+            })),
+             claimDocument: (files.claimDocument || []).map(file => ({
+                file: file.filename,
+                fileId: file.id,
+            })),
+            //claimImage: files.claimImage?.map(f =>f.filename),
+            //claimDocument: files.claimDocument?.map(f =>f.filename),
+            petId: request.body.petId,
+            userId: request.session.user._id
+       
+        });
+        await newClaim.save();
+        response.redirect("/user/pets_profile" );
+
+    }catch(error){
+        console.error("Error with creating claim ", error);
+        response.status(500).send("Error with creating claim");
+    }
+});
+
+// stream the file to get it later
+app.get("/file/:filename", async(request, response)=>{
+    try{
+        const bucket = request.app.locals.gridFSBucket;
+        const fileStream = bucket.openDownloadStreamByName(request.params.filename);
+
+        fileStream.on("error",()=>{
+         return response.status(400).send("File doesnt exist");
+        });
+
+        //const radStream = fileStream.createReadStream({filename});
+
+       fileStream.pipe(response);
+
+    }catch(error){
+        console.error("Error with File ", error);
+        response.status(500).send("Error with File streaming");
+        
+    }
+});
+
+
+
+
 
 // display the claims on pet profile
 
@@ -372,27 +530,42 @@ app.get("/user/view_claims/:id", isAuthen, async (request, response) => {
     
 });
 
-// Edit Claim and display updated content
-app.post("/user/view_claims/:id", isAuthen, async (request, response) => {
+// Edit Claim - inputs/images/documents
+app.post("/user/view_claims/:id", isAuthen,upload.fields([{ name: 'claimImage', maxCount: 5 }, { name: 'claimDocument', maxCount: 10 }]), async (request, response) => {
     try{
         const claimId = request.params.id;
-        const updatedClaimData = { 
-            claimTitle:  request.body.claimTitle,
-            claimDescription:  request.body.claimDescription,
-            areaOfIssue:  request.body.areaOfIssue,
-            incidentStartDate: request.body.incidentStartDate,
-            vetDate: request.body.vetDate,
-            vetDetail: request.body.vetDetail,
-            claimStatus: request.body.claimStatus,
-            claimAmount: request.body.claimAmount
-        };
-        await  ClaimDetail.findOneAndUpdate({_id: claimId}, updatedClaimData );
+        const{body, files} = request;
+
+        const claim = await ClaimDetail.findById(claimId);
+
+        claim.claimTitle = body.claimTitle;
+        claim.claimDescription = body.claimDescription;
+        claim.areaOfIssue = body.areaOfIssue;
+        claim.incidentStartDate = body.incidentStartDate;
+        claim.vetDate = body.vetDate;
+        claim.vetDetail = body.vetDetail;
+        claim.claimStatus = body.claimStatus;
+        claim.claimAmount = body.claimAmount;
+
+        if(files.claimImage) {
+         claim.claimImage= files.claimImage.map(file => ({
+            file: file.filename,
+            fileId: file.id,
+        }))};
+        if(files.claimDocument) {
+         claim.claimDocument= files.claimDocument.map(file => ({
+            file: file.filename,
+            fileId: file.id,
+        }))};
+            
+        
+        await claim.save();
         
         //await  ClaimDetail.findOneAndUpdate(claimId, updatedClaimData );
 
-       // const pets  = await PetAccountDetail.find({userId: request.session.user._id});
         const updatedClaim = await ClaimDetail.findById(claimId);
-        
+        const pets  = await PetAccountDetail.find({userId: request.session.user._id});
+
         response.render("user/view_claims", { 
             title: "View Claim",
             pets: await PetAccountDetail.find({userId: request.session.user._id}),
@@ -406,6 +579,39 @@ app.post("/user/view_claims/:id", isAuthen, async (request, response) => {
     }
 
 });
+//app.post("/user/view_claims/:id", isAuthen, async (request, response) => {
+//    try{
+//        const claimId = request.params.id;
+//        const updatedClaimData = { 
+//            claimTitle:  request.body.claimTitle,
+//            claimDescription:  request.body.claimDescription,
+//            areaOfIssue:  request.body.areaOfIssue,
+//            incidentStartDate: request.body.incidentStartDate,
+//            vetDate: request.body.vetDate,
+//            vetDetail: request.body.vetDetail,
+//            claimStatus: request.body.claimStatus,
+//            claimAmount: request.body.claimAmount
+//        };
+//        await  ClaimDetail.findOneAndUpdate({_id: claimId}, updatedClaimData );
+//        
+//        //await  ClaimDetail.findOneAndUpdate(claimId, updatedClaimData );
+//
+//       // const pets  = await PetAccountDetail.find({userId: request.session.user._id});
+//        const updatedClaim = await ClaimDetail.findById(claimId);
+//        
+//        response.render("user/view_claims", { 
+//            title: "View Claim",
+//            pets: await PetAccountDetail.find({userId: request.session.user._id}),
+//            claim: updatedClaim,
+//            user: request.session.user,
+//        });
+//                  
+//    }catch(error){
+//        console.error("Edit error", error);
+//        response.status(500).send("Error with Edit");
+//    }
+//
+//});
 
 
 
@@ -522,18 +728,13 @@ app.get("/insurance/insurance_profile", isInsurerAuthen, async (request, respons
             return response.status(404).send("User not found");
         }
 
-      
-
         response.render("insurance/insurance_profile", {
              title: "Insurer profile",
              insurerUser,
              company: insurerUser.company
-             //insurerUser: request.session.insurerUser,
-             //company: request.session.insurerUser.company
-           // insurerUser: savedInsurerUser
+             
          });
-        // response.redirect("/insurance/insurance_profile");
-
+       
     }catch(error){
         console.error(error);
         response.status(500).send("Login error");
@@ -561,10 +762,15 @@ app.get("/logout", (request, response) => {
     request.session.destroy(() => { response.redirect("/");  });
 });
 
+
 //404 page
 app.use((request, response) => {
     response.status(404).render("404", { title: "404" });
 });
 
+app.listen(3000, () => console.log("Server running"));
+  })
+  
+.catch(err => console.error("MongoDB connection error:", err));
 
 
