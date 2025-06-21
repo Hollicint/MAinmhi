@@ -4,11 +4,13 @@
 <%- include ("./partials/head.ejs") %>
 
 <body>
-     <!--Header Bar-->
-    <header class="head text-center p-3">
-        <h1>Welcome to M'Ainmhi</h1>
-    </header>    
 
+    <div class="grid-container">
+     
+      <!--header-->
+   <%- include ("./partials/header.ejs") %>%>  
+
+    </div>    
        
             <!--nav bar-->
         <%- include ("partials/navbar/nav.ejs") %>
@@ -38,6 +40,11 @@
     <!--Footer-->
     <%- include ("./partials/footer.ejs") %>%>
 
+    </div>    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>

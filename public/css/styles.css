@@ -1,11 +1,43 @@
+
+.grid-container {
+  display: grid;
+}
+/*
+.header{
+   grid-area: header;
+   text-align: center;
+   background-color: #8C3061;
+   color: #FBF6E9;
+    padding: 0;
+    margin: 0
+ 
+}
+*/
+body{
+    background-color: white;
+}
+
+.footer{
+   grid-area: footer;
+   text-align: center;
+   background-color: #8C3061;
+   color: #FBF6E9;
+  
+   
+}
+
+.navbar{
+   grid-area: main;
+   text-align: center;
+   background-color: #8C3061;
+   color: #FBF6E9;
+  
+   
+}
+
 .head{
     background-color: #8C3061;
     color: #FBF6E9;
-}
-
-
-body{
-    background-color: white;
 }
 
 .foot{
@@ -19,7 +51,11 @@ body{
     width: 100%;
     text-align: center;
     font-size: 160%;
+
 }
+
+
+
 /**************  about **************/
 #aboutContent{
   text-align: center;

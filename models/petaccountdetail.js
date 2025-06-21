@@ -37,21 +37,27 @@ const petDetailSchema = new Schema({
         type: String,
         required: true
     },
-    insuranceCompanyName: {
-        type: String,
-        required: true
+ //   insuranceCompanyName: {
+ //       type: mongoose.Schema.Types.ObjectId,
+ //       ref: "RegisterInsuranceCompany"     
+ //      // type: String,
+ //      // required: true
+ //   },
+     insurerCompanyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "RegisterInsuranceCompany",
     },
     
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         //ref: "registeruser",
-        ref: "User",
+        ref: "RegisterUser",
        // required: true
     }
 }, { timestamps: true });
 
 // creating the userlogindetail model entry
-const PetAccountDetail = mongoose.model("petaccountdetail", petDetailSchema);
+const PetAccountDetail = mongoose.model("PetAccountDetail", petDetailSchema);
 
 //export the User Login Details
 module.exports = PetAccountDetail;

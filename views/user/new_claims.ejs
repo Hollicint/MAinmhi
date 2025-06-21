@@ -4,8 +4,7 @@
 <%- include ("../partials/head.ejs") %>
 
     <body>
-        <!--nav bar-->
-        <!-- <%- include ("../partials/navbar/nav.ejs") %> -->
+
 
         <div class="container-fluid full-height">
 
@@ -13,38 +12,22 @@
                 <h3>Pets Name</h3> <br>
                 <img src="/images/profileImages/lizard.png" alt="">
                 <br>
-
-                <% if (pets.length> 0) { %>
-                    <% pets.forEach(pet=> { %>
-                        <h3>Pets Name: <%= pet.petName %>
-                        </h3>
-                        <h4>Pets Type: <%= pet.petType %>
-                        </h4>
-                        <h4>Pets Breed: <%= pet.breed %>
-                        </h4>
-                        <h4>Pets Gender: <%= pet.gender %>
-                        </h4>
-                        <h4>D.O.B: <%= pet.dateOfBirth %>
-                        </h4>
-                        <h4>Pets Colour: <%= pet.colour %>
-                        </h4>
-                        <h4>Microchipping: <%= pet.microchipping %>
-                        </h4>
-                        <h4>Microchipping Number: <%= pet.microchippingNum %>
-                        </h4>
-                        <h4>Policy Number: <%= pet.policyNum %>
-                        </h4>
-                        <h4>Insurance Company: <%= pet.insuranceCompanyName %>
-                        </h4>
-                        <% }); %>
-                            <% } else { %>
-                                <p>You have no pets registered.</p>
-                                <% } %>
-                                    <br>
-                                    <a href="/logout"><button>Log out of account</button></a>
-                                    <br>
-                                    <a href="/user/pets_profile"><button>Pets</button></a>
-                                    
+                        <h3>Pets Name: <%= pet.petName %> </h3>
+                        <h4>Pets Type: <%= pet.petType %> </h4>
+                        <h4>Pets Breed: <%= pet.breed %> </h4>
+                        <h4>Pets Gender: <%= pet.gender %> </h4>
+                        <h4>D.O.B:  <%= pet.dateOfBirth %> </h4>
+                        <h4>Pets Colour: <%= pet.colour %> </h4>
+                        <h4>Microchipping: <%= pet.microchipping %> </h4>
+                        <h4>Microchipping Number:  <%= pet.microchippingNum %> </h4>
+                        <h4>Policy Number: <%= pet.policyNum %> </h4>
+                        <h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4>
+              
+                    <br>
+                    <a href="/logout"><button>Log out of account</button></a>
+                    <br>
+                     <a href="/user/pets_profile/<%= pet._id %>"> <button>Pet Profile</button></a><br>  <br> 
+                    <a href="/user/user_profile"> <button>User Profile</button></a><br>  <br>
             </div>
             <div class="col-8 ">
 
@@ -67,9 +50,8 @@
                             <th>
                                 <label for="petId"> Choose your pet</label>
                                 <select name="petId" required>
-                                    <% pets.forEach(pet => { %>
                                     <option value="<%= pet._id %>"><%= pet.petName %></option>
-                                     <% }); %>
+                                   
                                 </select>
                             </th>
                         </tr>
@@ -152,7 +134,7 @@
                          <tr>
                             <th> <label for="claimDocument">Document Upload</label><br>
                                 <input type="file" name="claimDocument" accept=".pdf,.doc,.docx" multiple>
-                            </th>
+                            </th> 
                          </tr>
                          <tr>
                             <th>
@@ -187,6 +169,7 @@
 
         <!--Footer-->
         <%- include ("../partials/footer.ejs") %>%>
+        <script  src="/js/claims.js"></script>
 
     </body>
 
