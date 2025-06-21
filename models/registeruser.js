@@ -40,7 +40,7 @@ const regUserSchema= new Schema({
 }, { timestamps: true });
 
 // creating the registerUser model entry
-const RegisterUser = mongoose.model("registeruser", regUserSchema);
+const RegisterUser = mongoose.model("RegisterUser", regUserSchema);
 
 //export the User Login Details
 module.exports = RegisterUser;

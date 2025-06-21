@@ -2,11 +2,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M'Ainmhí | <%= title %></title>
+
     <!--Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!--Style Sheet-->
     <link rel="stylesheet" href="/css/styles.css">
     <!--<script src="/js/claims.js"></script>-->
     
+<!--Adding Content Security Policy
+    - default-src return resources from same origin
+ - script-src Controls loading and starting of Javascript  - strict-dynamic'(doesnt like) - actively loads trusted scripts - 'nonce-rAnd0m123' - only nonce scripts can be applied
+    -  object-src 'none'; - no types of plugins or flash objects are allowed to run
+    -  require-trusted-types-for 'script'; - security feature to prevent XSS attacks
+    - img-src 'self'securing images from same origin
+-->
+    
+      <meta http-equiv="Content-Security-Policy" 
+        content="
+            default-src 'self'  
+            script-src 'nonce-rAnd0m123'; 
+            object-src 'none';
+            require-trusted-types-for 'script';
+            img-src 'self';
+        ">
+
+    
    
 </head>
+

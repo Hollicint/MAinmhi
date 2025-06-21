@@ -42,12 +42,10 @@ const claimDetailSchema = new Schema({
          fileId: mongoose.Schema.Types.ObjectId,
      }],
     
-    //userId: {
-    //    type: mongoose.Schema.Types.ObjectId,
-    //    //ref: "registeruser",
-    //    ref: "User",
-    //    required: true
-    //}
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "RegisterUser",
+    },
      petId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "PetAccountDetail",

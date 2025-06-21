@@ -17,10 +17,10 @@
                 <br>
                 
             
-                <% if (pets.length > 0) { %>
-                    <% pets.forEach(pet => { %>
+                
+                    <div>
                         <h3>Pets Name: <%= pet.petName %> </h3>
-                         <h4>Pets Type: <%= pet.petType %> </h4>
+                        <h4>Pets Type: <%= pet.petType %> </h4>
                         <h4>Pets Breed: <%= pet.breed %> </h4>
                         <h4>Pets Gender: <%= pet.gender %> </h4>
                         <h4>D.O.B:  <%= pet.dateOfBirth %> </h4>
@@ -29,10 +29,8 @@
                         <h4>Microchipping Number:  <%= pet.microchippingNum %> </h4>
                         <h4>Policy Number: <%= pet.policyNum %> </h4>
                         <h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4>
-                        <% }); %>    
-                <% } else { %>
-                    <p>You have no pets registered.</p>
-                <% } %>
+                    </div>
+                        
                 <h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3>
                 <br>
                 <a href="/user/user_profile"> <button>User Profile</button></a><br>  <br>
@@ -44,10 +42,9 @@
             </div>
             <div class="col-8 ">
                 <h1>
-                       <% pets.forEach(pet => { %>
+                       
                         <h1> <%= pet.petName %>'s Account </h1>
-                        <% }); %>     
-               
+                      
                 <h2>Start your claim creation and storage now!</h2><br>
                 
 
@@ -58,7 +55,7 @@
                         <tr>
                              <h1>Claim List</h1>
                              <!-- Buttons while Code is being created to move around pages-->
-                             <a href="/user/new_claims"><button>New Claims</button></a> <br><br>
+                             <a href="/user/new_claims/<%= pet._id %>"><button>New Claims</button></a> <br><br>
                              
                         </tr>
                         <tr>

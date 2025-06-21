@@ -4,10 +4,7 @@
 <%- include ("../partials/head.ejs") %>
 
     <body>
-        <!--nav bar-->
-        <!--
-        <%- include ("../partials/navbar/insurance_nav.ejs") %>
-         -->
+
 
         <div class="container-fluid full-height">
 
@@ -31,7 +28,7 @@
                     <h4>Company Name: <%= company.insuranceCompanyName %> </h4>
                     <h4>Company Support Email: <%= company.insuranceCompanyEmail %> </h4>
                     <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
-                     <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
+                     <h4>Company Address: <%= company.insuranceCompanyAddress %> </h4>
                  <% } else { %>
                     <p>You have no company registered.</p>
                 <% } %>    
@@ -51,17 +48,28 @@
                     <table id="claimDisplay">
                         <tr>
                             <th> Policy Holder </th>
-                            <th> Number of Pets </th>
-                            <th> Open Claims </th>
-                            <th> Claim Status </th>
-                            <th> View Claim </th>
+                            <th> Pets Name </th>
+                            <th> Claims Title </th>
+                            <th> Claim Description </th>
+                          
                         </tr>
 
-                        <td>Linda Green</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>New Claim</td>
-                        <td><a href="">Claims</a></td>
+                    
+                        <% claims.forEach(claim => { %>
+                        <tr>
+                            <td><%= claim.userId ? claim.userId.firstName : "N/A" %></td>
+                            <td><%= claim.petId ? claim.petId.petName : "N/A" %></td>
+                            <td><%= claim.claimTitle %></td>
+                           <td><%= claim.claimDescription %></td>
+                            
+
+                        </tr>                  
+                        <% }); %>
+              
+
+
+
+                        </a></td>
                         <tr>
                             <!--td colspan="10">No claims submitted.</td-->
                         </tr>
@@ -70,11 +78,6 @@
 
                 </div>
                 <br><br>
-
-                <!-- Buttons while Code is being created to move around pages-->
-
-                <!--a href="/insurance/clients_list"><button>Clients list</button></a-->
-
             </div>
         </div>
 

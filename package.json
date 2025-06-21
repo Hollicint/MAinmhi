@@ -17,17 +17,22 @@
   },
   "homepage": "https://github.com/Hollicint/MAinhi#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
     "bson": "^5.5.1",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
     "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
     "hbs": "^4.2.0",
     "lodash": "^4.17.21",
     "mongodb": "^5.9.2",
     "mongoose": "^7.5.0",
-    "multer": "^1.4.4",
-    "multer-gridfs-storage": "^5.0.2"
+    "multer": "^2.0.1",
+    "multer-gridfs-storage": "^5.0.2",
+    "ratelimit": "^0.0.4"
   }
 }

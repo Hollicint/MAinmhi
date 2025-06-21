@@ -10,21 +10,29 @@
                <h1>Welcome to M'Ainmhi</h1>
           </header>
 
-          <!--nav bar-->
+          <!--nav bar https://youtu.be/ZtAEXhpTJXk -->
           <%- include ("partials/navbar/nav.ejs") %>
                <div id="aboutContent">
                     <h1>Support </h1> <br>
                      <h3>Form</h3>
-                     <form action="">
+                     <div>
+                     <form action="" method="post">
+                         <div>
                          <label for="fname">First name:</label>
-                         <input type="text" id="fname" name="fname"><br>
+                         <input type="text" id="fname" name="fname" class="form-control" >
+                         </div>
+                          <div>
                          <label for="lname">Last name:</label>
-                         <input type="text" id="lname" name="lname" ><br>
+                         <input type="text" id="lname" name="lname" class="form-control"  >
+                         </div>
+                          <div>
                          <label for="lname">Message:</label><br>
-                         <textarea id="message" name="message" rows="4" cols="50"> 
-                         </textarea><br><br>
-                         <input type="submit" value="Submit">
+                         <textarea id="message" name="message" rows="4" cols="50" class="form-control" > 
+                         </textarea>
+                         </div><br><br>
+                         <button>Submit</button>
                      </form><br><br>
+                     </div>
                      <h2>Contact Details</h2>
                      <h3>Support Email: info@mainmhi.com</h3>
                      <h3>IT Email: support@mainmhi.com</h3>

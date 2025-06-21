@@ -44,7 +44,7 @@
                             <div class="col-6 pet-account"> 
 
                             <h3>Pets Name: <%= pet.petName %> </h3>
-                            <a href="/user/pets_profile"><img src="/images/profileImages/lizard.png" alt="<%= pet.petType %>" class="rounded-circle" width="250" height="250"></a>
+                            <a href="/user/pets_profile/<%= pet._id %>"><img src="/images/profileImages/lizard.png" alt="<%= pet.petType %>" class="rounded-circle" width="250" height="250"></a>
                             </div>   
                             <% }); %>    
                         <br>
