@@ -2,118 +2,92 @@
 <html lang="en">
 <!--head-->
 <%- include ("../partials/head.ejs") %>
+<body>
+    <div class="container-fluid conatainer3-mainBody full-height">
+        
+             <div class="col-4 leftimage-col ">
+                  <div class="col">
+                     <img src="/images/profileImages/lizard.png"  class="petprofileImg" alt="">
+                     <br><br>
+                     <div><h3>Pets Name: <%= pet.petName %> </h3></div>
+                     <div><h4>Pets Type: <%= pet.petType %> </h4></div>
+                     <div><h4>Pets Breed: <%= pet.breed %> </h4></div>
+                     <div><h4>Pets Gender: <%= pet.gender %> </h4></div>
+                     <div><h4>D.O.B:  <%= pet.dateOfBirth %> </h4></div>
+                     <div><h4>Pets Colour: <%= pet.colour %> </h4></div>
+                     <div><h4>Microchipping: <%= pet.microchipping %> </h4></div>
+                     <div><h4>Microchipping Number:  <%= pet.microchippingNum %> </h4></div>
+                     <div><h4>Policy Number: <%= pet.policyNum %> </h4></div>
+                     <div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div>
+                     <br>
 
-
-    <body>
-        <!--nav bar-->
-        <!--
-        <%- include ("../partials/navbar/user_nav.ejs") %>
-        -->
-        <div class="container-fluid full-height"> 
-
-            <div class="col-4">
-              
-                <img src="/images/profileImages/lizard.png" alt="">
-                <br>
-                
-            
-                
+                     <div><h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3></div>
+                      <br>
                     <div>
-                        <h3>Pets Name: <%= pet.petName %> </h3>
-                        <h4>Pets Type: <%= pet.petType %> </h4>
-                        <h4>Pets Breed: <%= pet.breed %> </h4>
-                        <h4>Pets Gender: <%= pet.gender %> </h4>
-                        <h4>D.O.B:  <%= pet.dateOfBirth %> </h4>
-                        <h4>Pets Colour: <%= pet.colour %> </h4>
-                        <h4>Microchipping: <%= pet.microchipping %> </h4>
-                        <h4>Microchipping Number:  <%= pet.microchippingNum %> </h4>
-                        <h4>Policy Number: <%= pet.policyNum %> </h4>
-                        <h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4>
+                        <a href="/user/pets_profile/<%= pet._id %>"> <button><p>Pet Profile</p></button></a>
+                        <a href="/user/user_profile"> <button><p>User Profile</p></button></a>
+                        <a href="/logout"><button><p>Log out of account</p></button></a>
                     </div>
-                        
-                <h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3>
-                <br>
-                <a href="/user/user_profile"> <button>User Profile</button></a><br>  <br>
-                <a href="/logout"><button>Log out of account</button></a>
 
-                  
-                
+                  </div>
+             </div>
+             <div class="col-md-8 createPetAccount  ">
+                 <div class="col claimDetailsList">
+                     <div> 
+                         <h1> <%= pet.petName %>'s Account </h1>
+                         <h2>Start your claim creation and storage now!</h2><br>
+                     </div>
+                     <div>
+                         <table>
+                             <div>
+                                 <tr>
+                                  <h1>Claim List</h1>
+                                  <!-- Buttons while Code is being created to move around pages-->
+                                  <a href="/user/new_claims/<%= pet._id %>"><button><p>New Claims</p></button></a> <br><br>
+                                 </tr>
+                             </div>
+                             <div>
+                                 <tr>
+                                 <th> <h4>Claim Title:</h4></th>
+                                 <th> <h4>Area Of Issue:</h4> </th>
+                                 <th> <h4>Claims Cost:</h4></th>
+                                 <th> <h4>Claims Status:</h4></th>
+                                 <th> <h4>View Claims:</h4></th>   
+                                 <th><h4>Submit Claim:</h4></th>
+                                 <th> <h4>Archive Claims:</h4></th>
+                             </tr>
+                             </div>
+                             <div>
+                                 <% if (claimsdetail && claimsdetail.length > 0) { %>
+                                 <% claimsdetail.forEach(claim => { %>
+                                  <tr>
+                                     <td><p><%= claim.claimTitle %></p></td>
+                                     <td><p><%= claim.areaOfIssue %></p></td>
+                                     <td><p><%= claim.claimAmount %></p></td>
+                                     <td><p><%= claim.claimStatus %></p></td>
+                                     <td><a href="/user/view_claims/<%= claim._id %>"><p><button>View / Edit</button> </p></a></td>
+                                     <td><p><button id="sendBtnICU" onclick="alert('Sent Claim')">Submit</button></p></td>
+                                      <td><p><button id="sendBtnStore" >Archive</button></p></td>
+                                 </tr>
+                                 <% }); %>
+                             <% } else { %>
+                             <tr>
+                                 <td colspan="10">No claims submitted.</td>
+                             </tr>
+                              <% } %>
+                             </div>
+                         
+                         </table>
+                     </div>
 
-            </div>
-            <div class="col-8 ">
-                <h1>
-                       
-                        <h1> <%= pet.petName %>'s Account </h1>
-                      
-                <h2>Start your claim creation and storage now!</h2><br>
-                
-
-
-
-                <div >
-                    <table>
-                        <tr>
-                             <h1>Claim List</h1>
-                             <!-- Buttons while Code is being created to move around pages-->
-                             <a href="/user/new_claims/<%= pet._id %>"><button>New Claims</button></a> <br><br>
-                             
-                        </tr>
-                        <tr>
-                            <th> Claim Title  </th>
-                            <th> Area Of Issue:  </th>
-                            <th> Claims Cost </th>
-                            <th> Claims Status </th>
-                            <th> View Claims  </th>
-                            
-                            <th>Submit Claim</th>
-                            <!--th> Archive Claims  </th-->
-                        </tr>
-                        <% if (claimsdetail && claimsdetail.length > 0) { %>
-                            <% claimsdetail.forEach(claim => { %>
-                        <tr>
-                    
-                           <td><%= claim.claimTitle %></td>
-                           
-                           <td><%= claim.areaOfIssue %></td>
-                           <td><%= claim.claimAmount %></td>
-                           <td><%= claim.claimStatus %></td>
-
-                           <td><a href="/user/view_claims/<%= claim._id %>"><button>View / Edit</button> </a></td>
-
-                           <!--td><button id="editClaim">Edit</button></td-->
-                           <td><button id="sendBtnICU" onclick="alert('Sent Claim')">Submit</button></td>
-                           
-                        </tr>
-                            <% }); %>
-                        <% } else { %>
-                        <tr>
-                            <td colspan="10">No claims submitted.</td>
-                        </tr>
-                         <% } %>
-                    </table> <br>
-                    
-                </div>
-        
-                
-            
-
-
-                <br>
-
-
-        
-        
-            </div>
-        </div>   
-
-
-
-       
-        
-        <!--Footer-->
-        <%- include ("../partials/footer.ejs") %>
-
-         <script  src="/js/claims.js"></script>
-    </body>
-
+                 </div> 
+                 <br><br>     
+             </div>
+     
+ 
+    </div>  
+     <!--Footer-->
+    <%- include("../partials/footer.ejs") %>     
+    <script  src="/js/claims.js"></script>
+</body>
 </html>

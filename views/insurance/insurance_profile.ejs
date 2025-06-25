@@ -2,90 +2,72 @@
 <html lang="en">
 <!--head-->
 <%- include ("../partials/head.ejs") %>
+<body>
+    <div class="container-fluid conatainer3-mainBody full-height">
+        <div class="col-4 leftimage-col">
+            <div class="col">
+                <img src="/images/profileImages/man.png"  class="petprofileImg" alt=""><br><br>
 
-    <body>
+                <div><h3>Name: <%= insurerUser.staffFirstName %> <%= insurerUser.staffLastName %></h3></div>
+                <div><h4>Email: <%= insurerUser.staffEmailAddress %></h4></div>
+                <div><h4>Contant Number: <%= insurerUser.staffContactNumber %></h4></div>
+                <div><h4>Staff Number: <%= insurerUser.staffNumber %></h4></div>
+                <div><h4>Position: <%= insurerUser.staffRole %></h4></div>
 
-
-        <div class="container-fluid full-height">
-
-            <div class="col-4">
-                <img src="/images/profileImages/man.png" alt=""><br><br>
-                <h3>Name: <%= insurerUser.staffFirstName %>
-                        <%= insurerUser.staffLastName %>
-                </h3>
-                <h4>Email: <%= insurerUser.staffEmailAddress %>
-                </h4>
-                <h4>Contant Number: <%= insurerUser.staffContactNumber %>
-                </h4>
-                <h4>Staff Number: <%= insurerUser.staffNumber %>
-                </h4>
-                <h4>Position: <%= insurerUser.staffRole %>
-                </h4>
-                <br><br>
-
-                <h2>Company Informaiton</h2><br>
-                 <% if (company) { %>
-                    <h4>Company Name: <%= company.insuranceCompanyName %> </h4>
-                    <h4>Company Support Email: <%= company.insuranceCompanyEmail %> </h4>
-                    <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
-                     <h4>Company Address: <%= company.insuranceCompanyAddress %> </h4>
-                 <% } else { %>
-                    <p>You have no company registered.</p>
-                <% } %>    
-              
-                    
-                 <br><br>
-                 <a href="/logout"><button>Log Off</button></a>
+                <h2>Company Informaiton</h2>
+                <div>
+                     <% if (company) { %>
+                        <h4>Company Name: <%= company.insuranceCompanyName %> </h4>
+                        <h4>Company Support Email: <%= company.insuranceCompanyEmail %> </h4>
+                        <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
+                         <h4>Company Address: <%= company.insuranceCompanyAddress %> </h4>
+                     <% } else { %>
+                        <p>You have no company registered.</p>
+                    <% } %>    
+                </div>    
+                <br><br>    
+                <div> <a href="/logout"><button><p>Log out of account</p></button></a></div>
             </div>
-            <div class="col-8 ">
-                <h1>Welcome to M'Ainmhi <%= insurerUser.staffFirstName %>!</h1>
+        </div>    
+          
+        <div class="col-8 ">
+            <div class="col">
+                <div>
+                    <h1>Welcome to M'Ainmhi <%= insurerUser.staffFirstName %>!</h1>
+                </div>
+
                 <div class="popup">
                     <span class="closepopup" onclick="this.parentElement.style.display='none';">&times;</span>
-                    Policy Holder has submitted a new claim
-                </div><br>
-
-                <div>
+                   <p> Policy Holder has submitted a new claim</p> 
+                </div>
+                <div> <br><br>
                     <table id="claimDisplay">
-                        <tr>
-                            <th> Policy Holder </th>
-                            <th> Pets Name </th>
-                            <th> Claims Title </th>
-                            <th> Claim Description </th>
-                          
-                        </tr>
+                        <div>
+                            <tr>
+                                <th><h4> Policy Holder </h4></th>
+                                <th><h4> Pets Name </h4></th>
+                                <th><h4> Claims Title </h4></th>
+                                <th><h4> Claim Description </h4></th>                     
+                            </tr>
+                        </div>
 
-                    
-                        <% claims.forEach(claim => { %>
-                        <tr>
-                            <td><%= claim.userId ? claim.userId.firstName : "N/A" %></td>
-                            <td><%= claim.petId ? claim.petId.petName : "N/A" %></td>
-                            <td><%= claim.claimTitle %></td>
-                           <td><%= claim.claimDescription %></td>
-                            
-
-                        </tr>                  
-                        <% }); %>
-              
-
-
-
-                        </a></td>
-                        <tr>
-                            <!--td colspan="10">No claims submitted.</td-->
-                        </tr>
+                        <div>
+                            <% claims.forEach(claim => { %>
+                             <tr>
+                                <td><p><%= claim.userId ? claim.userId.firstName : "N/A" %></p></td>
+                                <td><p><%= claim.petId ? claim.petId.petName : "N/A" %></p></td>
+                                <td><p><%= claim.claimTitle %></p></td>
+                                <td><p><%= claim.claimDescription %></p></td>
+                             </tr>                  
+                            <% }); %>
+                        </div>
                     </table>
-
-
                 </div>
                 <br><br>
             </div>
         </div>
-
-
-
-        <!--Footer-->
-        <%- include ("../partials/footer.ejs") %>
-
-    </body>
-
+    </div> <!--container end div-->
+    <!--Footer-->
+    <%- include ("../partials/footer.ejs") %>
+</body>
 </html>

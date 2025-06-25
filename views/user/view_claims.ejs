@@ -2,48 +2,43 @@
 <html lang="en">
 <!--head-->
 <%- include ("../partials/head.ejs") %>
-
-    <body>
-        <div class="container-fluid full-height"> 
-
-            <div class="col-4">
-              
-                <img src="/images/profileImages/lizard.png" alt="">
-                <br>
-                
-                
-        
-                 <h3>Pets Name: <%= pet.petName %> </h3>
-                  <h4>Pets Type: <%= pet.petType %> </h4>
-                 <h4>Pets Breed: <%= pet.breed %> </h4>
-                 <h4>Pets Gender: <%= pet.gender %> </h4>
-                 <h4>D.O.B:  <%= pet.dateOfBirth %> </h4>
-                 <h4>Pets Colour: <%= pet.colour %> </h4>
-                 <h4>Microchipping: <%= pet.microchipping %> </h4>
-                 <h4>Microchipping Number:  <%= pet.microchippingNum %> </h4>
-                 <h4>Policy Number: <%= pet.policyNum %> </h4>
-                 <h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4>
-         
-                <h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3>
-                <br>
-               <a href="/user/pets_profile/<%= pet._id %>"> <button>Pet Profile</button></a><br>  <br> 
-                <a href="/logout"><button>Log out of account</button></a>
-                          <a href="/user/user_profile"> <button>User Profile</button></a><br>  <br>
-                  
-                
-
+<body>
+    <div class="container-fluid conatainer3-mainBody full-height">
+    
+            <div class="col-4 leftimage-col ">
+                <div class="col">
+                    <img src="/images/profileImages/lizard.png"  class="petprofileImg" alt="">
+                    <br><br>
+                    <div><h3>Pets Name: <%= pet.petName %> </h3></div>
+                    <div><h4>Pets Type: <%= pet.petType %> </h4></div>
+                    <div><h4>Pets Breed: <%= pet.breed %> </h4></div>
+                    <div><h4>Pets Gender: <%= pet.gender %> </h4></div>
+                    <div><h4>D.O.B:  <%= pet.dateOfBirth %> </h4></div>
+                    <div><h4>Pets Colour: <%= pet.colour %> </h4></div>
+                    <div><h4>Microchipping: <%= pet.microchipping %> </h4></div>
+                    <div><h4>Microchipping Number:  <%= pet.microchippingNum %> </h4></div>
+                    <div><h4>Policy Number: <%= pet.policyNum %> </h4></div>
+                    <div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div>
+                    <br>
+                    
+                    <div><h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3></div>
+                     <br>
+                     <div>
+                        <a href="/user/pets_profile/<%= pet._id %>"> <button><p>Pet Profile</p></button></a>
+                        <a href="/user/user_profile"> <button><p>User Profile</p></button></a>
+                        <a href="/logout"><button><p>Log out of account</p></button></a>
+                    </div>
+                </div>
             </div>
-            <div class="col-8 ">
-                <h1>
-                       
+            <div class="col-md-8 createPetAccount">
+                <div class="col">
+                    <div>
                         <h1> <%= pet.petName %>'s Account </h1>
-                        
-               <!--
-                        View Individaul claim, if it doesnt exist no claim message will appear
-               -->
-                <div class="viewClaimSection">
-                    <% if (claim) { %>
+                    </div>
+                    <div class="viewClaimSection">
                         <table>
+                        <% if (claim) { %>
+                      
                             <tr> <td> <label for="claimTitle">Title: <%= claim.claimTitle %></label></td></tr>
                             <tr><td> <label for="claimDescription">Description: <%= claim.claimDescription %></label></td></tr>
                             <tr><td> <label for="areaOfIssue">Area Of Issue: <%= claim.areaOfIssue %></label></td></tr>
@@ -62,7 +57,8 @@
                                 <% } %>
                             
                             </td></tr>
-            	            <tr><td><label for="claimDocument">Cliam Document: </label>
+            	            <tr>
+                                <td><label for="claimDocument">Cliam Document: </label>
                                 <% if (claim.claimDocument.length > 0) { %>
                                      <% claim.claimDocument.forEach(document => { %>
                                          <a href="/file/<%= document.file %>" download><%= document.file %></a><br>
@@ -70,25 +66,20 @@
                                 <% } else { %>
                                     <p>You have no document.</p>
                                 <% } %>
-                            
-                            
-                            </td></tr>
-
-
+                        
+                                </td>
+                             </tr>
                             <tr> <td> <label for="claimStatus">Claim Status: <%= claim.claimStatus %></label></td></tr>
                             <tr><td> <label for="claimAmount">Claim Cost: <%= claim.claimAmount %></label></td></tr>                                                                                                        
                         </table>
-                          <button  id="editClaim">Edit</button>
-                    <% } else { %>
-                            <h4>No claims submitted.</h4>
-                    <% } %>
-                      
 
-                </div>
-                <br><br>
-                <div class="editClaimSection"  >
-                    <form action="/user/view_claims/<%= claim._id %>" method="post" enctype="multipart/form-data">
-                        
+                          <button  id="editClaim">Edit</button>
+                         <% } else { %>
+                            <h4>No claims submitted.</h4>
+                         <% } %>
+                    </div>
+                    <div class="editClaimSection"  >
+                        <form action="/user/view_claims/<%= claim._id %>" method="post" enctype="multipart/form-data">
                         <table>
                             <input type="text" required name="id" value="<%= claim._id %>" hidden><br>
                          <tr>
@@ -142,86 +133,68 @@
                                      </optgroup>
                                  </select>
                              </td>
-                         </tr>
-                         <tr>
-                             <td>
-                                 <label for="incidentStartDate">Issue Date: </label>
-                                 <input type="date" name="incidentStartDate" placeholder="Issue Date" value="<%= claim.incidentStartDate.toISOString().split('T')[0] %>" > <br>
-                             </td>
-                         </tr>
-                         <tr>
-                            <td>
-                                <label for="vetDate">Vet First visit Date: </label>
-                                <input type="date" name="vetDate" placeholder="Issue Date" value="<%= claim.vetDate.toISOString().split('T')[0] %>" > <br>
-                            </td>
-                         </tr>
-                         <tr>
-                            <td>
-                                <label for="vetDetail">Vet Details: </label> <br>
-                                <textarea  name="vetDetail" rows="4" cols="50"  > <%= claim.vetDetail %></textarea>  <br>
-                            </td>
-                         </tr>
-                         <tr>
-                            <td>
-                                <label for="claimImage">Image Upload</label><br>
-                                 <input type="file" name="claimImage" accept="image/*"  multiple >
-                            </td>
-                         </tr>
-                         <tr>
-                            <td> <label for="claimDocument">Document Upload</label><br>
-                                <input type="file" name="claimDocument" accept=".pdf,.doc,.docx" multiple>
-                            </td>
-                         </tr>
-                         <tr>
-                            <td>
-                                <label for="claimStatus">Claim Status</label>
-                                 <select name="claimStatus" id="claimStatus" >
-                                    <option value="claim Unselected"  <%= claim.claimStatus === 'claim Unselected' ? 'selected' : '' %>>unselected</option>
-                                    <option value="claim Ready"  <%= claim.claimStatus === 'claim Ready'? 'selected' : '' %>>Ready</option>
-                                    <option value="claim Working"  <%= claim.claimStatus === 'claim Working' ? 'selected' : '' %>>Working on</option>
-                                    <option value="claim Waiting" <%= claim.claimStatus === 'claim Waiting' ? 'selected' : '' %>>Waiting update</option>
-                                    <option value="claim Complete" <%= claim.claimStatus === 'claim Complete' ? 'selected' : '' %>>Complete </option>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="incidentStartDate">Issue Date: </label>
+                                    <input type="date" name="incidentStartDate" placeholder="Issue Date" value="<%= claim.incidentStartDate.toISOString().split('T')[0] %>" > <br>
+                                </td>
+                            </tr>
+                            <tr>
+                               <td>
+                                   <label for="vetDate">Vet First visit Date: </label>
+                                   <input type="date" name="vetDate" placeholder="Issue Date" value="<%= claim.vetDate.toISOString().split('T')[0] %>" > <br>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td>
+                                   <label for="vetDetail">Vet Details: </label> <br>
+                                   <textarea  name="vetDetail" rows="4" cols="50"  > <%= claim.vetDetail %></textarea>  <br>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td>
+                                   <label for="claimImage">Image Upload</label><br>
+                                    <input type="file" name="claimImage" accept="image/*"  multiple >
+                               </td>
+                            </tr>
+                            <tr>
+                               <td> <label for="claimDocument">Document Upload</label><br>
+                                   <input type="file" name="claimDocument" accept=".pdf,.doc,.docx" multiple>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td>
+                                   <label for="claimStatus">Claim Status</label>
+                                    <select name="claimStatus" id="claimStatus" >
+                                       <option value="claim Unselected"  <%= claim.claimStatus === 'claim Unselected' ? 'selected' : '' %>>unselected</option>
+                                       <option value="claim Ready"  <%= claim.claimStatus === 'claim Ready'? 'selected' : '' %>>Ready</option>
+                                       <option value="claim Working"  <%= claim.claimStatus === 'claim Working' ? 'selected' : '' %>>Working on</option>
+                                       <option value="claim Waiting" <%= claim.claimStatus === 'claim Waiting' ? 'selected' : '' %>>Waiting update</option>
+                                       <option value="claim Complete" <%= claim.claimStatus === 'claim Complete' ? 'selected' : '' %>>Complete </option>
             
-                                </select>    <br>
-                            </td>
-                         </tr>
-                         <tr>
-                            <td>
-                                 <label for="claimAmount">Claim Cost: </label>
-                                 <input type="number" name="claimAmount"  value="<%= claim.claimAmount %>" > <br>
-                            </td>
-                         </tr>
-                         <tr>
-                            <td>
-                                <button id="saveClaim">Save Claim</button>
-                            </td>
-                         </tr>
-                     </table>
-                    </form>
-                </div>
-                
-
-
-
-        
-                
-            
-
-
-
-
-        
-        
-            </div>
-        </div>   
-
-
-
-       
-        
-        <!--Footer-->
-        <%- include ("../partials/footer.ejs") %>
-        <script  src="/js/claims.js"></script>
-    </body>
-
+                                   </select>    <br>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td>
+                                    <label for="claimAmount">Claim Cost: </label>
+                                    <input type="number" name="claimAmount"  value="<%= claim.claimAmount %>" > <br>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td>
+                                   <button id="saveClaim">Save Claim</button>
+                               </td>
+                            </tr>
+                        </table>
+                        </form>
+                    </div>
+                </div> <!--close col-->
+            </div><!--close section col-->
+        </div>   <!--close row -->  
+    <!--Footer-->
+    <%- include ("../partials/footer.ejs") %>
+    <script  src="/js/claims.js"></script>
+</body>
 </html>

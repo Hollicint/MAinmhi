@@ -3,78 +3,68 @@
 <!--head-->
 <%- include ("../partials/head.ejs") %>
 
-    <body>
+<body>
+    <div class="container-fluid conatainer3-mainBody">
 
-
-        <div class="container-fluid full-height"> 
-
-            <div class="col-4">
-                <img src="/images/profileImages/woman.png" alt=""><br><br> <!--https://www.pexels.com/photo/photo-of-woman-wearing-blue-zip-up-jacket-1090387/-->
-                <h3>Name: <%= user.firstName %> <%= user.lastName %> </h3>
-                <h4>Email: <%= user.emailAddress %> </h4>
-                <h4>Contant Number: <%= user.contactNumber %> </h4>
-                <h4>D.O.B: <%= user.dateOfBirth %></h4>
-                <h4>Address: <%= user.address %></h4>
-              
-                
-                <br>
-                <a href="/logout"><button>Log out of account</button></a><br>
-            </div>
-
-            <div class="col-8 ">
-
-                <h1>Welcome to M'Ainmhi <%= user.firstName %>! </h1>
-
-
-                <h3>Please To store your beloved pet medical information</h3><br>
-
-                
-
-                <br>
-              
-                <!--https://www.pexels.com/photo/close-up-of-monocled-cobra-in-natural-habitat-30076154/-->
-                <br>
-                 <div class="col-6 createPetAccount"><br> 
-                     <h1> <%= user.firstName %>'s Pet Accounts </h1><br>
-                     <br>
-                     <% if (pets.length > 0) { %>
-                         <div class="row mt-3"> 
-                        <% pets.forEach(pet => { %>
-                        
-                            <div class="col-6 pet-account"> 
-
-                            <h3>Pets Name: <%= pet.petName %> </h3>
-                            <a href="/user/pets_profile/<%= pet._id %>"><img src="/images/profileImages/lizard.png" alt="<%= pet.petType %>" class="rounded-circle" width="250" height="250"></a>
-                            </div>   
-                            <% }); %>    
-                        <br>
-                            <div class="col-6 pet-account">
-                            <h3>Add a Pet  </h3>
-                            <a href="/user/reg_petpage"><img src="/images/profileImages/snake.png" alt="New Account" class="rounded-circle" width="250" height="250"></a> 
-                            </div>
-                        <br>
-                         <% } else { %>
-                            <div class="col-6 pet-account">
-                            <h3>No Pet registered yet </h3>
-                             <a href="/user/reg_petpage"><img src="/images/profileImages/paw.png" alt="New Account" class="rounded-circle" width="250" height="250"></a>
-                            </div>    
-                        </div> 
-                         
+        <div class="row">
+            <div class="col-4 leftimage-col ">
+                <div class="col">
+                    <img src="/images/profileImages/woman.png" class="petprofileImg" alt="">
+                    <br><br> <!--https://www.pexels.com/photo/photo-of-woman-wearing-blue-zip-up-jacket-1090387/-->
+                    
+                    <div><h3>Name: <%= user.firstName %> <%= user.lastName %> </h3></div><br>
+                    <div><h4>Email: <%= user.emailAddress %> </h4></div>
+                    <div><h4>Contant Number: <%= user.contactNumber %> </h4></div>
+                    <div><h4>D.O.B: <%= user.dateOfBirth %></h4></div>
+                    <div> <h4>Address: <%= user.address %></h4></div>
+                    <div><h4>Username: <%= user.username %> </h4></div>
                    
-                    <% } %>
-                     <br>
-               
-               
-                 </div>
+                    <br><br>
+                    <div><a href="/logout"><button><p>Log out of account</p></button></a></div>
+                    <br><br>
+                </div>   
+            </div>
+            <div class="col-md-8 createPetAccount  ">
+                <div class="col">
+                  <div> 
+                    <h1>Welcome to M'Ainmhi <%= user.firstName %>! </h1>
+                    <h3>Please To store your beloved pet medical information</h3>
+                    <br>
+                    <h1> <%= user.firstName %>'s Pet Accounts </h1>
+                    <br><br>
+                  </div>
 
-                <br> <br>
-                
-
-            </div>   
-        </div>
-        <!--Footer-->
-        <%- include("../partials/footer.ejs") %>
-
-    </body>
-
+                  <div>
+                    <% if (pets.length > 0) { %>
+                    <div class="row mt-3"> 
+                        <% pets.forEach(pet => { %>
+                        <div class="col-6 pet-account"> 
+                            <h3>Pets Name: <%= pet.petName %> </h3>
+                            <a href="/user/pets_profile/<%= pet._id %>"><img src="/images/profileImages/lizard.png" alt="<%= pet.petType %>" class="rounded-circle petprofileImg"></a>
+                        </div>   
+                    <% }); %>    
+                    <br>
+                    <div class="col-6 pet-account">
+                        <h3>Add a Pet  </h3>
+                        <a href="/user/reg_petpage"><img src="/images/profileImages/snake.png" alt="New Account" class="rounded-circle petprofileImg" ></a> 
+                     </div>
+                    <br>
+                    <% } else { %>
+                    <div class="col-6 pet-account">
+                        <h3>No Pet registered yet </h3>
+                        <a href="/user/reg_petpage"><img src="/images/profileImages/paw.png" alt="New Account" class="rounded-circle" class="petprofileImg"></a>
+                     </div>    
+                    </div> 
+                    <% } %>  
+                    <br>      
+                  </div>
+                </div>
+                <br><br>  
+            </div>
+        </div>  
+    
+    </div>  
+    <!--Footer-->
+   <%- include("../partials/footer.ejs") %>    
+</body>
 </html>
