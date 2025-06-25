@@ -3,84 +3,74 @@
 <!--head-->
 <%- include ("../partials/head.ejs") %>
 
-    <body>
-        
-
-
-        <div class="container-fluid full-height">
-
-            <div class="col-4 leftimage-col">
-                
-                <img src="/images/accountsImages/UsersIcon.png" alt="icon">
-            </div>
-            
-            
-            <div class="col-8 rightSide-col">
-                <h3>Pet Account Registration</h3> <br>
-
-                <form action="/user/reg_petpage" method="post">
-                    <!--User and Password that will be checked if exists-->
-                    <label for="petName">Pets Name</label>
-                    <input type="text" name="petName" placeholder="Pets Name" class="form-control" required>
-                     <label for="petType">Type of Pet </label>
-                    <select name="petType" class="form-control">
-                        <option value="blank"> </option>
-                        <option value="dog">Dog </option>
-                        <option value="cat">Cat </option>
-                        <option value="hamster">Hamster </option>
-                        <option value="bird">Bird </option>
-                        <option value="horse">Horse </option>
-                        <option value="snake">Snake </option>
-                        <option value="lizard">Lizard </option>
-                        <option value="fish">Fish </option>
-                        
-                    </select>
-                    <label for="breed">Pets breed</label>
-                    <input type="text" name="breed" placeholder="Pets Breed" class="form-control" required>
-                    <label for="gender">Gender</label>
-                    <select name="gender" class="form-control">
-                         <option value="blank"> </option>
-                        <option value="felmale">Female </option>
-                        <option value="male">Male </option>
-                    </select>
-                    <label for="colour">Pets Colour</label>
-                    <input type="text" name="colour" placeholder="Pets Colour" class="form-control" required>
-                    <label for="dateOfBirth">Pets DOB</label>
-                    <input type="date" name="dateOfBirth"  placeholder="Pets DOB" class="form-control" required> 
-                    <label for="microchipping">Microchipping</label>
-                    <select name="microchipping" class="form-control">
-                        <option value="blank"> </option>
-                        <option value="yes">Yes </option>
-                        <option value="no">No </option>
-                    </select>
-                    <label for="microchippingNum">Microchipping Number</label>
-                    <input type="text" name="microchippingNum"  placeholder="Microchipping Number" class="form-control" required> 
-                    <label for="policyNum">Policy Number</label>
-                    <input type="text" name="policyNum"  placeholder="Policy Number" class="form-control" required> 
-                    
-                    <label for="insuranceCompanyName">insurance Company Name</label>
-                    <input type="text" name="insuranceCompanyName"  placeholder="Policy Number" class="form-control" required> 
-                    <br>
-                    <!--Submit button-->
-                    <button type="submit">Enter </button>
-     
-               </form>
-                <br>
-                <!-- Buttons while Code is being created to move around pages-->
-                <a href="/"> Home</a>
-                <!-- Register location that will connect to DB -->
-                <a href="/regNewUser" id="regButton">Register</a>
-           
-                <br><br>
-
-                <a href="/user/user_profile"> <button>User Profile</button></a>
-
-             </div>
+<body>
+    <div class="container-fluid conatainer3-mainBody full-height">
+        <div class="col-4 leftimage-col ">
+                <img src="/images/accountsImages/UsersIcon.png" class="userLoginIcon" alt="icon">
         </div>
+        <div class="col-8 rightSide-col ">
+           <div> <h3>Pet Account Registration</h3> <br>
+          </div>
 
-        <!--Footer-->
-        <%- include("../partials/footer.ejs") %>
+            <form action="/user/reg_petpage" method="post">
+                  <div class="row userLoginForm">  
+                     <!--User and Password that will be checked if exists-->
+                     <div><label for="petName">Pets Name</label>
+                     <input type="text" name="petName" placeholder="Pets Name"  required></div>
+                
+                     <div> <label for="petType">Type of Pet </label>
+                     <select name="petType" >
+                         <option value="blank"> </option>
+                         <option value="dog">Dog </option>
+                         <option value="cat">Cat </option>
+                         <option value="hamster">Hamster </option>
+                         <option value="bird">Bird </option>
+                         <option value="horse">Horse </option>
+                         <option value="snake">Snake </option>
+                         <option value="lizard">Lizard </option>
+                         <option value="fish">Fish </option>
 
-    </body>
+                     </select></div>
+                     <div><label for="breed">Pets breed</label>
+                     <input type="text" name="breed" placeholder="Pets Breed"  required></div>
 
+                     <div><label for="gender">Gender</label>
+                     <select name="gender" >
+                          <option value="blank"> </option>
+                         <option value="felmale">Female </option>
+                         <option value="male">Male </option>
+                     </select></div>
+
+                     <div><label for="colour">Pets Colour</label>
+                     <input type="text" name="colour" placeholder="Pets Colour"  required></div>
+
+                     <div><label for="dateOfBirth">Pets DOB</label>
+                     <input type="date" name="dateOfBirth"  placeholder="Pets DOB"  required> </div>
+
+                     <div><label for="microchipping">Microchipping</label>
+                     <select name="microchipping" >
+                         <option value="blank"> </option>
+                         <option value="yes">Yes </option>
+                         <option value="no">No </option>
+                     </select></div>
+                     <div><label for="microchippingNum">Microchipping Number</label>
+                     <input type="text" name="microchippingNum"  placeholder="Microchipping Number"  required> </div>
+                
+                     <div><label for="policyNum">Policy Number</label>
+                     <input type="text" name="policyNum"  placeholder="Policy Number"  required> </div>
+                
+                     <div><label for="insuranceCompanyName">insurance Company Name</label>
+                     <input type="text" name="insuranceCompanyName"  placeholder="Policy Number"  required> </div>
+                     <br> <br>
+                     <!--Submit button-->
+                    <div> <button type="submit">Enter </button></div>
+                </div>     
+            </form>                
+
+               
+        </div>  
+    </div>
+    <!--Footer-->
+    <%- include("../partials/footer.ejs") %>
+ </body>
 </html>

@@ -2,68 +2,63 @@
 <html lang="en">
 <%- include ("../partials/head.ejs") %>
 
-    <body>
-        <div class="container-fluid full-height">
-
-
-            <div class="col-4 leftimage-col">
-
-                <img src="/images/accountsImages/InsuranceIcon.png" alt="icon">
-            </div>
-            <div class="col-8 rightSide-col">
-                <h2>Sign Up</h2>
-
-                <div id="registerSection">
-                    <h3>Company Register</h3>
-                    <form action="/insurance/reg_insuranceCompany" method="post">
-                         <label for="staffFirstName">First Name: </label>
-                          <input type="text" name="staffFirstName" class="form-control" required> 
-                          <label for="staffLastName">Last Name: </label>
-                          <input type="text" name="staffLastName"  class="form-control" required>
-                          <label for="staffEmailAddress">Company Email: </label>
-                          <input type="email" name="staffEmailAddress"  class="form-control" required> 
-                          <label for="staffContactNumber">Company Contact Number: </label>
-                          <input type="text" name="staffContactNumber" class="form-control" required> 
-                          <label for="staffNumber">Staff Number: </label>
-                          <input type="text" name="staffNumber"  class="form-control" required> 
-                          <label for="staffRole">Staff Role: </label>
-                          <input type="text" name="staffRole" class="form-control" required>
-                             <br>
-                          <label for="username">Username:</label>
-                          <input type="text" name="username" placeholder="Username" class="form-control" required> 
-                          <label for="password">Password:</label>
-                          <input type="password" name="password" placeholder="Password" class="form-control" required> 
-                            <br><br> 
-                        <label for="companyDetails">Company Details</label>
-                        <br><br>
-                        <label for="insuranceCompanyName">Company Name: </label>
-                        <input type="text" name="insuranceCompanyName" class="form-control" required> 
-                        <label for="insuranceCompanyEmail">Company Email: </label>
-                        <input type="email" name="insuranceCompanyEmail" class="form-control" required> 
-                        <label for="insuranceCompanyContact">Company Contact Number: </label>
-                        <input type="text" name="insuranceCompanyContact" class="form-control" required> 
-                        <label for="insuranceCompanyAddress">Company Address: </label>
-                        <input type="text" name="insuranceCompanyAddress" class="form-control" required> 
-                        <br><br>
-                        <button type="submit">Register </button>
-                    </form>
-
-                </div>
-                <br>
-                <!-- Buttons while Code is being created to move around pages-->
-                <a href="/"> Home</a>
-                <br>
-                 <!--a href="/regNewInsurerUser" id="regButton">Register</a-->
-                <br><br>
-                <a href="/insurance/insurance_profile">insurance_profile</a>
-
-            </div>
-
-
+<body>
+    <div class="container-fluid conatainer3-mainBody full-height">
+        <div class="col-4 leftimage-col">
+              <img src="/images/accountsImages/InsuranceIcon.png" class="userLoginIcon" alt="icon">
         </div>
 
-        <!--Footer-->
-        <%- include("../partials/footer.ejs") %>
-    </body>
+        <div class="col-8 rightSide-col">
+            <div>
+                <h2>Sign Up</h2>
+            </div>
+       
+            <div id="registerSection">
+                <h3>Company Register</h3>
+                    <form action="/insurance/reg_insuranceCompany" method="post">
+                      <div class="row userLoginForm"> 
+                        
+                        <div> <label for="staffFirstName">First Name: </label>
+                            <input type="text" name="staffFirstName"  required> </div>
+                        <div><label for="staffLastName">Last Name: </label>
+                            <input type="text" name="staffLastName"  required></div>
+                        <div><label for="staffEmailAddress">Company Email: </label>
+                            <input type="email" name="staffEmailAddress"   required> </div>
+                        <div><label for="staffContactNumber">Company Contact Number: </label>
+                             <input type="text" name="staffContactNumber"  required> </div>
+                        <div><label for="staffNumber">Staff Number: </label>
+                             <input type="text" name="staffNumber"   required> </div>
+                        <div><label for="staffRole">Staff Role: </label>
+                            <input type="text" name="staffRole"  required></div>
+                            
+                        <div> <br><label for="username">Username:</label>
+                             <input type="text" name="username"   required></div>
+                        <div><label for="password">Password:</label>
+                          <input type="password" name="password" placeholder="Password"  required> <br></div>
+                           
+                        <div> <br><label for="companyDetails">Company Details</label><br><br></div>
+                        <div> <label for="insuranceCompanyName">Company Name: </label>
+                             <input type="text" name="insuranceCompanyName"  required> </div>
+                        <div><label for="insuranceCompanyEmail">Company Email: </label>
+                             <input type="email" name="insuranceCompanyEmail"  required> </div>
+                        <div> <label for="insuranceCompanyContact">Company Contact Number: </label>
+                             <input type="text" name="insuranceCompanyContact"  required> </div>
+                        <div> <label for="insuranceCompanyAddress">Company Address: </label>
+                             <input type="text" name="insuranceCompanyAddress"  required> </div>
+                        <div><br><br><button type="submit">Register </button></div>
+                      
+                      </div> 
+                    </form>
+                     <div>
+                        <a href="/insurance/insurance_loginpage"><h3>Login</h3></a>    
+                        
+                    </div>
+            </div>
+        </div>    
 
+
+    </div>
+    <!--Footer-->
+    <%- include("../partials/footer.ejs") %>
+</body>
 </html>

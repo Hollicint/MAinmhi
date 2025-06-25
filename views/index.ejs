@@ -4,52 +4,103 @@
 <%- include ("./partials/head.ejs") %>
 
 <body>
-
-    <div class="grid-container">
-     
-      <!--header-->
-   <%- include ("./partials/header.ejs") %>%>  
-
-    </div>    
-       
-            <!--nav bar-->
-        <%- include ("partials/navbar/nav.ejs") %>
-
-
-        <h3>Please To store your beloved pet medical information</h3><br>
+  <div class="container-fluid conatainer3-mainBody">
+    <!--header-->
+    <%- include ("./partials/header.ejs") %>  
     
-
-        <% var sMessage="Choose User or Insurance Company path" %>
-        <%= sMessage %>
-
-        <br>
-
-
-        <div class="row mt-3">
-            <div class="col-6 user-account">User Account <br>
-                <a href="/user/user_loginpage"><img src="images/accountsImages/UsersIcon.png" alt="icon"></a>
-            </div>
-            <div class="col-6 insurance">Insurance Company <br>
-                <a href="/insurance/insurance_loginpage"> <img src="images/accountsImages/InsuranceIcon.png" alt="icon"></a>
-            </div>
-        </div> 
-
-
-        
-
-    <!--Footer-->
-    <%- include ("./partials/footer.ejs") %>%>
-
+    <!--https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_carousel2&stacked=h-->
+     <div class="row-carousel">
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators  -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+            <li data-target="#carousel" data-slide-to="2"></li>
+          </ol>     
+             <!-- Wrapper for slides -->
+             <div class="carousel-inner">
+               <div class="item active">
+                 <img src="images/carousel/lipenHeart.jpeg" class="img-fluid" alt="lipenHeart" >
+                 <div class="carousel-caption ">
+                   <h3>Love of your animal</h3>
+                   <p>Looking after your animal information has never been easier</p>
+                 </div>
+               </div>
+           
+               <div class="item" >
+                 <img src="images/carousel/lipen-cone.jpg" class="img-fluid" alt="cone">
+                 <div class="carousel-caption">
+                   <h3>For all their Accidents</h3>
+                   <p>You never know when this issues will pop up, but being prepared has never been easier</p>
+                 </div>
+               </div>
+           
+               <div class="item">
+                 <img src="images/carousel/lipen_walk.jpeg" class="img-fluid" alt="walkiesHappy">
+                 <div class="carousel-caption">
+                   <h3>Keeping you and your Pet happy</h3>
+                   <p>The goal of being stress free, is our goal </p>
+                 </div>
+               </div>
+             </div>        
+          <!-- Left and right controls -->
+          <a class="left carousel-control" href="#carousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+     </div>      
+     
+    
+    <div class="row">
+    <div>
+      <br><br>
+        <p>
+            Click on the image to be directed to the correct login page. <br>
+            If you dont have an account, please follow the on page directions to register your account
+        </p><br>
+       
     </div>    
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-</body>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6 user-account">User Account <br>
+        <a href="/user/user_loginpage"><img src="images/accountsImages/UsersIcon.png" class="indexLoginIcon" alt="icon"></a>
+      </div>
+      <div class="col-sm-12 col-md-6 insurance">Insurance Company <br>
+        <a href="/insurance/insurance_loginpage"> <img src="images/accountsImages/InsuranceIcon.png" class="indexLoginIcon" alt="icon"></a>
+      </div>
+    </div> 
 
+    <div class="row">
+      <div id="indexTxt"><br>
+        <p>
+        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.
+         Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.
+          Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.
+         Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. 
+         Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos. </p>
+          <!--https://loremipsum.io/generator/?n=5&t=p-->
+        </p>
+      </div>    
+    </div>
+
+  
+  </div> <!--Container-fluid closed div-->
+
+   <!--Footer-->
+  <%- include ("./partials/footer.ejs") %>  
+</body>
 </html>
 
 <!--
+ <% var sMessage="Choose User or Insurance Company path" %>
+            <%= sMessage %>
+
 image ref
  https://icon-library.com/icon/pet-icon-png-15.html
   https://www.flaticon.com/free-icon/insurance-company_9417371

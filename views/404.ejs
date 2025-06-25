@@ -2,20 +2,32 @@
 <html lang="en">
 <!--head-->
 <%- include ("./partials/head.ejs") %>
-
-    <body>
-        <!--nav bar-->
-        <%- include ("partials/navbar/nav.ejs") %>
-
-        <h1>Welcome to M'Ainmhi</h1>
-
-        <h3>Please To store your beloved pet medical information</h3><br>
-        <h1>404 ERROR</h1><br>
-        <h3>Ooops, content not found...</h3>
-
-        <!--Footer-->
-        <%- include ("./partials/footer.ejs") %>
-
-    </body>
-
+<body>
+    <div class="container-fluid conatainer3-mainBody">
+    <!--header-->
+        <%- include ("./partials/header.ejs") %>%>     
+        <div class="row">
+            <div class="col">
+                 <h1>404 ERROR</h1><br>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col">
+                  <h3>Ooops, content not found...</h3>
+            </div>
+        </div>          
+        <div class="row">
+            <div class="col-md-9 offset-md-3 ">
+                  <img src="/images/about/404.jpg" class="errImage" alt="" > 
+                  <!--https://www.freepik.com/free-vector/error-404-concept-landing-page_4660853.htm#fromView=search&page=1&position=23&uuid=fd53010d-25c0-4929-8376-4d64d40f28f8&query=404+pet-->
+            </div>
+        </div>  
+            
+          
+        <br>
+    </div>
+    <!--Footer-->
+    <%- include ("./partials/footer.ejs") %>
+        
+</body>
 </html>

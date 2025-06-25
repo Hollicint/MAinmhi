@@ -3,51 +3,71 @@
 <!--head-->
 <%- include ("./partials/head.ejs") %>
 
-     <body>
-
-          <!--Header Bar-->
-          <header class="head text-center p-3">
-               <h1>Welcome to M'Ainmhi</h1>
-          </header>
-
-          <!--nav bar https://youtu.be/ZtAEXhpTJXk -->
-          <%- include ("partials/navbar/nav.ejs") %>
-               <div id="aboutContent">
-                    <h1>Support </h1> <br>
-                     <h3>Form</h3>
+<body>
+    <div class="container-fluid conatainer3-mainBody">
+        <!--header-->
+        <%- include ("./partials/header.ejs") %>%>     
+        <div class="row">
+            <div class="col">
+                <h1>Support </h1> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Contact us for any issues </h3>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form action="" method="post">
+                  <div class="row formBackground">
                      <div>
-                     <form action="" method="post">
-                         <div>
-                         <label for="fname">First name:</label>
-                         <input type="text" id="fname" name="fname" class="form-control" >
-                         </div>
-                          <div>
-                         <label for="lname">Last name:</label>
-                         <input type="text" id="lname" name="lname" class="form-control"  >
-                         </div>
-                          <div>
-                         <label for="lname">Message:</label><br>
-                         <textarea id="message" name="message" rows="4" cols="50" class="form-control" > 
-                         </textarea>
-                         </div><br><br>
-                         <button>Submit</button>
-                     </form><br><br>
+                        <label for="fname"><p>First name:</p></label>
+                     </div> 
+                     <div>
+                        <input type="text" id="fname" name="fname" class="form-control" >
                      </div>
-                     <h2>Contact Details</h2>
-                     <h3>Support Email: info@mainmhi.com</h3>
-                     <h3>IT Email: support@mainmhi.com</h3>
+                    <div>
+                        <label for="lname"><p>Last name:</p></label>
+                    </div>
+                    <div>
+                        <input type="text" id="lname" name="lname" class="form-control"  >
+                    </div>
+                    <div>
+                        <label for="lname"><p>Message:</p></label><br>
+                    </div> 
+                    <div>  
+                        <textarea id="message" name="message" rows="4" cols="50" class="form-control" > </textarea>
+                    </div>
+                   
+                    <div>
+                         <button type="submit"> Enter </button>
+                    </div>  
+                    
+                   
+                  </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>Contact Details</h2>
+                <h3>Support Email: info@mainmhi.com</h3>
+                <h3>IT Email: support@mainmhi.com</h3>    
+                <h3>Contact Number: +000 000 0000</h3>
+            </div>
+        </div>  
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <img src="/images/aboutImages/map.png" alt="">
+            </div>
+            <div class="col-md-6 offset-md-3">
+                <img src="/images/aboutImages/map.png" alt="">
+            </div>
+        </div> 
                      
-                     <h3>Contact Number: +000 000 0000</h3>
-                     <img src="/images/aboutImages/map.png" alt="">
-
-               </div>
-
-
-
-
-               <!--Footer-->
-
-               <%- include ("./partials/footer.ejs") %>
-     </body>
-
+     </div><!--Container-fluid closed div-->    
+    <!--Footer-->
+    <%- include ("./partials/footer.ejs") %>  
+</body>
 </html>
