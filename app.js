@@ -17,6 +17,7 @@ const { body, validationResult } = require("express-validator");
 const RegisterUser = require("./models/registeruser");
 const PetAccountDetail = require("./models/petaccountdetail");
 const ClaimDetail = require("./models/claimsdetail");
+const ArchiveClaimsDetail = require("./models/archiveclaimsdetail");
 const RegisterInsurer = require("./models/registerinsurer");
 const RegisterInsuranceCompany = require("./models/registerinsurancecompany")
 
@@ -31,8 +32,9 @@ const saltRounds = 12;
 
 //create session logs
 const session = require("express-session");
-const { result } = require("lodash");
+const { result, values } = require("lodash");
 const { request } = require("http");
+const { title } = require("process");
 
 //load environment 
 require('dotenv').config();
@@ -54,12 +56,22 @@ app.use(
             httpOnly: true, //prevenets XSS using JS in the browser
             secure: process.env.NODE_ENV === 'production', // cookies sent over HTTPS
             sameSite: 'strict', //allows only request and trusted sites cookies
-            maxAge: 60000 // 1 min of none active it will reset 
+           // maxAge: 60000 // 1 min of none active it will reset 
+           maxAge: 24 * 60 * 60 * 1000 //day time
         },
         // reset
         rolling: true,
     })
 );
+
+app.use((request, response, next)=>{
+    response.locals.user = request.session.user || null;
+    response.locals.insurerUser = request.session.insurerUser || null;
+    next();
+
+ 
+});
+
 
 //Sets the limit tries to enter login
 const limitLogin = rateLimit({
@@ -183,7 +195,9 @@ mongoose.connect(dbURI) // connects DB
      // User register get
      app.get("/user/reg_userpage", (request, response) => {
          response.render("user/reg_userpage", {
-             title: "User Reg"
+             title: "User Reg",
+             errorMessage: {},
+             values:{}
         });
      });
         /*
@@ -192,30 +206,61 @@ mongoose.connect(dbURI) // connects DB
 
     // Post Request
     app.post("/user/reg_userpage", async (request, response) => {
-        try {
-            const {
-                firstName, lastName, emailAddress, contactNumber, dateOfBirth,
-                address, username, password
-            } = request.body;
+       
+        const {
+            firstName, lastName, emailAddress, contactNumber, dateOfBirth,
+            address, username, password
+        } = request.body;
 
+        const errorMessage ={};
+        const values=request.body;
+
+         try {    
             // Check Email is entered correctly
             const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-            if (!emailFormat.test(emailAddress)) {            
-                    errorMessage: "Incorrect email format"
+            if (!emailFormat.test(emailAddress)) { 
+              //  errorMessage.push( "Invalid credentials");
+                 errorMessage.emailAddress ="Email Already on system";
             }
         //Check Username is enterd correctly
             if(username.length < 6){
-                errorMessage: "Incorrect username format"
+               // errorMessage.push( "Invalid credentials");
+               errorMessage.username ="Username must be more than 6 characters";
               }
             
         //Check Password is enterd correctly
             if(password.length < 8 || password.length > 14 ){ 
-                errorMessage: "Incorrect password length must be between 8 to 14"
+               // errorMessage.push( "Invalid credentials");
+                errorMessage.password ="password must contain 8-14 characters";
             }
+
+        // Check if details already Exist             
+            const userExisting = await RegisterUser.findOne({ 
+                $or: [{username},{emailAddress}]
+            });
+            if(userExisting){ 
+                if(userExisting.username === emailAddress){
+                    errorMessage.username ="Username already exist";
+                }
+                if(userExisting.emailAddress === emailAddress){
+                    errorMessage.emailAddress ="email Address already exist";
+                }
+            }
+
+            //Check if errors are on page it will stay and not go to pet reg page
+            if(Object.keys(errorMessage).length >0){
+                return response.render("user/reg_userpage",{
+                    title: "Register User",
+                    errorMessage,
+                    values: request.body,
+                });
+            }
+
             // adding bcrypt
             const hashedPassword = await bcrypt.hash(password, saltRounds);
-             const user = await RegisterUser({
-                 firstName, lastName, emailAddress, contactNumber, dateOfBirth,
+            
+            const user = await RegisterUser({
+                firstName, lastName, emailAddress, contactNumber, dateOfBirth,
                 address, username, password:hashedPassword
              }); 
 
@@ -246,33 +291,39 @@ mongoose.connect(dbURI) // connects DB
     app.post("/user/user_loginpage", limitLogin, async (request, response) => {
         const { username, password } = request.body;
         try {
-          //  const user = await RegisterUser.findOne({ username, password });
+            //  finds users username
             const user = await RegisterUser.findOne({ username });
+
+            // Gives error if users doesnt exist
             if (!user) {
-                response.render("user/user_loginpage", {
-                title: "User Login",
-                errorMessage: "Not Registered user" 
+                 return response.render("user/user_loginpage", {
+                    title: "User Login",
+                    errorMessage: "Invalid credentials" 
                  });                    
             } 
-            
+            // checking password
             const matchedLogin = await bcrypt.compare(password, user.password);
 
             if(!matchedLogin) {
-                response.render("user/user_loginpage", {
-                title: "User Login",
-                errorMessage: "Not Registered password" 
-            });                    
+                return response.render("user/user_loginpage", {
+                    title: "User Login",
+                    errorMessage: "Invalid credentials" 
+                });                    
             } 
-
-
             // connects to user registered logins and goes to profile
-             request.session.user = user;
+           //  request.session.user = user;
+             request.session.user ={
+                _id: user._id,
+                username: user.username
+             };
+
+
              response.redirect("/user/user_profile");
 
 
         } catch (error) {
-            console.error("Error with Login", error);
-            response.status(500).send("Error with Login");
+            console.error("Invalid credentials", error);
+            response.status(500).send("Invalid credentials");
         }
 
         /*  response.render("user/reg_userpage");*/
@@ -284,11 +335,9 @@ mongoose.connect(dbURI) // connects DB
         try {
             // show the login user and the pet connected to that
             const user = request.session.user;
-
-           // const hashedPasswords = await bcrypt.hash(request.body.password);
-
-            //const user = await RegisterInsurer.findById(request.session.user._id);
+            //Displays the pets connected to users account
             const pets = await PetAccountDetail.find({ userId: user._id });
+            // sending data to the correct location to display
             response.render("user/user_profile", {
                 title: "user profile",
                 user: user,
@@ -357,14 +406,52 @@ mongoose.connect(dbURI) // connects DB
             const pet = await PetAccountDetail.findOne({
                  _id:petId, 
                  userId: request.session.user._id 
-            });
+            }).populate("insurerCompanyId");
       
             const claimsdetail = await ClaimDetail.find({petId }); 
+            const archiveClaim = await ArchiveClaimsDetail.find({petId }); 
+
+
+            const claimsdetailFlag = await claimsdetail.map((claim)=>({
+                _id: claim._id,
+                claimTitle: claim.claimTitle,
+                claimDescription : claim.claimDescription,
+                areaOfIssue : claim.areaOfIssue,
+                incidentStartDate : claim.incidentStartDate,
+                vetDate : claim.vetDate,
+                vetDetail : claim.vetDetail,
+                claimStatus : claim.claimStatus,
+                claimAmount : claim.claimAmount,
+                claimImage : claim.claimImage,
+                claimDocument : claim.claimDocument,
+                petId: claim.petId,
+                userId: claim.userId,
+                isArchived: false,  
+            })); 
+            const archiveClaimFlag = archiveClaim.map((claim)=>({
+                _id: claim._id,
+                claimTitle: claim.claimTitle,
+                claimDescription : claim.claimDescription,
+                areaOfIssue : claim.areaOfIssue,
+                incidentStartDate : claim.incidentStartDate,
+                vetDate : claim.vetDate,
+                vetDetail : claim.vetDetail,
+                claimStatus : "Archived",
+                claimAmount : claim.claimAmount,
+                claimImage : claim.claimImage,
+                claimDocument : claim.claimDocument,
+                petId: claim.petId,
+                userId: claim.userId,
+                isArchived: true, 
+            })); 
+
+            const allclaimsconnected = [...claimsdetailFlag, ...archiveClaimFlag];
+
             response.render("user/pets_profile", {
               title: "pets profile",
               pet,
               user: request.session.user,
-              claimsdetail
+              claimsdetail: allclaimsconnected,
             });
 
         }catch(error){
@@ -403,9 +490,10 @@ mongoose.connect(dbURI) // connects DB
                      userId: request.session.user._id 
                 });
 
+
                 response.render("user/new_claims", {
                     title: "new claim",
-                    pet: pet  ,
+                    pet: pet,
                     user: request.session.user
                  });
       
@@ -455,9 +543,15 @@ mongoose.connect(dbURI) // connects DB
                     userId: request.session.user._id
 
                 });
-                await newClaim.save();
-                response.redirect("/user/pets_profile/");
 
+                await newClaim.save();
+                const pet = await PetAccountDetail.findById(body.petId);
+                response.render("user/new_claims", {
+                    title: "new claim",
+                    pet: pet  ,
+                    user: request.session.user
+                 });
+      
             } catch (error) {
                 console.error("Error with creating claim ", error);
                 response.status(500).send("Error with creating claim");
@@ -488,12 +582,26 @@ mongoose.connect(dbURI) // connects DB
 
         //Get and display certain claim
         app.get("/user/view_claims/:id", isAuthen, async (request, response) => {
-
             try {
-           
                const claimId = request.params.id;
-               const claim = await ClaimDetail.findById(claimId);
+               let claim = await ClaimDetail.findById(claimId);
 
+               let isArchived = false;
+
+                // If claim not found in active claims, check archived claims
+                if (!claim) {
+                   claim = await ArchiveClaimsDetail.findById(claimId);
+                  if (claim) {
+                     isArchived = true;
+                  }else{
+                    return response.status(404).send("Claim not found");
+                  }
+               
+                }
+
+                if (!claim) {
+                    return response.status(404).send("Claim not found");
+                }
                 const pet = await PetAccountDetail.findOne({
                      _id: claim.petId, 
                      userId: request.session.user._id 
@@ -501,9 +609,10 @@ mongoose.connect(dbURI) // connects DB
 
                response.render("user/view_claims", {
                    title: "View Claim",
-                   pet: pet,
+                   pet,
                    claim,
                    user: request.session.user,
+                   isArchived: isArchived
                });
 
             } catch (error) {
@@ -561,11 +670,77 @@ mongoose.connect(dbURI) // connects DB
                     pet: pet,
                     claim: updatedClaim,
                     user: request.session.user,
+                    isArchived: false
                 });
 
             } catch (error) {
                 console.error("Edit error", error);
                 response.status(500).send("Error with Edit");
+            }
+
+        });
+
+        // post notifcation to claim is ready to insurer
+    //    app.post("/update_insurer_of_Claim", async(request, response)=>{
+    //        try{
+    //
+    //        }
+    //        catch(error){
+    //            console.error("Error with claim Notfying to Insurer");
+    //            response.status(500).send("Error with Notfying");
+    //        }
+    //    });
+
+        //archiving a claim
+         app.post("/user/archive_claims/:id",isAuthen, async (request, response) => {
+            try {
+                const claimId = request.params.id;
+                // checking for claim with the id
+                const claim = await ClaimDetail.findById(claimId);
+                 if (!claim) {
+                    return response.status(404).send("Claim not found");
+                }
+                // creating a field for archiveClaim
+                const archiveClaim = await ArchiveClaimsDetail({
+                    claimTitle: claim.claimTitle,
+                    claimDescription : claim.claimDescription,
+                    areaOfIssue : claim.areaOfIssue,
+                    incidentStartDate : claim.incidentStartDate,
+                    vetDate : claim.vetDate,
+                    vetDetail : claim.vetDetail,
+                    claimStatus : claim.claimStatus,
+                    claimAmount : claim.claimAmount,
+                    claimImage : claim.claimImage,
+                    claimDocument : claim.claimDocument,
+                    petId: claim.petId,
+                    userId: claim.userId,
+                    archivedAt: new Date()    
+                });   
+                //save archive claim
+                await archiveClaim.save();
+                // remove the orignal claim
+                await  ClaimDetail.findByIdAndDelete(claimId);
+
+               
+               const pet = await PetAccountDetail.findOne({ 
+                   _id: claim.petId, 
+                   userId: request.session.user._id
+                });
+
+               response.render("user/view_claims", {
+                   title: "View Claim",
+                   pet: pet,
+                   claim: archiveClaim,
+                   user: request.session.user,
+                   // archving 
+                   isArchived: true,
+               });
+
+              //  response.redirect("/user/pets_profile/${claim.petId}");
+
+            } catch (error) {
+                console.error("archiving error", error);
+                response.status(500).send("Error with archiving");
             }
 
         });
@@ -579,7 +754,8 @@ mongoose.connect(dbURI) // connects DB
             response.render("insurance/reg_insuranceCompany", { 
                 title: "insurance Company Registration",
                 insurerUser: request.session.user || null,
-                errorMessage: null
+                errorMessage: {},
+                values: {},
             });
     });
 
@@ -590,7 +766,7 @@ mongoose.connect(dbURI) // connects DB
         storing them in two different schemas 
     */
     app.post("/insurance/reg_insuranceCompany", async (request, response) => {
-        try {
+       
             const {
                 staffFirstName, staffLastName, staffEmailAddress,
                 staffContactNumber, staffNumber,
@@ -603,7 +779,52 @@ mongoose.connect(dbURI) // connects DB
                 insuranceCompanyContact, insuranceCompanyAddress,
                 // insurerId: savedInsurerUser._id
             });
-           
+
+            const errorMessage ={};   
+            const values= request.body;
+
+         try {   
+            // Check Email is entered correctly
+            const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            if (!emailFormat.test(insuranceCompanyEmail,)) { 
+                 errorMessage.insuranceCompanyEmail ="Email Already on system";
+            }
+
+        //Check Username is enterd correctly
+            if(!username || username.length < 6){
+               errorMessage.username ="Username must be more than 6 characters";
+              }
+
+    	//Check Password is enterd correctly
+            if(!password || password.length < 8 || password.length > 14 ){ 
+                errorMessage.password ="password must contain 8-14 characters";
+            }
+
+
+        // Check if details already Exist             
+            const userExisting = await RegisterInsurer.findOne({ 
+                $or: [{username},{staffEmailAddress}]
+            });
+
+
+            if(userExisting){ 
+                if(userExisting.username === staffEmailAddress){
+                    errorMessage.username ="Username already exist";
+                }
+                if(userExisting.staffEmailAddress === staffEmailAddress){
+                    errorMessage.staffEmailAddress ="email Address already exist";
+                }
+            }
+
+        //Check if errors are on page it will stay and not go to pet reg page
+            if(Object.keys(errorMessage).length >0){
+                return response.render("insurance/reg_insuranceCompany",{
+                    title: "Register User",
+                    errorMessage,
+                    values,
+                });
+            }
+
             const company = await newInsurerCompany.save();
             const hashedPassword = await bcrypt.hash(password, saltRounds);
             const insurerUser = await RegisterInsurer({
@@ -622,18 +843,19 @@ mongoose.connect(dbURI) // connects DB
             response.status(500).send("Error with registration");
         }
     });
+
     // Insurance Company User logins in
     app.get("/insurance/insurance_loginpage", (request, response) => {
-        response.render("insurance/insurance_loginpage",
-             { title: "insurance Login",
-                
-
-              });
+        response.render("insurance/insurance_loginpage", { 
+            title: "insurance Login",
+            insurerUser: request.session.insurerUser || null,    
+            errorMessage: null
+        });
     });
 
     
     // post login details to correct user profile
-    app.post("/insurance/insurance_loginpage", async (request, response) => {
+    app.post("/insurance/insurance_loginpage",limitLogin, async (request, response) => {
         const { username, password } = request.body;
         try {
             const insurerUser = await RegisterInsurer.findOne({ username }).populate("company");;
@@ -651,17 +873,15 @@ mongoose.connect(dbURI) // connects DB
                     });                    
                 } 
    
-            request.session.insurerUser = insurerUser;
+            //request.session.insurerUser = insurerUser;
+            request.session.insurerUser ={
+                _id: insurerUser._id,
+                username: insurerUser.username,
+                company: insurerUser.company?.name || null
+            };
+
             response.redirect("/insurance/insurance_profile");    
 
-
-            //  console.log("Login correct", savedInsurerUser);
-           // if (insurerUser) {
-           //     request.session.insurerUser = insurerUser;
-           //     response.redirect("/insurance/insurance_profile");
-           // } else {
-           //     response.status(401).send("insurance Login invalid");
-           // }
         } catch (error) {
             console.error("Error with Insurance Login", error);
             response.status(500).send("Error with Insurance Login");
@@ -723,16 +943,33 @@ mongoose.connect(dbURI) // connects DB
         response.render("admin/admin_profile", { title: "Admin" });
     });
     /////////////////////////////////////////////////
-    //logi * will have to go or be changed
-    app.get("/login", (request, response) => {
-        response.render("login", { title: "login" });
+    //logout
+    
+    //user
+    app.get("/user/logout", (request, response) => {
+        request.session.destroy(() => {
+            //response.redirect("/user/user_loginpage");
+            response.redirect("/");
+        });
     });
-    /////////////////////////////////////////////
-    // log off account
-    app.get("/logout", (request, response) => {
-        //request.session.destroy(() => { response.redirect("/user/user_loginpage");  });
-        request.session.destroy(() => { response.redirect("/"); });
+    //Insurance user
+    app.get("/insurance/logout", (request, response) => {
+        request.session.destroy(() => {
+            //response.redirect("/insurance/insurance_loginpage");
+            response.redirect("/");
+        });
     });
+
+
+    //app.get("/login", (request, response) => {
+    //    response.render("login", { title: "login" });
+    //});
+    ///////////////////////////////////////////////
+    //// log off account
+    //app.get("/logout", (request, response) => {
+    //    //request.session.destroy(() => { response.redirect("/user/user_loginpage");  });
+    //    request.session.destroy(() => { response.redirect("/"); });
+    //});
 
 
 

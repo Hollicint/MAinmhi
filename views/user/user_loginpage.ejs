@@ -16,9 +16,17 @@
                   <h3>User Login Page</h3> 
               </div>
               <br>
+              
               <div>
                   <form action="/user/user_loginpage" method="post">
                       <div class="row userLoginForm"> 
+                        <div >
+                            <% if(errorMessage) { %>
+                             <div>
+                                <%= errorMessage %>
+                            </div>
+                            <% }%> 
+                        </div>
                              <!--User and Password that will be checked if exists-->
                           <div>
                               <label for="username">Username: </label>
@@ -34,6 +42,8 @@
                   <a href="/user/reg_userpage"><h3>Register an account</h3></a> 
                   <a href="/forgottenpass"> <h3>Forgotten Password</h3></a>
                 </div> 
+
+             
           </div>
            
     </div><!--Container-fluid closed div-->    

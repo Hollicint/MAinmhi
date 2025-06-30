@@ -23,10 +23,14 @@
                      
                      <div><h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3></div>
                       <br>
-                     <div>
-                        <a href="/user/pets_profile/<%= pet._id %>"> <button><p>Pet Profile</p></button></a>
-                        <a href="/user/user_profile"> <button><p>User Profile</p></button></a>
-                        <a href="/logout"><button><p>Log out of account</p></button></a>
+                     <div class="accountBtns logInOut">
+    
+                        <a href="/user/pets_profile/<%= pet._id %>"> <%= pet.petName %>'s Profile | </a>
+                        <a href="/user/user_profile"> <%= user.username %> 's Profile | </a>
+                           <!-- Login out of account-->
+                        <%if(user) {%>
+                            <a href="/user/logout"> Logout</a>
+                        <% } %> 
                     </div>
                     
                   </div>
@@ -69,12 +73,12 @@
                                                  <option value="teeth">Teeth </option>
                                                  <option value="tongue">Tongue </option>
                                                  <option value="throat">Throat </option>
-                                                 <option value="rightEye">Right Eye</option>
+                                                 <option value="right Eye">Right Eye</option>
                                                  <option value="leftEye">Left Eye</option>
                                              </optgroup>
                                              <optgroup label="Head">
-                                                 <option value="rightEar">Right Ear</option>
-                                                 <option value="leftEar">Left Ear</option>
+                                                 <option value="right Ear">Right Ear</option>
+                                                 <option value="left Ear">Left Ear</option>
                                                  <option value="backOfNeck">Back of Neck </option>
                                                  <option value="frontOfNeck">Front of Neck </option>
                                                  <option value="backOfHead">Back of Head </option>
