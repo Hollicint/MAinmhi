@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const claimDetailSchema = new Schema({
+const archiveClaimDetailSchema = new Schema({
     claimTitle: {
         type: String,
         required: true
@@ -53,7 +53,7 @@ const claimDetailSchema = new Schema({
 }, { timestamps: true });
 
 // creating the ClaimDetail model entry
-const ClaimDetail = mongoose.model("claimsdetail", claimDetailSchema);
+const ArchiveClaimsDetail = mongoose.model("ArchiveClaimsDetail", archiveClaimDetailSchema);
 
 //export the User Claim Details
-module.exports = ClaimDetail;
+module.exports = ArchiveClaimsDetail;

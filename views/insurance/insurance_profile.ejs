@@ -26,7 +26,14 @@
                     <% } %>    
                 </div>    
                 <br><br>    
-                <div> <a href="/logout"><button><p>Log out of account</p></button></a></div>
+                <div> 
+                    <%if(insurerUser) {%>
+                        <div class="logInOut">
+                          <a href="/insurance/logout">  <%= insurerUser.username %> Logout</a>
+                        </div>
+             
+                    <% } %>  
+                </div>
             </div>
         </div>    
           

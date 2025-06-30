@@ -3,7 +3,7 @@
 <!--head-->
 <%- include ("../partials/head.ejs") %>
 <body>
-    <div class="container-fluid conatainer3-mainBody full-height">
+    <div class="container-fluid container3-mainBody full-height">
         
              <div class="col-4 leftimage-col ">
                   <div class="col">
@@ -23,10 +23,14 @@
 
                      <div><h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3></div>
                       <br>
-                    <div>
-                        <a href="/user/pets_profile/<%= pet._id %>"> <button><p>Pet Profile</p></button></a>
-                        <a href="/user/user_profile"> <button><p>User Profile</p></button></a>
-                        <a href="/logout"><button><p>Log out of account</p></button></a>
+                     <div class="accountBtns logInOut">
+                       
+                      
+                        <a href="/user/user_profile"> <button><p><%= user.username %> 's Profile</p></button></a>
+                         <!-- Login out of account-->
+                        <%if(user) {%>
+                             <button> <a href="/user/logout"> Logout</a></button>
+                        <% } %>   
                     </div>
 
                   </div>
@@ -65,9 +69,20 @@
                                      <td><p><%= claim.areaOfIssue %></p></td>
                                      <td><p><%= claim.claimAmount %></p></td>
                                      <td><p><%= claim.claimStatus %></p></td>
+
+                                     
                                      <td><a href="/user/view_claims/<%= claim._id %>"><p><button>View / Edit</button> </p></a></td>
-                                     <td><p><button id="sendBtnICU" onclick="alert('Sent Claim')">Submit</button></p></td>
-                                      <td><p><button id="sendBtnStore" >Archive</button></p></td>
+
+                                     <!--td><p><button id="sendBtnICU" onclick="alert('Sent Claim')">Submit</button></p></td-->
+                                     <td><p><button id="sendBtnICU" >Submit</button></p></td>
+
+                                    <td>
+                                        <% if (!claim.isArchived) { %>
+                                            <form action="/user/archive_claims/<%= claim._id %>" method="post">
+                                             <p><button id="sendBtnStore" >Archive</button></p>
+                                            </form>
+                                        <% } %>
+                                    </td>
                                  </tr>
                                  <% }); %>
                              <% } else { %>

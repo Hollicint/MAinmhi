@@ -59,7 +59,11 @@ p{
   padding: auto;
 }
 
+/******** Login / Logout *****************/
 
+.logInOut{
+  font-size: 70px;
+}
 
 /**************  links in footer **************/
 /*
@@ -180,6 +184,19 @@ a:link, a:hover{
    width: 900px;
    height: 900px;
 }
+
+/*********** User Reg Page ***************/
+
+.input-group{
+
+
+}
+
+userRegForm{
+ 
+  box-sizing: border-box;
+}
+
 
 /************ Pet Profile Page ***********/
 

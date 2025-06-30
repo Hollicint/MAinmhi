@@ -22,11 +22,15 @@
                     <br>
                     
                     <div><h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3></div>
-                     <br>
-                     <div>
-                        <a href="/user/pets_profile/<%= pet._id %>"> <button><p>Pet Profile</p></button></a>
-                        <a href="/user/user_profile"> <button><p>User Profile</p></button></a>
-                        <a href="/logout"><button><p>Log out of account</p></button></a>
+                    <br>
+                    <div class="accountBtns logInOut">
+                    
+                        <a href="/user/pets_profile/<%= pet._id %>"> <button><p><%= pet.petName %> 's Profile</p></button></a>
+                        <a href="/user/user_profile"> <button><p><%= user.username %>'s Profile</p></button></a>
+                          <!-- Login out of account-->
+                        <%if(user) {%>
+                             <button> <a href="/user/logout"> Logout</a></button>
+                        <% } %>  
                     </div>
                 </div>
             </div>
@@ -72,12 +76,25 @@
                             <tr> <td> <label for="claimStatus">Claim Status: <%= claim.claimStatus %></label></td></tr>
                             <tr><td> <label for="claimAmount">Claim Cost: <%= claim.claimAmount %></label></td></tr>                                                                                                        
                         </table>
+                          
+                        <!--Checking is archive wont allow to edit -->
+                                
+                         <% if (!isArchived) { %>
 
-                          <button  id="editClaim">Edit</button>
+                           <button  id="editClaim">Edit</button>
+
+                        <% } else { %>
+                            <p>Cant Edit due to claim being archived.</p>
+                        <% } %>
+                      
+
                          <% } else { %>
                             <h4>No claims submitted.</h4>
                          <% } %>
                     </div>
+
+
+                      <% if (!isArchived) { %>
                     <div class="editClaimSection"  >
                         <form action="/user/view_claims/<%= claim._id %>" method="post" enctype="multipart/form-data">
                         <table>
@@ -190,6 +207,8 @@
                         </table>
                         </form>
                     </div>
+                    <% } %>
+
                 </div> <!--close col-->
             </div><!--close section col-->
         </div>   <!--close row -->  

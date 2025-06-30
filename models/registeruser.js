@@ -36,7 +36,13 @@ const regUserSchema= new Schema({
     password: {
         type: String,
         required: true
-    },   
+    },  
+    // only user role access set as defluat
+    role:{
+        type: String,
+        enum: ['user'],
+        default: 'user',
+    } ,
 }, { timestamps: true });
 
 // creating the registerUser model entry
