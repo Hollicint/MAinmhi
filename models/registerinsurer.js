@@ -37,7 +37,12 @@ const regInsurerSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "RegisterInsuranceCompany",
         // required: false
-    }
+    },
+    role:{
+        type: String,
+        enum: ['insurer'],
+        default: 'insurer',
+    },
 }, { timestamps: true });
 
 // creating the userlogindetail model entry

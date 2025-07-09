@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--head-->
+<%- include ("../partials/head.ejs") %>
+<body>   
+     <div class="container-fluid conatainer3-mainBody full-height">
+       
+        <div class="col-4 leftimage-col">
+            <img src="/images/accountsImages/InsuranceIcon.png" class="userLoginIcon" alt="icon">
+         </div>
+
+        <div class="col-8 rightSide-col ">
+            <div>
+                <h3>Admin Login Page</h3><br>
+            </div>
+            <div>
+                <form action="/admin/admin_loginpage" method="post">
+                        <!--User and Password that will be checked if exists-->
+                    <div class="row userLoginForm"> 
+                            <div >
+                          
+                        </div>
+                               <!--User and Password that will be checked if exists-->
+                        <div>
+                            <label for="username">Username: </label>
+                            <input type="text" name="username" placeholder="Username"  required> 
+                         </div>
+                        <div> 
+                            <label for="password"> Password: </label>
+                            <input type="password" name="password" placeholder="Password"  required> <br> 
+                        </div>
+                        <div> <button type="submit"> Enter </button></div>   <!--Submit button-->
+                    </div>
+                </form>
+                  <!--  <a href="/admin/reg_adminpage"><h3>Register</h3></a> -->
+                
+                    <a href="/forgottenpass"> <h3>Forgotten Password</h3></a>
+            </div>   
+
+                 
+        </div>
+        
+    </div> 
+    <!--Footer-->
+    <%- include ("../partials/footer.ejs") %>%>   
+ </body>
+</html>

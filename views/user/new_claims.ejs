@@ -7,7 +7,7 @@
       
                <div class="col-4 leftimage-col ">
                   <div class="col">
-                     <img src="/images/profileImages/lizard.png"  class="petprofileImg" alt="">
+                     <img src="/images/profileImages/paw.png"  class="petprofileImg" alt="">
                      <br><br>
                      <div><h3>Pets Name: <%= pet.petName %> </h3></div>
                      <div><h4>Pets Type: <%= pet.petType %> </h4></div>
@@ -41,8 +41,8 @@
                           <h1>Claims</h1>
                     </div>
                     <div>
-                        <form  id="claimForm" action="/user/new_claims" method="post" enctype="multipart/form-data">
-                            <table>
+                        <form  action="/user/new_claims" method="post" enctype="multipart/form-data">
+                            <table  class="claimForm" >
                                 <tr>
                                     <th>
                                         <label for="petId"> Choose your pet</label>
@@ -74,14 +74,14 @@
                                                  <option value="tongue">Tongue </option>
                                                  <option value="throat">Throat </option>
                                                  <option value="right Eye">Right Eye</option>
-                                                 <option value="leftEye">Left Eye</option>
+                                                 <option value="left Eye">Left Eye</option>
                                              </optgroup>
                                              <optgroup label="Head">
                                                  <option value="right Ear">Right Ear</option>
                                                  <option value="left Ear">Left Ear</option>
-                                                 <option value="backOfNeck">Back of Neck </option>
-                                                 <option value="frontOfNeck">Front of Neck </option>
-                                                 <option value="backOfHead">Back of Head </option>
+                                                 <option value="back Of Neck">Back of Neck </option>
+                                                 <option value="front Of Neck">Front of Neck </option>
+                                                 <option value="back Of Head">Back of Head </option>
                                              </optgroup>
                                              <optgroup label="Back">
                                                  <option value="body">Body </option>
@@ -89,16 +89,21 @@
                                                  <option value="tail">Tail </option>
                                              </optgroup>
                                              <optgroup label="Leg">
-                                                 <option value="frontRight">Leg Front Right </option>
-                                                 <option value="frontleft">Leg Front Left </option>
-                                                 <option value="backRight">Leg Back Right </option>
-                                                 <option value="backLeft">Leg Back Left </option>
+                                                 <option value="front Right">Leg Front Right </option>
+                                                 <option value="front left">Leg Front Left </option>
+                                                 <option value="back Right">Leg Back Right </option>
+                                                 <option value="back Left">Leg Back Left </option>
                                              </optgroup>
                                              <optgroup label="Foot">
-                                                 <option value="frontRight">Front Foot Right </option>
-                                                 <option value="frontleft">Front Foot Left </option>
-                                                 <option value="backRight">Back Foot Right </option>
-                                                 <option value="backLeft">Back Foot Left </option>
+                                                 <option value="front Right">Front Foot Right </option>
+                                                 <option value="front left">Front Foot Left </option>
+                                                 <option value="back Right">Back Foot Right </option>
+                                                 <option value="back Left">Back Foot Left </option>
+                                             </optgroup>
+                                                 <optgroup label="Additioanl">
+                                                 <option value="furr">furr </option>
+                                                 <option value="Scales">Scales</option>
+                                                
                                              </optgroup>
                                          </select>
                                      </th>
@@ -138,8 +143,8 @@
                                          <select name="claimStatus" id="claimStatus">
                                             <option value="claim Unselected">unselected</option>
                                             <option value="claim Ready">Ready</option>
-                                            <option value="claim Working">Working on</option>
-                                            <option value="claim Waiting">Waiting updte</option>
+                                            <option value="claim Working">Working On</option>
+                                            <option value="claim Waiting">Waiting Update</option>
                                             <option value="claimComplete">Complete</option>
                                          </select>    <br>
                                     </th>
@@ -149,6 +154,12 @@
                                          <label for="claimAmount">Claim Cost: </label>
                                          <input type="number" name="claimAmount"  required> <br>
                                     </th>
+                                 </tr>
+                                 <tr>
+                                     <th>
+                                         <label for="additionalclaimDescription">Additional Description: </label><br>
+                                         <textarea name="additionalclaimDescription" rows="4" cols="50" required> </textarea>
+                                     </th>
                                  </tr>
                                  <tr>
                                     <td>

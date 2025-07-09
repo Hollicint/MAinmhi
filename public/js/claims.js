@@ -56,7 +56,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
            alert("Sending claim to Insurance Company");
 
          });
-     }    
+     }
+     
+
+
 
 });
 

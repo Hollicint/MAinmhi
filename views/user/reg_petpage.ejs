@@ -9,64 +9,114 @@
                 <img src="/images/accountsImages/UsersIcon.png" class="userLoginIcon" alt="icon">
         </div>
         <div class="col-8 rightSide-col ">
-           <div> <h3>Pet Account Registration</h3> <br>
+           <div> 
+                <h2>Pet Account Registration</h2> <br>
+                <p>
+                    Complete the form below to complete the profile registration. If you notice something important missing that can improve your experience
+                    drop us a email or message via the support page. 
+                </p><br>
+                <p>Already have an account <a href="/user/user_loginpage">Login</a></p>
           </div>
 
-            <form action="/user/reg_petpage" method="post">
-                  <div class="row userLoginForm">  
-                     <!--User and Password that will be checked if exists-->
-                     <div><label for="petName">Pets Name</label>
-                     <input type="text" name="petName" placeholder="Pets Name"  required></div>
+          <div id="registerSection">
+            <form action="/user/reg_petpage" class="form-inline" method="post">
+                  <div class="row RegForm">  
+                    <h4>Pet Information</h4><br>
+                    <div> 
                 
-                     <div> <label for="petType">Type of Pet </label>
-                     <select name="petType" >
-                         <option value="blank"> </option>
-                         <option value="dog">Dog </option>
-                         <option value="cat">Cat </option>
-                         <option value="hamster">Hamster </option>
-                         <option value="bird">Bird </option>
-                         <option value="horse">Horse </option>
-                         <option value="snake">Snake </option>
-                         <option value="lizard">Lizard </option>
-                         <option value="fish">Fish </option>
+                        <label for="petType">Pet Type: </label>
+                        <select name="petType" >
+                            <option value="blank"> </option>
+                           <optgroup label="House Pet">
+                               <option value="Dog">Dog </option>
+                               <option value="Cat">Cat </option>
+                               <option value="Hamster">Hamster</option>
+                               <option value="Rabiit">Rabiit</option>
+                           </optgroup>
+                           <optgroup label="Farm Animal">
+                               <option value="Horse">Horse</option>
+                               <option value="Sheep">Sheep</option>
+                               <option value="Cattle">Cattle</option>
+                               <option value="Goat">Goat</option>
+                           </optgroup>
+                           <optgroup label="Avian">
+                               <option value="Sparrow">Sparrow </option>
+                               <option value="Parrot">Parrot </option>
+                               <option value="Sparrow">Sparrow </option>
+                               <option value="Hummingbird">Hummingbird </option>
+                           </optgroup>
+                           <optgroup label="Specialized">
+                               <option value="Snake">Snake </option>
+                               <option value="Lizard">Lizard </option>
+                               <option value="Turtle">Turtle </option>
+                           </optgroup>
+                        </select>
+                    </div><br>
+                    
+                     <div><label for="petName">Pets Name:</label> <br>
+                     <input type="text" name="petName"  required></div>  <br>    
+                     <div><label for="dateOfBirth">Date of Birth:</label><br>
+                     <input type="date" name="dateOfBirth"  id="regDate"  required> </div><br><br>      
+                     <div><label for="breed">Pets Breed:</label><br>
+                     <input type="text" name="breed"  required></div>
 
-                     </select></div>
-                     <div><label for="breed">Pets breed</label>
-                     <input type="text" name="breed" placeholder="Pets Breed"  required></div>
-
-                     <div><label for="gender">Gender</label>
+                     <div><label for="gender">Gender:</label><br>
                      <select name="gender" >
                           <option value="blank"> </option>
                          <option value="felmale">Female </option>
                          <option value="male">Male </option>
+                     </select></div><br><br>
+
+                     <div><label for="colour">Pets Colour:</label><br>
+                     <input type="text" name="colour"  required></div><br><br><br>
+
+
+
+                    <h4>Policy Information</h4><br>
+                    
+                     <div><label for="desexed">Desexed:</label>
+                     <select name="desexed" >
+                         <option value="blank"> </option>
+                         <option value="Yes">Yes</option>
+                         <option value="No">No</option>
+                         <option value="Undecided">Undecided</option>
+                         <option value="Not Yet">Not Yet</option>
                      </select></div>
-
-                     <div><label for="colour">Pets Colour</label>
-                     <input type="text" name="colour" placeholder="Pets Colour"  required></div>
-
-                     <div><label for="dateOfBirth">Pets DOB</label>
-                     <input type="date" name="dateOfBirth"  placeholder="Pets DOB"  required> </div>
-
-                     <div><label for="microchipping">Microchipping</label>
+                     <div><label for="microchipping">Microchipping:</label>
                      <select name="microchipping" >
                          <option value="blank"> </option>
                          <option value="yes">Yes </option>
                          <option value="no">No </option>
                      </select></div>
-                     <div><label for="microchippingNum">Microchipping Number</label>
-                     <input type="text" name="microchippingNum"  placeholder="Microchipping Number"  required> </div>
+                     <div><label for="microchippingNum">Microchipping Number:</label>
+                     <input type="text" name="microchippingNum" required> </div>
                 
-                     <div><label for="policyNum">Policy Number</label>
-                     <input type="text" name="policyNum"  placeholder="Policy Number"  required> </div>
-                
-                     <div><label for="insuranceCompanyName">insurance Company Name</label>
-                     <input type="text" name="insuranceCompanyName"  placeholder="insuranceCompanyName"  required> </div>
+                     <div><label for="policyNum">Policy Number:</label>
+                     <input type="text" name="policyNum" required> </div>
+        
+                    <div><label for="startDate">Policy Start Date</label>:</label>
+                     <input type="date" name="startDate"  id="regDate"  required> </div>
+                    <div><label for="endDate">Policy End Date:</label>
+                     <input type="date" name="endDate"  id="regDate"  required> </div><br>  
+
+                    <div><label for="insuranceCompanyName">insurance Company Name:</label>
+                        <input type="text" name="insuranceCompanyName" required> </div>    
+                        <!--Shows all the companies registered -->
+                        <!--select name="insurerCompanyId" >
+                            <% insuranceCompanies.forEach(company => { %>
+                                <option value="<%= company._id %>"><%= company.insuranceCompanyName %></option>
+                            <% }) %>
+                        </select-->
+
+
+                        <!-- Its display but not on frontend-->
+                     <!--input type="text" name="insurerCompanyId"  placeholder="insurerCompanyId"  required> </div-->
                      <br> <br>
                      <!--Submit button-->
                     <div> <button type="submit">Enter </button></div>
                 </div>     
             </form>                
-
+        </div>
                
         </div>  
     </div>

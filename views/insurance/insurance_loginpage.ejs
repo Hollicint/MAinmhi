@@ -6,31 +6,44 @@
      <div class="container-fluid conatainer3-mainBody full-height">
        
         <div class="col-4 leftimage-col">
-            <img src="/images/accountsImages/InsuranceIcon.png" class="userLoginIcon" alt="icon">
+            <img src="/images/accountsImages/insuranceIcon.jpg" class="userLoginIcon" alt="icon">
          </div>
 
         <div class="col-8 rightSide-col ">
             <div>
-                <h3>Insurance Login Page</h3><br>
+                <h1>Insurance Login Page</h1><br>
+                <p>
+                    Login into your Company account, to link up with your policy holders claims.
+                </p><br>
+                <p>
+                    If your company isnt registered, create one <a href="/insurance/reg_insuranceCompany">Register account</a>
+                </p><br>
             </div>
-            <div>
+            <div id="registerSection">
                 <form action="/insurance/insurance_loginpage" method="post">
                         <!--User and Password that will be checked if exists-->
                     <div class="row userLoginForm"> 
+                            <div >
+                            <% if(errorMessage) { %>
+                             <div>
+                                <%= errorMessage %>
+                            </div>
+                            <% }%> 
+                        </div>
                                <!--User and Password that will be checked if exists-->
                         <div>
                             <label for="username">Username: </label>
-                            <input type="text" name="username" placeholder="Username"  required> 
+                            <input type="text" name="username" placeholder="Username"  required>
                          </div>
                         <div> 
                             <label for="password"> Password: </label>
                             <input type="password" name="password" placeholder="Password"  required> <br> 
                         </div>
-                        <div> <button type="submit"> Enter </button></div>   <!--Submit button-->
+                        <div><br> <button type="submit"> Enter </button></div>   <!--Submit button-->
                     </div>
                 </form>
-                    <a href="/insurance/reg_insuranceCompany"><h3>Register account</h3></a>
-                    <a href="/forgottenpass"> <h3>Forgotten Password</h3></a>
+                   
+                    <!--a href="/forgottenpass"> <h3>Forgotten Password</h3></a-->
             </div>   
                 
         </div>

@@ -41,6 +41,10 @@ const claimDetailSchema = new Schema({
          file: String,
          fileId: mongoose.Schema.Types.ObjectId,
      }],
+    additionalclaimDescription:{
+        type: String,
+        required: true
+    },
     
     userId: {
         type: mongoose.Schema.Types.ObjectId,

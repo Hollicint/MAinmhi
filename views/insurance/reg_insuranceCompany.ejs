@@ -10,13 +10,18 @@
 
         <div class="col-8 rightSide-col">
             <div>
-                <h2>Sign Up</h2>
+                <h1>Company Register </h1>
+                <p>
+                    <br>Register your account, by simply filling in the form below, you will be directed 
+                    to create your company account. Once created you will be login to you profile, where you can view your policy holders claims.
+                </p><br>
+                 <p>Already have an account <a href="/insurance/insurance_loginpage">Login</a></p>
+
             </div>
        
             <div id="registerSection">
-                <h3>Company Register</h3>
-                    <form action="/insurance/reg_insuranceCompany" method="post">
-                      <div class="row userLoginForm"> 
+                    <form action="/insurance/reg_insuranceCompany"   class="form-inline" method="post">
+                      <div class="row userRegForm"> 
                         
                         <div> <label for="staffFirstName">First Name: </label>
                             <input type="text" name="staffFirstName" value="<%= values?.staffFirstName || '' %>"  required> </div>
@@ -36,21 +41,25 @@
                              <input type="text" name="staffNumber" value="<%= values?.staffNumber || '' %>"   required> </div>
                         <div><label for="staffRole">Staff Role: </label>
                             <input type="text" name="staffRole" value="<%= values?.staffRole || '' %>"  required></div>
-                            
-                        <div> <br><label for="username">Username:</label>
+                        
+                        <div> <br><h3>Create your Login Details</h3></div>    
+                        <div> <label for="username">Username:</label>
+                            <small id="passwordHelpInline" class="text-muted"> Username must be more than 6 characters.</small><br>
                              <input type="text" name="username"  value="<%= values?.username || '' %>"  required>
                             <% if(errorMessage?.username){ %>
                                 <span class="errorMessageLogin"><%= errorMessage.username %></span>
                             <% } %>
                         </div>
                         <div><label for="password">Password:</label>
+                            <small id="passwordHelpInline" class="text-muted"> Must be 8-14 characters long. </small><br>
                           <input type="password" name="password" value="<%= values?.password || '' %>"  required> 
                             <% if(errorMessage?.password){ %>
                                 <span class="errorMessageLogin"><%= errorMessage.password %></span>
                             <% } %>
                         </div>
                            
-                        <div> <br><label for="companyDetails">Company Details</label><br><br></div>
+                        <div> <h3>Company Details</h3><br></div>
+                        
                         <div> <label for="insuranceCompanyName">Company Name: </label>
                              <input type="text" name="insuranceCompanyName" value="<%= values?.insuranceCompanyName || '' %>" required> </div>
                         <div><label for="insuranceCompanyEmail">Company Email: </label>
@@ -59,14 +68,11 @@
                              <input type="text" name="insuranceCompanyContact" value="<%= values?.insuranceCompanyContact || '' %>" required> </div>
                         <div> <label for="insuranceCompanyAddress">Company Address: </label>
                              <input type="text" name="insuranceCompanyAddress"value="<%= values?.insuranceCompanyAddress || '' %>"  required> </div>
-                        <div><br><br><button type="submit">Register </button></div>
+                        <div><br><button type="submit">Register </button></div>
                       
                       </div> 
                     </form>
-                     <div>
-                        <a href="/insurance/insurance_loginpage"><h3>Login</h3></a>    
-                        
-                    </div>
+                     
             </div>
         </div>    
 

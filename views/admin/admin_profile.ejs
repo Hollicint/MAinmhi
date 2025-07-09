@@ -1,99 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--head-->
 <%- include ("../partials/head.ejs") %>
 <body>
+    <div class="container-fluid conatainer3-mainBody full-height">
+        <div class="row"></div>
+            <div class="col-4 leftimage-col">
+                <div class="col">
+                    <img src="/images/profileImages/adminIcon.jpg" class="petprofileImg"  alt="icon"> <br><br>
+                    <!--https://www.istockphoto.com/vector/digital-security-line-icon-design-gm1371134975-440538718?searchscope=image%2Cfilm-->
+                    <div >
+                        <div><h4>Name <%= adminUser.adminfirstName %> <%= adminUser.adminLastName %></h4><br></div>
+                        <div><h4>Email: <%= adminUser.adminEmailAddress %></h4><br></div>
+                        <div><h4>Staff Number: <%= adminUser.adminStaffNumber %></h4><br></div>
+                        <div><h4>Ext Number: 9091 </h4><br></div>
+                        <div><h4>Username: <%= adminUser.username %></h4><br></div>
+                        <div></div>
+                    </div>
 
-    <div class="container-fluid full-height"> 
-         <div class="col-4"><!--https://www.pexels.com/photo/text-on-red-surface-9180717/-->
-             <img src="/images/profileImages/Admin.png" alt=""><br><br> 
-            <h3>Name: Terry Berry </h3>
-            <h4>Email: terry.berry@mainmhil.com </h4>
-            <h4>Ext: 9091 </h4>
+                    <%if(adminUser) {%>
+                        <div class="logInOut"><br>
+                             <a href="/admin/logout">  Logout</a>
+                        </div>
+                     <% } %>         
+                </div>
 
-            <br><br>
-            <a href="\"><button>Log off</button></a>
-             
-         </div>
-         <div class="col-8 ">
-               <!--h2>Admin Page</h2><br-->
-                <div class="popup">
-                    <span class="closepopup" onclick="this.parentElement.style.display='none';">&times;</span>
-                     Unlock request
-                </div><br>
-                <br>
-
-                <table>
-                    <h2>Unlock User</h2><br>
-                    <tr>
-                        <th>User Name</th>
-                        <th>Locked</th>
-                        <th>Unlocked</th>
-                        <th>Archive Account</th>
-
-                    </tr>
-                    <tr>
-                        <td>Linda Green </td>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" checked>
-                                <span class="slider round"></span>
-                            </label>
-                        <td> 
-                            <label class="switch">
-                                <input type="checkbox" checked>
-                                <span class="slider round"></span>
-                            </label>
-                        </td>
-                      
-                        <td><button>Archive</button></td>
-
-                    </tr>
-                        <td>John Carter </td>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" checked>
-                                <span class="slider round"></span>
-                            </label>
-                        <th> 
-                            <label class="switch">
-                                <input type="checkbox" checked>
-                                <span class="slider round"></span>
-                            </label>
-                        </td>
-                        
-                        <td><button>Archive</button></td>
-                   
-
-                </table>
-                <br>
-
-               
-
-             <table>
-                 <h2>Reports</h2><br>
-                    <tr>
-                        <th>User List</th>  
-                        <th>Company List </th>  
-                        <th>Claim List </th>     
-                    </tr>
-                    <tr>
-                        <td><button>generate</button></td>
-                         <td><button>generate</button></td>  
-                          <td><button>generate</button></td>  
-                    </tr>
-                  
-             </table>
-
-
-
-         </div>
-    </div>
+            </div>    
+              
+            <div class="col-8 ">
+                <div class="col">
+                    <div>
+                        <h1>Administrator Section  M'Ainmhi </h1>
+                    </div>
+                    <div> <br><br>
+                        <table id="claimDisplay">
+                            <div>
+                                <tr>
+                                    <th><h4>User Name</h4></th>
+                                    <th><h4>Locked</h4></th>
+                                    <th><h4>Unlocked</h4></th>
+                                    <th><h4>Archive Account</h4></th>                     
+                                </tr>
+                            </div>
+                            <div>
 
 
 
 
- 
+                                
+                             <!-- <tr>
+                                <td>
+                                    <% if (users.length > 0) { %> 
+                                        <%= users.userId ? users.userId.firstName + " " + users.userId.lastName : "N/A" %>
+
+                                     <% } %>      
+                                </td>
+                                <td> 
+                                    <label class="switch">
+                                     <input type="checkbox" checked>
+                                     <span class="slider round"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="switch">
+                                     <input type="checkbox" checked>
+                                     <span class="slider round"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="switch">
+                                     <input type="checkbox" checked>
+                                     <span class="slider round"></span>
+                                    </label>
+                                </td>
+                              </tr>-->
+                           </div>
+                        </table>
+                    </div> 
+                    
+                    <div>
+
+                        <div></div>
+                        <div></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!--container end div-->
     <!--Footer-->
-    <%- include ("../partials/footer.ejs") %>%>
+    <%- include ("../partials/footer.ejs") %>
 </body>
 </html>

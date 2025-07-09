@@ -41,8 +41,8 @@ const regUserSchema= new Schema({
     role:{
         type: String,
         enum: ['user'],
-        default: 'user',
-    } ,
+        default:'user',
+    },
 }, { timestamps: true });
 
 // creating the registerUser model entry

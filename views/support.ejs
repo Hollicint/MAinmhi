@@ -2,72 +2,94 @@
 <html lang="en">
 <!--head-->
 <%- include ("./partials/head.ejs") %>
-
 <body>
     <div class="container-fluid conatainer3-mainBody">
         <!--header-->
-        <%- include ("./partials/header.ejs") %>%>     
-        <div class="row">
-            <div class="col">
-                <h1>Support </h1> 
-            </div>
-        </div>
-        <div class="row">
+        <%- include ("./partials/header.ejs") %>
+         <div class="row">
             <div class="col">
                 <h3>Contact us for any issues </h3>
             </div>
-        </div>    
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <form action="" method="post">
-                  <div class="row formBackground">
-                     <div>
-                        <label for="fname"><p>First name:</p></label>
-                     </div> 
-                     <div>
-                        <input type="text" id="fname" name="fname" class="form-control" >
-                     </div>
-                    <div>
-                        <label for="lname"><p>Last name:</p></label>
-                    </div>
-                    <div>
-                        <input type="text" id="lname" name="lname" class="form-control"  >
-                    </div>
-                    <div>
-                        <label for="lname"><p>Message:</p></label><br>
-                    </div> 
-                    <div>  
-                        <textarea id="message" name="message" rows="4" cols="50" class="form-control" > </textarea>
-                    </div>
-                   
-                    <div>
-                         <button type="submit"> Enter </button>
-                    </div>  
-                    
-                   
-                  </div>
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h2>Contact Details</h2>
-                <h3>Support Email: info@mainmhi.com</h3>
-                <h3>IT Email: support@mainmhi.com</h3>    
-                <h3>Contact Number: +000 000 0000</h3>
-            </div>
-        </div>  
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <img src="/images/aboutImages/map.png" alt="">
-            </div>
-            <div class="col-md-6 offset-md-3">
-                <img src="/images/aboutImages/map.png" alt="">
-            </div>
-        </div> 
+         </div>
+         <div class="row">
+            <!--div class="col-md"> </div-->
+             <div class="col"><br><br>
+                <form action="https://api.web3forms.com/submit" method="POST" class="supportForm">               
+                    <!--https://web3forms.com/#start   https://docs.web3forms.com/ -->
+                 
+                     <input type="hidden" name="access_key" value="072b7cf2-70a6-478a-ac1e-3359fe5acac3">
+
+                    <tr>
+                       
+                        <label for="name">Name</label><br>
+                        <input type="text" name="name" class="form-group" required><br>                     
+                    </tr>
+                    <tr>
+                      
+                        <label for="email">Email address</label> <br>
+                        <input type="email" name="email" class="form-group" required ><br>
+                    </tr>
+                    <tr>
+                      
+                    <label for="formTextArea"> Message</label><br>
+                    <textarea  class="form-group" rows="5"  style="height:200px"  name="message" required></textarea>
+
+                         <!-- Honeypot Spam Protection -->
+                    <input type="checkbox" name="botcheck" class="hidden" >
+                    <br>
+                    <button type="submit" >Submit</button>   
                      
-     </div><!--Container-fluid closed div-->    
+                    </tr>          
+                </form><br><br><br>
+             </div>
+            <div class="col-md">
+             <div class="col">
+                 <table id="supportTableDetails">
+                    <h3>Contact Details</h3>
+                    <tr>
+                        <td>Support Email:</td>
+                        <td>info@mainmhi.com</td>
+                    </tr>  
+                    <tr>
+                        <td>Support Email:</td>
+                        <td>mainmhiltd@gmail.com</td>
+                    </tr>                                  
+                        <td>Contact Number:</td>
+                         <td> +000 000 0000</td>
+                    </tr>
+                    <br>
+                </table> <br>
+            </div>
+
+
+            </div>
+         </div>
+        <div class="row">
+             <div class="col-md"></div>
+
+             <div class="col-md"></div>
+        </div> 
+         <div class="row">
+            <div class="col-md"></div>
+            <div class="col google-map"> 
+                <!--https://blog.hubspot.com/website/how-to-embed-google-map-in-html-->
+              <!--  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1938.227752507857!2d-6.245175628932288!3d53.34955232648783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sie!4v1751826368457!5m2!1sen!2sie" 
+                   allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"> </iframe>--> 
+                  </div> 
+                
+             <div id="petAds">
+               <!--img src="images/about/adone.jpg" class="adImage"--> <!--https://www.istockphoto.com/photo/happy-puppy-welsh-corgi-14-weeks-old-dog-winking-panting-and-sitting-isolated-on-gm1482199015-509248962?searchscope=image%2Cfilm-->
+               <img src="images/about/adsix.jpg" class="adImage" > <!--https://www.istockphoto.com/photo/portrait-funny-and-happy-shiba-inu-puppy-dog-peeking-out-from-behind-a-blue-banner-gm1503385646-523099248?searchscope=image%2Cfilm-->
+               <img src="images/about/adtwo.jpg" class="adImage" >
+               <img src="images/about/adeight.jpg" class="adImage" > <!--https://www.istockphoto.com/photo/overhead-view-of-bags-with-grains-and-pellets-for-sale-at-the-forage-gm1276714803-376141304?searchscope=image%2Cfilm-->
+
+             </div>
+            
+            <div class="col-md"></div>
+         </div>
+    </div> <!--Containter closed-->
     <!--Footer-->
     <%- include ("./partials/footer_genPages.ejs") %>  
+    <script  src="/js/support.js"></script> 
 </body>
 </html>
