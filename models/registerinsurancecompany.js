@@ -21,7 +21,12 @@ const regInsuranceCompanySchema = new Schema({
         type: Schema.Types.ObjectId,
          ref: "RegisterInsurer",
        // required: true
-    }
+    },
+        role:{
+        type: String,
+        enum: ['insurancecompany'],
+        default:'insurancecompany',
+    },
 }, { timestamps: true });
 
 // creating the userlogindetail model entry

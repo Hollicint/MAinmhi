@@ -7,30 +7,65 @@
         
              <div class="col-4 leftimage-col ">
                   <div class="col">
-                     <img src="/images/profileImages/lizard.png"  class="petprofileImg" alt="">
+                     <img src="/images/profileImages/paw.png"  class="petprofileImg" alt="">
                      <br><br>
-                     <div><h3>Pets Name: <%= pet.petName %> </h3></div>
-                     <div><h4>Pets Type: <%= pet.petType %> </h4></div>
-                     <div><h4>Pets Breed: <%= pet.breed %> </h4></div>
-                     <div><h4>Pets Gender: <%= pet.gender %> </h4></div>
-                     <div><h4>D.O.B:  <%= pet.dateOfBirth %> </h4></div>
-                     <div><h4>Pets Colour: <%= pet.colour %> </h4></div>
-                     <div><h4>Microchipping: <%= pet.microchipping %> </h4></div>
-                     <div><h4>Microchipping Number:  <%= pet.microchippingNum %> </h4></div>
-                     <div><h4>Policy Number: <%= pet.policyNum %> </h4></div>
-                     <div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div>
-                     <br>
+                    <div  class="update_userDetails">
+                        <div><h3>Pets Name: <%= pet.petName %> </h3></div>
+                        <div><h4>Pets Type: <%= pet.petType %> </h4></div>
+                        <div><h4>Pets Breed: <%= pet.breed %> </h4></div>
+                        <div><h4>Pets Gender: <%= pet.gender %> </h4></div>
+                        <div><h4>D.O.B:  <%= pet.dateOfBirth %> </h4></div>
+                        <div><h4>Pets Colour: <%= pet.colour %> </h4></div>
+                        <div><h4>Microchipping: <%= pet.microchipping %> </h4></div>
+                        <div><h4>Microchipping Number:  <%= pet.microchippingNum %> </h4></div>
+                        <div><h4>Policy Number: <%= pet.policyNum %> </h4></div>
+                        <!--div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div-->
+                        <div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div>
+                        <!--div><h4>Insurance Company: <%= pet.insurerCompanyId ? pet.insurerCompanyId.insuranceCompanyName : "NA" %> </h4></div-->
+                        <br>
+                        <!--div><h4>Owner: <%= user.firstName %> <%= user.lastName %> </h4></div-->
 
-                     <div><h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3></div>
+                    </div>
+                    <div class="edit_petDetails">
+                        <form action="/user/pets_profile/<%= pet._id %>" method="post" >
+                            <input type="text" required name="id" value="<%= pet._id %>" hidden><br>
+
+                            <label for="petName"><h4>Pets Name: </h4></label>
+                            <input type="text" name="petName" class="displayBox" value="<%= pet.petName %>" required> <br>
+                            <label for="petType"><h4>Pets Type: </h4></label>
+                            <input type="text" name="petType" class="displayBox" value="<%= pet.petType %>"required><br>                            
+                            <label for="breed"><h4>Pets Breed: </h4></label>
+                            <input type="text" name="breed" class="displayBox" value="<%= pet.breed %>"required><br>
+                             <label for="gender"><h4>Pets Gender: </h4></label>
+                            <input type="text" name="gender" class="displayBox" value="<%=pet.gender %>"required><br>
+                            <label for="dateOfBirth"><h4>D.O.B: </h4></label>
+                            <input type="date" name="dateOfBirth" class="displayBox" value="<%= pet.dateOfBirth %>"required><br>                 
+                            <label for="colour"><h4>Pets Colour: </h4></label>
+                            <input type="text" name="colour" class="displayBox" value="<%= pet.colour %>"required><br>               
+                            <label for="microchipping"><h4>Microchipping: </h4></label>
+                            <input type="text" name="microchipping" class="displayBox" value="<%= pet.microchipping %>"required><br>
+                            <label for="microchippingNum"><h4>Microchipping Number: </h4></label>
+                            <input type="text" name="microchippingNum" class="displayBox"value="<%= pet.microchippingNum %>" required><br><br>       
+                            <label for="policyNum"><h4>Policy Number: </h4></label>
+                            <input type="text" name="policyNum" class="displayBox" value="<%= pet.policyNum %>" required><br><br>  
+                            <label for="insurerCompanyId"><h4>Insurance Company: </h4></label>
+                            <input type="text" name="insurerCompanyId" class="displayBox" value="<%= pet.insurerCompanyId %>"required><br><br>      
+                            
+
+                            <button id="save_editUserDetailsBtn">Save <%= pet.petName %> Details </button>   
+                                     
+                        </form>   
+                    </div>   
+
+
                       <br>
                      <div class="accountBtns logInOut">
-                       
-                      
-                        <a href="/user/user_profile"> <button><p><%= user.username %> 's Profile</p></button></a>
-                         <!-- Login out of account-->
+                        <a href="/user/user_profile"> <h4><%= user.username %> 's Profile</h4></a>
+                           <!-- Login out of account-->
                         <%if(user) {%>
-                             <button> <a href="/user/logout"> Logout</a></button>
-                        <% } %>   
+                             <a href="/user/logout"> <h4><br> Logout</h4></a>
+                        <% } %>  
+
                     </div>
 
                   </div>
@@ -38,20 +73,29 @@
              <div class="col-md-8 createPetAccount  ">
                  <div class="col claimDetailsList">
                      <div> 
+                     
+
                          <h1> <%= pet.petName %>'s Account </h1>
-                         <h2>Start your claim creation and storage now!</h2><br>
+                         <h2>Start your claim creation and storage now!</h2><br><br>
+                         
                      </div>
                      <div>
                          <table>
                              <div>
                                  <tr>
-                                  <h1>Claim List</h1>
                                   <!-- Buttons while Code is being created to move around pages-->
-                                  <a href="/user/new_claims/<%= pet._id %>"><button><p>New Claims</p></button></a> <br><br>
+                                  <a href="/user/new_claims/<%= pet._id %>"><p>Create New Claim..</p></a> <br><br><br><br>
                                  </tr>
+
                              </div>
                              <div>
                                  <tr>
+                                    <br><br>
+                                  <h3>Claim List</h3>
+                                 </tr>
+                             </div>
+                             <div>
+                                 <tr><br>
                                  <th> <h4>Claim Title:</h4></th>
                                  <th> <h4>Area Of Issue:</h4> </th>
                                  <th> <h4>Claims Cost:</h4></th>
@@ -91,6 +135,7 @@
                              </tr>
                               <% } %>
                              </div>
+                             
                          
                          </table>
                      </div>
@@ -104,5 +149,7 @@
      <!--Footer-->
     <%- include("../partials/footer.ejs") %>     
     <script  src="/js/claims.js"></script>
+    <script  src="/js/updateUserDetails.js"></script>     
+
 </body>
 </html>

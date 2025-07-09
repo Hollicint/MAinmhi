@@ -20,19 +20,27 @@ const ClaimDetail = require("./models/claimsdetail");
 const ArchiveClaimsDetail = require("./models/archiveclaimsdetail");
 const RegisterInsurer = require("./models/registerinsurer");
 const RegisterInsuranceCompany = require("./models/registerinsurancecompany")
+const AdminUser = require("./models/adminuser");
 
 //Login Security 
 //inserting limit attempts for login
 const rateLimit = require('express-rate-limit');
 //imports bcrypt for hashing
 const bcrypt = require('bcrypt');
+// imports tokens
+const crypto = require("crypto");
+// import to help send emails
+const nodemailer = require('nodemailer');
+//imports cookie parser
 const cookieParser = require('cookie-parser');
 //sets level of hashing
 const saltRounds = 12;
 
-//create session logs
+// session logs
 const session = require("express-session");
+// works with different formats - arrays/string etc
 const { result, values } = require("lodash");
+// allows http requests - GET/POST/PUT/Delete
 const { request } = require("http");
 const { title } = require("process");
 
@@ -67,9 +75,8 @@ app.use(
 app.use((request, response, next)=>{
     response.locals.user = request.session.user || null;
     response.locals.insurerUser = request.session.insurerUser || null;
+    response.locals.adminUser = request.session.adminUser || null;
     next();
-
- 
 });
 
 
@@ -100,6 +107,13 @@ function isInsurerAuthen(request, response, next) {
     }
     response.redirect("/insurance/insurance_loginpage");
 }
+function isAdminAuthen(request, response, next) {
+    if (request.session.adminUser) {
+        return next();
+    }
+    response.redirect("/admin/admin_loginpage");
+}
+
 
 // Mongodb connection
 const dbURI = process.env.mongo_db;
@@ -314,7 +328,13 @@ mongoose.connect(dbURI) // connects DB
            //  request.session.user = user;
              request.session.user ={
                 _id: user._id,
-                username: user.username
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                emailAddress: user.emailAddress,
+                contactNumber: user.contactNumber,
+                dateOfBirth: user.dateOfBirth,
+                address: user.address
              };
 
 
@@ -352,6 +372,61 @@ mongoose.connect(dbURI) // connects DB
 
     });
 
+
+
+        //Get 
+    app.get("/user/user_profile/:id", isAuthen, async (request, response) => {
+        response.render("/user/user_profile", {
+            title: "User Profile",
+            user: request.session.user || null,
+            errorMessage: null
+        });
+
+    });
+
+
+    // edit user profile details
+    app.post("/user/user_profile/:id", isAuthen, async(request, response)=>{
+       
+       const userId = request.params.id;
+        const {
+            firstName, lastName, emailAddress, contactNumber,
+             dateOfBirth, address, username, password
+            } = request.body;
+
+         try{    
+            const user = await RegisterUser.findById(userId);
+
+            user.firstName = firstName;
+            user.lastName = lastName;
+            user.emailAddress = emailAddress;
+            user.contactNumber = contactNumber;
+            user.dateOfBirth = dateOfBirth;
+            user.address = address;
+            user.username = username;
+           // user.password = body.password;
+            if(password && password.trim() !==""){
+                const hashedPassword = await bcrypt.hash(password, 12);
+                user.password = hashedPassword;
+            }
+            await user.save();
+
+            const updatedUserDetails = await RegisterUser.findById(userId);
+
+           response.redirect(`/user/user_profile/${userId}`);
+
+           // response.render("user/user_profile", {
+           //     title: "User Profile",
+           //     user: updatedUserDetails,
+           // });
+
+        } catch (error) {
+            console.error("Update error", error);
+            response.status(500).send("Error with Update");
+        }
+
+    });
+
  ////////////////////////////////////////////////////////////////
     //Pet  Login & Register
     app.get("/user/reg_petpage", async(request, response) => {
@@ -384,7 +459,11 @@ mongoose.connect(dbURI) // connects DB
                 microchipping: request.body.microchipping,
                 microchippingNum: request.body.microchippingNum,
                 policyNum: request.body.policyNum,
-                insuranceCompanyName: request.body.insuranceCompanyName,
+                desexed: request.body.desexed,
+                startDate: request.body.startDate,
+                endDate: request.body.endDate,
+                //insuranceCompanyName: request.body.insuranceCompanyName,
+                //insurerCompanyId: request.body.insurerCompanyId,
                 insurerCompanyId: request.body.insurerCompanyId,
                 userId: request.session.user._id
 
@@ -424,6 +503,7 @@ mongoose.connect(dbURI) // connects DB
                 claimAmount : claim.claimAmount,
                 claimImage : claim.claimImage,
                 claimDocument : claim.claimDocument,
+                additionalclaimDescription : claim.additionalclaimDescription,
                 petId: claim.petId,
                 userId: claim.userId,
                 isArchived: false,  
@@ -440,6 +520,7 @@ mongoose.connect(dbURI) // connects DB
                 claimAmount : claim.claimAmount,
                 claimImage : claim.claimImage,
                 claimDocument : claim.claimDocument,
+                additionalclaimDescription : claim.additionalclaimDescription,
                 petId: claim.petId,
                 userId: claim.userId,
                 isArchived: true, 
@@ -529,6 +610,7 @@ mongoose.connect(dbURI) // connects DB
                     vetDetail: request.body.vetDetail,
                     claimStatus: request.body.claimStatus,
                     claimAmount: request.body.claimAmount,
+                    additionalclaimDescription: request.body.additionalclaimDescription,
                     claimImage: (files.claimImage || []).map(file => ({
                         file: file.filename,
                         fileId: file.id,
@@ -639,7 +721,7 @@ mongoose.connect(dbURI) // connects DB
                 claim.vetDetail = body.vetDetail;
                 claim.claimStatus = body.claimStatus;
                 claim.claimAmount = body.claimAmount;
-
+                claim.additionalclaimDescription = body.additionalclaimDescription;
                 if (files.claimImage) {
                     claim.claimImage = files.claimImage.map(file => ({
                         file: file.filename,
@@ -712,6 +794,7 @@ mongoose.connect(dbURI) // connects DB
                     claimAmount : claim.claimAmount,
                     claimImage : claim.claimImage,
                     claimDocument : claim.claimDocument,
+                    additionalclaimDescription : claim.additionalclaimDescription,
                     petId: claim.petId,
                     userId: claim.userId,
                     archivedAt: new Date()    
@@ -858,16 +941,21 @@ mongoose.connect(dbURI) // connects DB
     app.post("/insurance/insurance_loginpage",limitLogin, async (request, response) => {
         const { username, password } = request.body;
         try {
-            const insurerUser = await RegisterInsurer.findOne({ username }).populate("company");;
+            const insurerUser = await RegisterInsurer.findOne({ username }).populate("company");
+
+            //Checking if the user matches on the system    
             if (!insurerUser) {
-                    response.render("insurance/insurance_loginpage", {
+                   return response.render("insurance/insurance_loginpage", {
                     title: "insurer User Login",
                     errorMessage: "Not Registered user" 
                      });                    
                 } 
-            const matchedLogin = await bcrypt.compare(password, insurerUser.password);    
+
+            //Checking if the password matches on the system    
+            const matchedLogin = await bcrypt.compare(password, insurerUser.password); 
+
             if(!matchedLogin) {
-                    response.render("insurance/insurance_loginpage", {
+                    return response.render("insurance/insurance_loginpage", {
                     title: "insurer User Login",
                     errorMessage: "Not Registered password" 
                     });                    
@@ -879,7 +967,7 @@ mongoose.connect(dbURI) // connects DB
                 username: insurerUser.username,
                 company: insurerUser.company?.name || null
             };
-
+            // if passes go to profile page
             response.redirect("/insurance/insurance_profile");    
 
         } catch (error) {
@@ -887,48 +975,39 @@ mongoose.connect(dbURI) // connects DB
             response.status(500).send("Error with Insurance Login");
         }
     });
-    // Insurance User Profile page
-  // app.get("/insurance/insurance_profile", isInsurerAuthen, async (request, response) => {
-  //      try {
-
-  //          const insurerUser = await RegisterInsurer.findById(request.session.insurerUser._id).populate("company");
-  //  
-  //           const claimsdetail = await ClaimDetail.find({ petId}); 
-
-  //          response.render("insurance/insurance_profile", {
-  //              title: "Insurer profile",
-  //              insurerUser,
-  //              company: insurerUser.company
-  //          });
-  //      } catch (error) {
-  //          console.error(error);
-  //          response.status(500).send("Login error");
-  //      }
-  //  });
-
-
 
    app.get("/insurance/insurance_profile", isInsurerAuthen, async (request, response) => {
     try {
-
+        //Get the login Insurance user
         const insurerUser = await RegisterInsurer.findById(request.session.insurerUser._id).populate("company");
-          
-      //  const pets = await PetAccountDetail.find({ insurerCompanyId: insurerUser._id }).select('_id');
-       //const pets = await PetAccountDetail.find({ insurerCompanyId: insurerUser.company._id }).select('_id');
+          // get the users connect to insurance company
+        const users = await RegisterUser.find({ 
+            insurerCompanyId: insurerUser.company._id 
+        }).select('_id firstName lastName');
+
+         // Get the users ID's
+        const userIds = users.map(user => user._id);
+
+       //get the pets connect to insurance company
         const pets = await PetAccountDetail.find({  }).select('_id');
+        // Get the Pets and the claims ID's
         const petIds = pets.map(pet => pet._id);
 
-        const claims = await ClaimDetail.find({ petId: { $in: petIds } })
+        // Get the pet claims 
+        const claims = await ClaimDetail.find({ })
            .populate("petId")
            .populate("userId")
            .exec();
 
-        
+
+        // display on profile page
        return response.render("insurance/insurance_profile", {
            title: "Insurer profile",
            insurerUser,
            company: insurerUser.company,
-           claims
+           claims,
+           pets,
+           users,
        });
     } catch (error) {
        console.error("Error with Insurer profile details", error);
@@ -939,10 +1018,162 @@ mongoose.connect(dbURI) // connects DB
    
     //////////////////////////////////////////////////////////////////
     // Admin
-    app.get("/admin/admin_profile", (request, response) => {
-        response.render("admin/admin_profile", { title: "Admin" });
+
+ app.get("/admin/reg_adminpage", (request, response) => {
+    response.render("admin/reg_adminpage", {
+         title: "Admin",
+        errorMessage: {},
+        values:{}
     });
-    /////////////////////////////////////////////////
+   
+    });
+
+ app.post("/admin/reg_adminpage", async (request, response) => {
+    const {
+       adminfirstName, adminLastName, adminEmailAddress, adminStaffNumber, username,password
+        }= request.body;
+    const errorMessage ={};
+    const values=request.body;
+
+    try{
+        // Check Email is entered correctly
+        const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (!emailFormat.test(adminEmailAddress)) { 
+            errorMessage.adminEmailAddress ="Email Already on system";
+        }
+        //Check Password is enterd correctly
+            if(password.length < 8 || password.length > 14 ){ 
+               // errorMessage.push( "Invalid credentials");
+                errorMessage.password ="password must contain 8-14 characters";
+            }
+
+        // Check if details already Exist             
+            const userExisting = await AdminUser.findOne({ 
+                $or: [{username},{adminEmailAddress}]
+            });
+            if(userExisting){ 
+                if(userExisting.username === adminEmailAddress){
+                    errorMessage.username ="Username already exist";
+                }
+                if(userExisting.adminEmailAddress === adminEmailAddress){
+                    errorMessage.adminEmailAddress ="email Address already exist";
+                }
+            }
+
+        //Check if errors 
+        if(Object.keys(errorMessage).length >0){
+                return response.render("admin/reg_adminpage",{
+                    title: "Register Admin",
+                    errorMessage,
+                    values: request.body,
+                });
+        }  
+        
+        const hashedPassword = await bcrypt.hash(password, saltRounds);   
+        const admin = await AdminUser({
+            adminfirstName, adminLastName, adminEmailAddress, 
+            adminStaffNumber, username, password:hashedPassword
+        }); 
+
+   
+        const adminSaved = await admin.save(); 
+        request.session.admin  = adminSaved;
+        response.redirect("/admin/admin_profile");
+
+    }catch(error){
+        console.error("Error with Admin profile details", error);
+        response.status(500).send("Error with Admin profile");     
+    }
+    
+    });
+
+
+
+    app.get("/admin/admin_loginpage", (request, response) => {
+        response.render("admin/admin_loginpage", {
+            title: "Admin Login",
+            adminUser: request.session.adminUser || null,
+            errorMessage: null
+        });
+    });
+
+   app.post("/admin/admin_loginpage", limitLogin, async (request, response) => {
+       const { username, password } = request.body;
+       try{
+           const adminUser = await AdminUser.findOne({ username });
+           // Gives error if users doesnt exis
+           if (!adminUser) {
+                return response.render("admin/admin_loginpage", {
+                   title: "Admin Login",
+                   errorMessage: "Invalid credentials" 
+                });                    
+           } 
+           // checking password
+           const matchedLogin = await bcrypt.compare(password, adminUser.password)
+           if(!matchedLogin) {
+           //if(adminUser.password !== password){
+               return response.render("admin/admin_loginpage", {
+                   title: "Admin Login",
+                   errorMessage: "Invalid credentials" 
+               });                    
+           }
+            request.session.adminUser ={
+                _id: adminUser._id,
+                adminfirstName: adminUser.adminfirstName,
+                adminLastName: adminUser.adminLastName,
+                adminEmailAddress: adminUser.adminEmailAddress,
+                adminStaffNumber: adminUser.adminStaffNumber,
+                username: adminUser.username
+            }
+            response.redirect("/admin/admin_profile");
+       }catch(error){
+           console.error("Error with Admin Login details", error);
+           response.status(500).send("Error with Admin Login");
+       }
+   }); 
+
+
+  app.get("/admin/admin_profile",isAdminAuthen,async (request, response) => {
+    try{
+        const adminUser = await AdminUser.findById(request.session.adminUser._id).lean();
+
+        
+        const users = await RegisterUser.find({ }).select('_id');
+        const userIds = users.map(user => user._id);
+
+       // const insurerUser = await RegisterInsurer.findById(request.session.insurerUser._id).populate("company");
+
+
+
+
+
+
+
+
+
+        response.render("admin/admin_profile", {
+            title: "Admin profile",
+            adminUser,
+            users,
+          //  insurerUser
+        });
+    }catch(error){
+        console.error("Error with Admin profile details", error);
+        response.status(500).send("Error with Admin profile");
+    }    
+
+
+  });
+
+
+ // app.get("/admin/admin_profile", (request, response) => {
+ //     response.render("admin/admin_profile", { title: "Admin" });
+ // });
+
+
+
+
+ //   /////////////////////////////////////////////////
     //logout
     
     //user
@@ -959,6 +1190,15 @@ mongoose.connect(dbURI) // connects DB
             response.redirect("/");
         });
     });
+
+    //Admin user
+    app.get("/admin/logout", (request, response) => {
+        request.session.destroy(() => {
+            //response.redirect("/insurance/insurance_loginpage");
+            response.redirect("/");
+        });
+    });
+
 
 
     //app.get("/login", (request, response) => {

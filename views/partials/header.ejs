@@ -1,6 +1,6 @@
 <header div class=" container1-header" >
     <h1> M'Ainmhi</h1>  
-    <h2>Your pet is the heart of it!</h2>
+<br><br>
 
     <div class="row">
         <div class="col">
@@ -13,7 +13,10 @@
                 <div>
                    <a href="/insurance/insurance_profile"> <%= insurerUser.username %> Home</a> | <a href="/insurance/logout">Logout</a>
                 </div> 
-   
+            <% } else if (adminUser){ %>   
+                <div>
+                   <a href="/admin/admin_profile"> <%= adminUser.username %> Home</a> | <a href="/admin/logout">Logout</a>
+                </div> 
             <% } %> 
         </div>
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ("../partials/head.ejs") %>
+
+<body>
+    <div class="container-fluid conatainer3-mainBody full-height">
+        <div class="col-4 leftimage-col">
+              <img src="/images/accountsImages/InsuranceIcon.png" class="userLoginIcon" alt="icon">
+        </div>
+
+        <div class="col-8 rightSide-col">
+            <div>
+                <h2>Sign Up</h2>
+            </div>
+       
+            <div id="registerSection">
+                <h3>Admin Company Register</h3>
+                    <form action="/admin/reg_adminpage" method="post">
+                      <div class="row userLoginForm"> 
+                        <div>
+                            <label for="adminfirstName">First Name</label>
+                            <input type="text" name="adminfirstName" value="<%= values?.adminfirstName || '' %>" required>
+                        </div>
+                        <div>
+                            <label for="adminLastName">Surname</label>
+                            <input type="text" name="adminLastName" value="<%= values?.adminLastName || '' %>" required>
+                        </div>
+                         <div>
+                            <label for="adminEmailAddress">Email</label>
+                            <input type="text" name="adminEmailAddress" value="<%= values?.adminEmailAddress || '' %>" required>
+                        </div>
+                        <div>
+                            <label for="adminStaffNumber">Staff Number</label>
+                            <input type="text" name="adminStaffNumber" value="<%= values?.adminStaffNumber || '' %>" required>
+                        </div>                        
+                        
+
+                            
+                        <div> <br><label for="username">Username:</label>
+                             <input type="text" name="username"  value="<%= values?.username || '' %>"  required>
+                            <% if(errorMessage?.username){ %>
+                                <span class="errorMessageLogin"><%= errorMessage.username %></span>
+                            <% } %>
+
+                        </div>
+                        <div><label for="password">Password:</label>
+                          <input type="password" name="password" required> 
+                            <% if(errorMessage?.password){ %>
+                                <span class="errorMessageLogin"><%= errorMessage.password %></span>
+                            <% } %>
+                        </div>
+                         
+                       <div><br><br><button type="submit">Register </button></div>
+                      </div> 
+                    </form>
+                     <div>
+                        <a href="/admin/admin_profile"><h3>Login</h3></a>    
+                        
+                    </div>
+            </div>
+        </div>    
+
+
+    </div>
+    <!--Footer-->
+    <%- include("../partials/footer.ejs") %>
+</body>
+</html>

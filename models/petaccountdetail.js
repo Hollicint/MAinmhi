@@ -37,6 +37,18 @@ const petDetailSchema = new Schema({
         type: String,
         required: true
     },
+    desexed: {
+        type: String,
+        required: true
+    },
+    startDate: {
+        type: String,
+        required: true
+    },
+    endDate: {
+        type: String,
+        required: true
+    },   
  //   insuranceCompanyName: {
  //       type: mongoose.Schema.Types.ObjectId,
  //       ref: "RegisterInsuranceCompany"     

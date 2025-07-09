@@ -7,7 +7,14 @@
     
             <div class="col-4 leftimage-col ">
                 <div class="col">
-                    <img src="/images/profileImages/lizard.png"  class="petprofileImg" alt="">
+                    <div class=" logInOut">
+                        <!-- Login out of account-->
+                        <%if(user) {%>
+                              <a href="/user/logout"><%= user.username %> Logout</a><br><br>
+                        <% } %> 
+                     </div>       
+
+                    <img src="/images/profileImages/paw.png"  class="petprofileImg" alt="">
                     <br><br>
                     <div><h3>Pets Name: <%= pet.petName %> </h3></div>
                     <div><h4>Pets Type: <%= pet.petType %> </h4></div>
@@ -25,12 +32,10 @@
                     <br>
                     <div class="accountBtns logInOut">
                     
-                        <a href="/user/pets_profile/<%= pet._id %>"> <button><p><%= pet.petName %> 's Profile</p></button></a>
-                        <a href="/user/user_profile"> <button><p><%= user.username %>'s Profile</p></button></a>
-                          <!-- Login out of account-->
-                        <%if(user) {%>
-                             <button> <a href="/user/logout"> Logout</a></button>
-                        <% } %>  
+                        <a href="/user/pets_profile/<%= pet._id %>"> <%= pet.petName %> 's Profile  | </a> 
+                        <a href="/user/user_profile"> <%= user.username %>'s Profile </a>
+                         
+ 
                     </div>
                 </div>
             </div>
@@ -40,7 +45,7 @@
                         <h1> <%= pet.petName %>'s Account </h1>
                     </div>
                     <div class="viewClaimSection">
-                        <table>
+                        <table class="viewClaimForm">
                         <% if (claim) { %>
                       
                             <tr> <td> <label for="claimTitle">Title: <%= claim.claimTitle %></label></td></tr>
@@ -49,17 +54,14 @@
                             <tr> <td> <label for="incidentStartDate">Issue Date: <%= claim.incidentStartDate %></label></td></tr>
                             <tr><td> <label for="vetDate">Vet First visit Date: <%= claim.vetDate %></label></td></tr>
                             <tr> <td> <label for="vetDetail">Vet Details: <%= claim.vetDetail %></label></td></tr>
-
-                            <tr><td><label for="claimImage">Cliam Images:</label><br>
-                                
+                            <tr><td><label for="claimImage">Cliam Images:</label><br>                               
                                 <% if (claim.claimImage.length > 0) { %>
                                      <% claim.claimImage.forEach(image => { %>
                                          <a href="/file/<%= image.file %>" download><%= image.file %></a><br>
                                       <% }); %>      
                                 <% } else { %>
                                     <p>You have no image.</p>
-                                <% } %>
-                            
+                                <% } %>                           
                             </td></tr>
             	            <tr>
                                 <td><label for="claimDocument">Cliam Document: </label>
@@ -69,35 +71,35 @@
                                       <% }); %>      
                                 <% } else { %>
                                     <p>You have no document.</p>
-                                <% } %>
-                        
+                                <% } %>                       
                                 </td>
                              </tr>
                             <tr> <td> <label for="claimStatus">Claim Status: <%= claim.claimStatus %></label></td></tr>
-                            <tr><td> <label for="claimAmount">Claim Cost: <%= claim.claimAmount %></label></td></tr>                                                                                                        
+                            <tr><td> <label for="claimAmount">Claim Cost: <%= claim.claimAmount %></label></td></tr>       
+                            <tr><td> <label for="additionalclaimDescription">Additional Description: <%= claim.additionalclaimDescription %></label></td></tr>
+                               <tr>
+                                <td>
+                                    <!--Checking is archive wont allow to edit -->                          
+                                     <% if (!isArchived) { %>
+                                        <button  id="editClaim">Edit</button>
+                                     <% } else { %>
+                                        <p>Cant Edit due to claim being archived.</p>
+                                    <% } %>                 
+                                    <% } else { %>
+                                       <h4>No claims submitted.</h4>
+                                    <% } %>
+                                </td>
+                               </tr>                                                                   
                         </table>
                           
-                        <!--Checking is archive wont allow to edit -->
-                                
-                         <% if (!isArchived) { %>
 
-                           <button  id="editClaim">Edit</button>
-
-                        <% } else { %>
-                            <p>Cant Edit due to claim being archived.</p>
-                        <% } %>
-                      
-
-                         <% } else { %>
-                            <h4>No claims submitted.</h4>
-                         <% } %>
                     </div>
 
 
                       <% if (!isArchived) { %>
-                    <div class="editClaimSection"  >
+                    <div class="editClaimSection">
                         <form action="/user/view_claims/<%= claim._id %>" method="post" enctype="multipart/form-data">
-                        <table>
+                        <table class="viewClaimForm">
                             <input type="text" required name="id" value="<%= claim._id %>" hidden><br>
                          <tr>
                              <td>
@@ -199,6 +201,12 @@
                                     <input type="number" name="claimAmount"  value="<%= claim.claimAmount %>" > <br>
                                </td>
                             </tr>
+                            <tr>
+                             <td>
+                                 <label for="additionalclaimDescription">Additional Description: </label><br>
+                                 <textarea name="additionalclaimDescription" rows="4" cols="50"  > <%= claim.additionalclaimDescription %> </textarea>
+                             </td>
+                         </tr>
                             <tr>
                                <td>
                                    <button id="saveClaim">Save Claim</button>

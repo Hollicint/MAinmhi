@@ -20,7 +20,7 @@
   color: #8C3061;
   padding: 25px;
   border: 15px;
- 
+  text-align: left;
   font-size: 2.5em;
 }
 .container4-footer{
@@ -35,9 +35,23 @@
 
 }
 /****** ******/
- h1, h2{
+.miniver-regular, h1 {
+  font-family: "Miniver", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.rouge-script-regular, h2 {
+  font-family: "Rouge Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+ h1{
   text-align: center;
-  font-size: 3.5em;
+  font-size: 200px;
+}
+h2{
+  text-align: center;
+  font-size: 150px;
 }
 h3{
   font-size: 100px;
@@ -84,13 +98,31 @@ a:link, a:hover{
   text-align: center;
 }
 
+.linkFooter{
+  text-align: center;
+}
 
 /**************  INDEX **************/
 .img-fluid{
-  width:1000px;
-  height:1000px; 
+  width:1500px;
+  height:1250px; 
   position:sticky;
+  padding: 24px;
+  
 }
+
+.adImage{
+  width:1600px;
+  height:1250px; 
+  position:sticky;
+  padding: 24px;
+ 
+}
+.petAds{
+  
+}
+
+
 .indexLoginIcon{
   width:2000px;
   height:2000px; 
@@ -126,8 +158,20 @@ a:link, a:hover{
  position: fixed;
 }
 /**************  about **************/
+#aboutTxt{
+  text-align: left;
+   font-size: 80px;
+   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
 
-
+ .img-fluidAbout{
+  width:1500px;
+  height:1250px; 
+  position:sticky;
+  padding: 40px;
+  margin: 10px;
+  
+} 
 /************** Support **************/
 
 .formBackground{
@@ -138,6 +182,51 @@ a:link, a:hover{
   text-align: center;
 }
 
+.supportForm{
+   border-radius: 5px;
+ 
+  padding: 20px;
+  font-size: 3em;
+
+}
+
+
+input[type=textarea] {
+  width: 100%;
+  height: 150px;
+
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+}
+
+#supportTableDetails td{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+  font-size: 70px;
+  color: black;
+  text-align: center;
+}
+
+
+.google-map{
+     padding-bottom: 30%;
+     position: relative;
+}
+
+.google-map iframe {
+     height: 50%;
+     width: 50%;
+     left: 0;
+     top: 0;
+     position: absolute;
+}
+
+
 /**********404***************/
 
 .errImage{
@@ -147,9 +236,10 @@ a:link, a:hover{
 /**************  User Login page **************/
 .userLoginForm{
   border-radius: 5px;
- font-size: 3em;
-  padding: 20px;
-  text-align: center;
+  font-size: 3em;
+  padding: 50px;
+
+
 }
 
 .userLoginIcon{
@@ -159,16 +249,18 @@ a:link, a:hover{
 }
 
 .leftimage-col {
-    background-color: #FFCF81;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    font-size: 50px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 /* Right column (Form) */
 .rightSide-col {
-    background-color: #FBF6E9;
+    background-color: white;
     padding: 40px;
     display: flex;
     flex-direction: column;
@@ -181,20 +273,39 @@ a:link, a:hover{
 }
 
 .petprofileImg{
-   width: 900px;
-   height: 900px;
+   width: 1200px;
+   height: 1200px;
+   text-align: center;
+
 }
+
+.edit_userDetails{
+  display: none;
+}
+
 
 /*********** User Reg Page ***************/
 
-.input-group{
-
-
+#RegForm{
+  font-size: 90px;
+  padding: 15px;
+  margin: 10px;
 }
 
-userRegForm{
- 
-  box-sizing: border-box;
+
+.form-inline{
+  font-size: 90px;
+  padding: 15px;
+  margin: 10px;
+}
+#regDate{
+  
+   
+}
+
+.userLoginForm{
+ text-align: center;
+
 }
 
 
@@ -204,6 +315,7 @@ userRegForm{
     color: black;
     padding: 15px;
     text-align: center;
+    
 }
 
 #claimDisplay th {
@@ -214,13 +326,14 @@ userRegForm{
   color: white;
   border: 1px solid #ddd;
   padding: 10px;
+  
 }
 #claimDisplay td {
   padding: 8px;
-  font-size: 30px;
   text-align: left;
   border-bottom: 1px solid #DDD;
   background-color: white;
+  font-size: 100px;
   
 }
 #claimDisplay:hover td{
@@ -246,7 +359,19 @@ userRegForm{
   color: black;
 }
 
+.insureStatusUpdate{
+  font-size: 50px;
+}
 
+
+
+
+.informreg{
+  font-size: 80px;
+  padding: 15px;
+  margin: 10px;
+ 
+}
 
 /*************ADMIN Side********************/
 .switch {
@@ -326,6 +451,22 @@ th, td {
   display: none;
 }
 
+.claimForm, th, td{
+  font-size: 70px;
+  height: 20px;
+  padding: 15px;
+  margin: 10px;
+}
+.viewClaimForm{
+    font-size: 70px;
+  height: 20px;
+  padding: 15px;
+  margin: 10px;
+  text-align: center;
+}
+#editClaim{
+  font-size: 110px;
+}
 
 /*************Media*******************/
 
@@ -334,12 +475,20 @@ th, td {
   .container-fluid,.container1-header, .container2-navbar,
   .container3-mainBody{background-color: white;}
   .container4-footer{background-color: #FFCF81;}
+  .petprofileImg{
+   width: 500px;
+   height: 500px;
+}
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
   .container-fluid,.container1-header, .container2-navbar,
   .container3-mainBody{background-color: white;}
   .container4-footer{background-color: #FFCF81;}
+  .petprofileImg{
+   width: 500px;
+   height: 500px;
+}
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -347,19 +496,31 @@ th, td {
   .container-fluid,.container1-header, .container2-navbar,
   .container3-mainBody{background-color: white;}
   .container4-footer{background-color: #FFCF81;}
+  .petprofileImg{
+   width: 1500px;
+   height: 1500px;
+}
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
   .container-fluid,.container1-header, .container2-navbar,
-  .container3-mainBody{background-color: rgb(230, 221, 208);}
+  .container3-mainBody{background-color: white;}
   .container4-footer{background-color: #FFCF81;}
+  .petprofileImg{
+   width: 1500px;
+   height: 1500px;
+}
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   .container-fluid,.container1-header, .container2-navbar,
-  .container3-mainBody{background-color: rgb(246, 238, 225);}
+  .container3-mainBody{background-color: white;}
   .container4-footer{background-color: #FFCF81;}
+  .petprofileImg{
+   width: 1500px;
+   height: 1500px;
+}
 }
 
 

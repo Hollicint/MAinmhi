@@ -6,25 +6,26 @@
     <div class="container-fluid conatainer3-mainBody full-height">
         <div class="col-4 leftimage-col">
             <div class="col">
-                <img src="/images/profileImages/man.png"  class="petprofileImg" alt=""><br><br>
+                <img src="/images/accountsImages/insuranceIcon.jpg"  class="petprofileImg" alt="icon"><br><br>
+                <div class="update_insurerDetails">
+                     <div><h4>Name: <%= insurerUser.staffFirstName %> <%= insurerUser.staffLastName %></h4></div>
+                     <div><h4>Email: <%= insurerUser.staffEmailAddress %></h4></div>
+                     <div><h4>Contant Number: <%= insurerUser.staffContactNumber %></h4></div>
+                     <div><h4>Staff Number: <%= insurerUser.staffNumber %></h4></div>
+                     <div><h4>Position: <%= insurerUser.staffRole %></h4></div>
 
-                <div><h3>Name: <%= insurerUser.staffFirstName %> <%= insurerUser.staffLastName %></h3></div>
-                <div><h4>Email: <%= insurerUser.staffEmailAddress %></h4></div>
-                <div><h4>Contant Number: <%= insurerUser.staffContactNumber %></h4></div>
-                <div><h4>Staff Number: <%= insurerUser.staffNumber %></h4></div>
-                <div><h4>Position: <%= insurerUser.staffRole %></h4></div>
-
-                <h2>Company Informaiton</h2>
-                <div>
-                     <% if (company) { %>
-                        <h4>Company Name: <%= company.insuranceCompanyName %> </h4>
-                        <h4>Company Support Email: <%= company.insuranceCompanyEmail %> </h4>
-                        <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
-                         <h4>Company Address: <%= company.insuranceCompanyAddress %> </h4>
-                     <% } else { %>
-                        <p>You have no company registered.</p>
-                    <% } %>    
-                </div>    
+                     <h2>Company Informaiton</h2><br>
+                     <div>
+                          <% if (company) { %>
+                             <h4>Company Name: <%= company.insuranceCompanyName %> </h4>
+                             <h4>Company Support Email: <%= company.insuranceCompanyEmail %> </h4>
+                             <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
+                              <h4>Company Address: <%= company.insuranceCompanyAddress %> </h4>
+                          <% } else { %>
+                             <p>You have no company registered.</p>
+                         <% } %>    
+                     </div> 
+                </div>   
                 <br><br>    
                 <div> 
                     <%if(insurerUser) {%>
@@ -54,19 +55,36 @@
                                 <th><h4> Policy Holder </h4></th>
                                 <th><h4> Pets Name </h4></th>
                                 <th><h4> Claims Title </h4></th>
-                                <th><h4> Claim Description </h4></th>                     
+                                <th><h4> Claim Description </h4></th> 
+                                <th><h4> Claim Status </h4></th>                     
                             </tr>
                         </div>
 
                         <div>
-                            <% claims.forEach(claim => { %>
+                             <!--% if (claims.length > 0) { %--> 
+                            <% claims.forEach(claim => { %>  
+                                 <!--% if (claim.userId && userId.includes(claims.userId._id.toString())) { %-->
                              <tr>
-                                <td><p><%= claim.userId ? claim.userId.firstName : "N/A" %></p></td>
+                                <td><p><%= claim.userId ? claim.userId.firstName + " " + claim.userId.lastName : "N/A" %></p></td>
+                                
                                 <td><p><%= claim.petId ? claim.petId.petName : "N/A" %></p></td>
-                                <td><p><%= claim.claimTitle %></p></td>
+                                <td><a href="/user/view_claims/<%= claim._id %>"><p><%= claim.claimTitle %></p></a></td>
                                 <td><p><%= claim.claimDescription %></p></td>
-                             </tr>                  
-                            <% }); %>
+                                 <td>
+                                    <div>
+                                       <select name="insureStatusUpdate" style="width:200px;">
+                                            <option value="0"><p></p></option>
+                                            <option value="1"><span>Confirmed</span></option>
+                                            <option value="2">Refused</option>
+                                            <option value="3">Waiting Vet's Update</option>
+                                            <option value="4">Waiting Policy Holder update</option>
+                                        </select> 
+                                    </div>
+                                 </td>        
+                             </tr> 
+                              <!--% } %-->                 
+                            <!--% }); %-->
+                             <% }) %>        
                         </div>
                     </table>
                 </div>
