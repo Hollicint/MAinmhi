@@ -10,7 +10,7 @@ const path = require("path");
 const bodyParser = require('body-parser');
 const { body, validationResult } = require("express-validator");
 
-//app.use(express.json());
+
 
 // import of models connected to DB
 //const UserLoginDetail = require("./models/userlogindetail");
@@ -89,10 +89,13 @@ const limitLogin = rateLimit({
 
 //instruction with the view engine to be used
 app.set("view engine", "ejs")
+app.set('views', __dirname + '/views');
+
 //Retrieves data to server
 app.use(express.urlencoded({ extended: true }));
 //middleware to allow access to static files
 app.use(express.static("public"));
+app.use(express.json());
 
 //Middleware to check Authentication
 function isAuthen(request, response, next) {
@@ -303,6 +306,8 @@ mongoose.connect(dbURI) // connects DB
     });
 
     app.post("/user/user_loginpage", limitLogin, async (request, response) => {
+   // app.post("/user/user_loginpage", async (request, response) => {
+       
         const { username, password } = request.body;
         try {
             //  finds users username
@@ -1143,14 +1148,6 @@ mongoose.connect(dbURI) // connects DB
 
        // const insurerUser = await RegisterInsurer.findById(request.session.insurerUser._id).populate("company");
 
-
-
-
-
-
-
-
-
         response.render("admin/admin_profile", {
             title: "Admin profile",
             adminUser,
@@ -1218,8 +1215,26 @@ app.use((request, response) => {
     response.status(404).render("404", { title: "404" });
 });
 
-app.listen(3000, () => console.log("Server running"));
-  
-});
-     //.catch(err => console.error("MongoDB connection error:", err));
+/* Important for testing
+   when testing cypress uncomment this and remove test: jest in package.json */ 
 
+  app.listen(3000, () => console.log("Server running"))
+
+});
+
+ //when testing Jest uncomment this and add test: jest in package.json    
+ //module.exports = app;
+
+
+
+
+ // while testing commenting aout app.listen to not run server and jsut using module.exports 
+//.catch(err => console.error("MongoDB connection error:", err));
+// will switch when finished  // module.exports = app;
+
+//if (require.main !== module) {
+   // module.exports = app; 
+//} else {  
+ // app.listen(3000, () => console.log("Server running"))
+//}
+     //.catch(err => console.error("MongoDB connection error:", err));
