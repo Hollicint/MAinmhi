@@ -63,7 +63,7 @@
                         <a href="/user/user_profile"> <h4><%= user.username %> 's Profile</h4></a>
                            <!-- Login out of account-->
                         <%if(user) {%>
-                             <a href="/user/logout"> <h4><br> Logout</h4></a>
+                             <a href="/user/logout"  data-cy="userLogout"> > <h4><br> Logout</h4></a>
                         <% } %>  
 
                     </div>
@@ -84,7 +84,7 @@
                              <div>
                                  <tr>
                                   <!-- Buttons while Code is being created to move around pages-->
-                                  <a href="/user/new_claims/<%= pet._id %>"><p>Create New Claim..</p></a> <br><br><br><br>
+                                  <a href="/user/new_claims/<%= pet._id %>" data-cy="claimLink"><p>Create New Claim..</p></a> <br><br><br><br>
                                  </tr>
 
                              </div>

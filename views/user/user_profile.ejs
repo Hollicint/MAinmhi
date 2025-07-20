@@ -79,7 +79,8 @@
                         <% pets.forEach(pet => { %>
                         <div class="col-6 pet-account"> 
                             <h3>Pets Name: <%= pet.petName %> <br>Pet Type: <%= pet.petType %></h3>
-                            <a href="/user/pets_profile/<%= pet._id %>"><img src="/images/profileImages/paw.png" alt="<%= pet.petType %>" class="rounded-circle petprofileImg"></a>
+                            <a href="/user/pets_profile/<%= pet._id %>"><img src="/images/profileImages/paw.png" alt="<%= pet.petType %>" class="rounded-circle petprofileImg"  data-cy="petLink">
+                            </a>
                         </div>   
                     <% }); %>    
                     <br>
