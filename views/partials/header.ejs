@@ -1,10 +1,13 @@
 <header div class=" container1-header" >
-    <h1> M'Ainmhi</h1>  
-<br><br>
-
+ 
     <div class="row">
         <div class="col">
+           <div id="adminLogin">
+             <a href="/admin/admin_loginpage"> <img src="images/profileImages/adminIcon.jpg" alt=""></a>
+    
+          </div>   
          <!-- Login in and out of account-->
+          <div id="logInOut">
             <%if(user) {%>
                 <div>
                    <a href="/user/user_profile"> <%= user.username %> Home</a>  | <a href="/user/logout">Logout</a>
@@ -18,9 +21,13 @@
                    <a href="/admin/admin_profile"> <%= adminUser.username %> Home</a> | <a href="/admin/logout">Logout</a>
                 </div> 
             <% } %> 
+            </div>
         </div>
 
     </div>
+
+        <h1> M'Ainmhi</h1>    
+    <br><br>
 
     <div class="row nav-scroller py-1 mb-2 container2-navbar">
             <div class="col-sm">

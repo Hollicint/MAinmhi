@@ -49,12 +49,16 @@ const petDetailSchema = new Schema({
         type: String,
         required: true
     },   
- //   insuranceCompanyName: {
- //       type: mongoose.Schema.Types.ObjectId,
- //       ref: "RegisterInsuranceCompany"     
- //      // type: String,
- //      // required: true
- //   },
+    insuranceCompanyName: {
+        type: String,
+        required: true
+    },  
+   // insuranceCompanyName: {
+   //     type: mongoose.Schema.Types.ObjectId,
+   //     ref: "RegisterInsuranceCompany"     
+   //    // type: String,
+   //    // required: true
+   // },
      insurerCompanyId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "RegisterInsuranceCompany",

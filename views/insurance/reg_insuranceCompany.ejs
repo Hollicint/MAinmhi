@@ -5,7 +5,7 @@
 <body>
     <div class="container-fluid conatainer3-mainBody full-height">
         <div class="col-4 leftimage-col">
-              <img src="/images/accountsImages/InsuranceIcon.png" class="userLoginIcon" alt="icon">
+              <img src="/images/accountsImages/InsuranceIcon.png" class="indexLoginIcon" alt="icon">
         </div>
 
         <div class="col-8 rightSide-col">
@@ -21,64 +21,78 @@
        
             <div id="registerSection">
                     <form action="/insurance/reg_insuranceCompany"   class="form-inline" method="post">
-                      <div class="row userRegForm"> 
-                        
+                      <div class="row"> 
+                        <div><br> <h4>Company Staff Details</h4><br></div>
                         <div> <label for="staffFirstName">First Name: </label>
-                            <input type="text" name="staffFirstName" value="<%= values?.staffFirstName || '' %>"  required> </div>
-                        <div><label for="staffLastName">Last Name: </label>
-                            <input type="text" name="staffLastName" value="<%= values?.staffLastName || '' %>"  required></div>
+                            <input type="text" name="staffFirstName" value="<%= values?.staffFirstName || '' %>"  required> 
+                        </div>
+                        <div><br><label for="staffLastName">Last Name: </label>
+                            <input type="text" name="staffLastName" value="<%= values?.staffLastName || '' %>"  required>
+                        </div>
 
-                        <div><label for="staffEmailAddress">Company Email: </label>
+                        <div><br><label for="staffEmailAddress">Company Email: </label>
                             <input type="email" name="staffEmailAddress" value="<%= values?.staffEmailAddress || '' %>"  required> 
                              <% if(errorMessage?.staffEmailAddress){ %>
                                 <span class="errorMessageLogin"><%= errorMessage.staffEmailAddress %></span>
                             <% } %>
-
                         </div>
-                        <div><label for="staffContactNumber">Company Contact Number: </label>
+                        <div><br><label for="staffContactNumber">Company Contact Number: </label>
                              <input type="text" name="staffContactNumber" value="<%= values?.staffContactNumber || '' %>"  required> </div>
-                        <div><label for="staffNumber">Staff Number: </label>
+                        <div><br><label for="staffNumber">Staff Number: </label>
                              <input type="text" name="staffNumber" value="<%= values?.staffNumber || '' %>"   required> </div>
-                        <div><label for="staffRole">Staff Role: </label>
+                        <div><br><label for="staffRole">Staff Role: </label>
                             <input type="text" name="staffRole" value="<%= values?.staffRole || '' %>"  required></div>
+
+                        <div><br> <h4>Company Details</h4><br></div>
                         
-                        <div> <br><h3>Create your Login Details</h3></div>    
-                        <div> <label for="username">Username:</label>
-                            <small id="passwordHelpInline" class="text-muted"> Username must be more than 6 characters.</small><br>
+                        <div> <label for="insuranceCompanyName">Company Name: </label>
+                             <input type="text" name="insuranceCompanyName" value="<%= values?.insuranceCompanyName || '' %>" required> </div>
+                        <div><br><label for="insuranceCompanyEmail">Company Email: </label>
+                             <input type="email" name="insuranceCompanyEmail" value="<%= values?.insuranceCompanyEmail || '' %>" required> </div>
+                        <div><br> <label for="insuranceCompanyContact">Company Contact Number: </label>
+                             <input type="text" name="insuranceCompanyContact" value="<%= values?.insuranceCompanyContact || '' %>" required> </div>
+                        <div><br> <label for="insuranceCompanyAddress">Company Address: </label>
+                             <input type="text" name="insuranceCompanyAddress"value="<%= values?.insuranceCompanyAddress || '' %>"  required> </div>
+                    
+                                                  
+                        
+                        <div> <br><h4>Create your Login Details</h4><br></div>    
+
+                        <div> <label for="username">Username:</label><br>
+                            <small> Username must be more than 6 characters.</small><br>
                              <input type="text" name="username"  value="<%= values?.username || '' %>"  required>
                             <% if(errorMessage?.username){ %>
                                 <span class="errorMessageLogin"><%= errorMessage.username %></span>
                             <% } %>
                         </div>
-                        <div><label for="password">Password:</label>
-                            <small id="passwordHelpInline" class="text-muted"> Must be 8-14 characters long. </small><br>
+                        <div><label for="password">Password:</label><br>
+                            <small > Must be 8-14 characters long. </small><br>
                           <input type="password" name="password" value="<%= values?.password || '' %>"  required> 
                             <% if(errorMessage?.password){ %>
                                 <span class="errorMessageLogin"><%= errorMessage.password %></span>
                             <% } %>
                         </div>
-                           
-                        <div> <h3>Company Details</h3><br></div>
-                        
-                        <div> <label for="insuranceCompanyName">Company Name: </label>
-                             <input type="text" name="insuranceCompanyName" value="<%= values?.insuranceCompanyName || '' %>" required> </div>
-                        <div><label for="insuranceCompanyEmail">Company Email: </label>
-                             <input type="email" name="insuranceCompanyEmail" value="<%= values?.insuranceCompanyEmail || '' %>" required> </div>
-                        <div> <label for="insuranceCompanyContact">Company Contact Number: </label>
-                             <input type="text" name="insuranceCompanyContact" value="<%= values?.insuranceCompanyContact || '' %>" required> </div>
-                        <div> <label for="insuranceCompanyAddress">Company Address: </label>
-                             <input type="text" name="insuranceCompanyAddress"value="<%= values?.insuranceCompanyAddress || '' %>"  required> </div>
-                        <div><br><button type="submit">Register </button></div>
-                      
+
+
+                        <div><br><button type="submit" id="userLoginButton">Register </button></div>
+                            <br>
                       </div> 
                     </form>
                      
             </div>
+            <div><br>
+                <p><br><br>
+                    * Please note that any details that inputted incorrectly you will have to contact our support team to amend details. <br>
+                     Contact details can be found on our suppport page. 
+                </p><br><br>
+
+            </div>
+
         </div>    
 
 
     </div>
     <!--Footer-->
-    <%- include("../partials/footer.ejs") %>
+    <%- include("../partials/footer_genPages.ejs") %>
 </body>
 </html>

@@ -6,46 +6,48 @@
     <div class="container-fluid conatainer3-mainBody full-height ">
        
           <div class="col-4 leftimage-col ">
-               <img src="/images/accountsImages/usersIcon.jpg" class="userLoginIcon" alt="icon">
+               <img src="/images/accountsImages/usersIcon.jpg" class="indexLoginIcon" alt="icon">
                <br> <!--https://www.istockphoto.com/search/more-like-this/1404578140?assettype=image&mediatype=illustration&phrase=person%20and%20dog%20icon-->
           </div>
 
           <div class="col-md-8 rightSide-col ">
               <br>
-              <div> 
-                  <h1>Login </h1> 
+              <div class="loginTxt"> 
+                  <h1>Login </h1>  
                   <p>
                     <br>
                     Login into your account, and update your pets profile by adding your last pet medical history via claims. Keep up to date, just in case.
                   </p>
                   <br>
                  <p>
-                    You don't have an account, create one <a href="/user/reg_userpage">Register Account</a> <br>
-                    Follow the on screen directions
+                    You don't have an account, create one <a href="/user/reg_userpage">Register Account</a> and follow the on screen directions,
+                    or go back to the <a href="/">Home</a> page <br><br><br>
                  </p>
               </div>
-              <br>
+ 
               
               <div id="registerSection">
                   <form action="/user/user_loginpage" method="post">
-                      <div class="row userLoginForm"> 
-                        <div >
+                      <div class="row "> 
+
+                             <!--User and Password that will be checked if exists-->
+                        <div id="userLoginForm">
+                            <label for="username">Username: </label>
+                            <input type="text" name="username" placeholder="Username"  required> 
+                            <br><br>
+                            <label for="password"> Password: </label>
+                            <input type="password" name="password" placeholder="Password"  required> 
+                            <br><br> 
+                            <button type="submit" id="userLoginButton"> Enter </button><br><br> <!--Submit button-->
+                        </div>   
+                        
+                        <div id="errorMessage" style="font-size: 100px" > <!--target="_self" -->
                             <% if(errorMessage) { %>
                              <div>
                                 <%= errorMessage %>
                             </div>
-                            <% }%> 
+                            <% }%> <br>
                         </div>
-                             <!--User and Password that will be checked if exists-->
-                          <div>
-                              <label for="username">Username: </label>
-                               <input type="text" name="username" placeholder="Username"  required> 
-                           </div>
-                          <div> 
-                              <label for="password"> Password: </label>
-                              <input type="password" name="password" placeholder="Password"  required> <br> 
-                          </div>
-                          <div><br> <button type="submit"> Enter </button></div>   <!--Submit button-->
                       </div>
                   </form>
                   
@@ -57,6 +59,6 @@
            
     </div><!--Container-fluid closed div-->    
     <!--Footer-->
-    <%- include ("../partials/footer.ejs") %>      
+    <%- include ("../partials/footer_genPages.ejs") %>      
 </body>
 </html>

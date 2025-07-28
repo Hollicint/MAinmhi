@@ -27,7 +27,6 @@
     -  require-trusted-types-for 'script'; - security feature to prevent XSS attacks
     - img-src 'self'securing images from same origin
 -->
-    
       <meta http-equiv="Content-Security-Policy" 
         content="
             default-src 'self'  
@@ -37,9 +36,15 @@
             img-src 'self';
         ">
 
-        <!--Style Sheet-->
-    <link rel="stylesheet" href="/css/styles.css">
-   
-   
+        <!--Style Sheets-->
+    <!-- Generally used css throughout-->    
+    <link rel="stylesheet" href="/css/genearlPagesStyle.css">
+    <!--Public with or without an account can see-->
+    <link rel="stylesheet" href="/css/sharedPageStyles.css">
+    
+    <!--Users Pages-->
+    <link rel="stylesheet" href="/css/userSideStyle.css">
+    <link rel="stylesheet" href="/css/insuranceSideStyle.css">
+    <link rel="stylesheet" href="/css/publicPagesStyles.css">
 </head>
 

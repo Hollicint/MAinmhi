@@ -6,24 +6,24 @@
 <body>
     <div class="container-fluid conatainer3-mainBody full-height">
         <div class="col-4 leftimage-col ">
-                <img src="/images/accountsImages/UsersIcon.png" class="userLoginIcon" alt="icon">
+               <img src="/images/accountsImages/usersIcon.jpg" class="indexLoginIcon" alt="icon">
         </div>
         <div class="col-8 rightSide-col ">
            <div> 
                 <h2>Pet Account Registration</h2> <br>
                 <p>
                     Complete the form below to complete the profile registration. If you notice something important missing that can improve your experience
-                    drop us a email or message via the support page. 
+                    drop us a email or message via the support page. Already have an account <a href="/user/user_loginpage">Login</a>
                 </p><br>
-                <p>Already have an account <a href="/user/user_loginpage">Login</a></p>
+
           </div>
 
           <div id="registerSection">
             <form action="/user/reg_petpage" class="form-inline" method="post">
                   <div class="row RegForm">  
-                    <h4>Pet Information</h4><br>
+                   
                     <div> 
-                
+                        <h4>Pet Information</h4><br>
                         <label for="petType">Pet Type: </label>
                         <select name="petType" >
                             <option value="blank"> </option>
@@ -31,7 +31,7 @@
                                <option value="Dog">Dog </option>
                                <option value="Cat">Cat </option>
                                <option value="Hamster">Hamster</option>
-                               <option value="Rabiit">Rabiit</option>
+                               <option value="Rabbit">Rabbit</option>
                            </optgroup>
                            <optgroup label="Farm Animal">
                                <option value="Horse">Horse</option>
@@ -52,27 +52,24 @@
                            </optgroup>
                         </select>
                     </div><br>
-                    
-                     <div><label for="petName">Pets Name:</label> <br>
-                     <input type="text" name="petName"  required></div>  <br>    
-                     <div><label for="dateOfBirth">Date of Birth:</label><br>
-                     <input type="date" name="dateOfBirth"  id="regDate"  required> </div><br><br>      
+                        
+                     <div><br><label for="petName">Pets Name:</label><br>
+                     <input type="text" name="petName"  required></div><br>
                      <div><label for="breed">Pets Breed:</label><br>
-                     <input type="text" name="breed"  required></div>
-
-                     <div><label for="gender">Gender:</label><br>
+                     <input type="text" name="breed"  required><br></div>
+                     <div><label for="colour">Pets Colour:</label><br>
+                     <input type="text" name="colour"  required><br><br></div>
+                      
+                     <div><label for="dateOfBirth">Date of Birth:</label>
+                     <input type="date" name="dateOfBirth"  id="regDate"  required><br> </div>    <br>                    
+                    <div><br> <label for="gender">Gender:</label>
                      <select name="gender" >
                           <option value="blank"> </option>
                          <option value="felmale">Female </option>
                          <option value="male">Male </option>
-                     </select></div><br><br>
+                     </select><br><br></div>
 
-                     <div><label for="colour">Pets Colour:</label><br>
-                     <input type="text" name="colour"  required></div><br><br><br>
-
-
-
-                    <h4>Policy Information</h4><br>
+                    <h4>Policy Information</h4><br><br>
                     
                      <div><label for="desexed">Desexed:</label>
                      <select name="desexed" >
@@ -82,25 +79,26 @@
                          <option value="Undecided">Undecided</option>
                          <option value="Not Yet">Not Yet</option>
                      </select></div>
-                     <div><label for="microchipping">Microchipping:</label>
+                     <div><br><label for="microchipping">Microchipping:</label>
                      <select name="microchipping" >
                          <option value="blank"> </option>
                          <option value="yes">Yes </option>
                          <option value="no">No </option>
                      </select></div>
-                     <div><label for="microchippingNum">Microchipping Number:</label>
+                     <div><br><label for="microchippingNum">Microchipping Number:</label><br>
                      <input type="text" name="microchippingNum" required> </div>
                 
-                     <div><label for="policyNum">Policy Number:</label>
+                     <div><label for="policyNum">Policy Number:</label><br>
                      <input type="text" name="policyNum" required> </div>
         
-                    <div><label for="startDate">Policy Start Date</label>:</label>
+                    <div><br><label for="startDate">Policy Start Date:</label>
                      <input type="date" name="startDate"  id="regDate"  required> </div>
-                    <div><label for="endDate">Policy End Date:</label>
+                    <div><br><label for="endDate">Policy End Date:</label>
                      <input type="date" name="endDate"  id="regDate"  required> </div><br>  
 
-                    <div><label for="insuranceCompanyName">insurance Company Name:</label>
-                        <input type="text" name="insuranceCompanyName" required> </div>    
+                    <div><br><label for="insuranceCompanyName">Insurance Company Name:</label><br>
+                        <input type="text" name="insuranceCompanyName" required>
+                     </div>    
                         <!--Shows all the companies registered -->
                         <!--select name="insurerCompanyId" >
                             <% insuranceCompanies.forEach(company => { %>
@@ -113,7 +111,7 @@
                      <!--input type="text" name="insurerCompanyId"  placeholder="insurerCompanyId"  required> </div-->
                      <br> <br>
                      <!--Submit button-->
-                    <div> <button type="submit">Enter </button></div>
+                    <div><br> <button type="submit" id="userLoginButton">Register Pet </button></div>
                 </div>     
             </form>                
         </div>
@@ -121,6 +119,6 @@
         </div>  
     </div>
     <!--Footer-->
-    <%- include("../partials/footer.ejs") %>
+    <%- include("../partials/footer_genPages.ejs") %>
  </body>
 </html>

@@ -8,7 +8,14 @@
         <%- include ("./partials/header.ejs") %>
          <div class="row">
             <div class="col">
-                <h3>Contact us for any issues </h3>
+                <h3>Contact us for any issues </h3><br>
+                <p>
+                    Our goal is to get back to you as with 24 hours, at present we are working  Standard Time IST, UTC+01:00 time.
+                    This does not affect the 24 hour time frame from when your email or calls comes in to us. Some times can be affected during Irelands
+                    banks holidays. We will send out reminders to all account users about time changes for support before these times. <br>
+                    As our site grows these times will change but as advise all changes will be updated to users well in advise of these changes coming into 
+                    action. If you need more information please do get in touch with our support department who will be able to provide the needed information.
+                </p>
             </div>
          </div>
          <div class="row">
@@ -17,7 +24,7 @@
                 <form action="https://api.web3forms.com/submit" method="POST" class="supportForm">               
                     <!--https://web3forms.com/#start   https://docs.web3forms.com/ -->
                  
-                     <input type="hidden" name="access_key" value="072b7cf2-70a6-478a-ac1e-3359fe5acac3">
+                     <input type="hidden" name="support_form" value="072b7cf2-70a6-478a-ac1e-3359fe5acac3">
 
                     <tr>
                        
@@ -37,16 +44,18 @@
                          <!-- Honeypot Spam Protection -->
                     <input type="checkbox" name="botcheck" class="hidden" >
                     <br>
-                    <button type="submit" >Submit</button>   
+                    <button type="submit" id="userLoginButton" >Submit</button>   
                      
                     </tr>          
                 </form><br><br><br>
              </div>
-            <div class="col-md">
+            
              <div class="col">
+                <br><br><br>
                  <table id="supportTableDetails">
-                    <h3>Contact Details</h3>
+
                     <tr>
+
                         <td>Support Email:</td>
                         <td>info@mainmhi.com</td>
                     </tr>  
@@ -60,24 +69,18 @@
                     <br>
                 </table> <br>
             </div>
-
-
-            </div>
          </div>
-        <div class="row">
-             <div class="col-md"></div>
-
-             <div class="col-md"></div>
-        </div> 
          <div class="row">
-            <div class="col-md"></div>
-            <div class="col google-map"> 
+            <!--div class="col google-map"--> 
                 <!--https://blog.hubspot.com/website/how-to-embed-google-map-in-html-->
               <!--  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1938.227752507857!2d-6.245175628932288!3d53.34955232648783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sie!4v1751826368457!5m2!1sen!2sie" 
                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"> </iframe>--> 
-                  </div> 
+            <!--/div--> 
                 
-             <div id="petAds">
+             <div id="petAds"><br>
+                
+            <p>Do you have a business that you wish to prompt, contact our support department to get your business AD on our site. Terms and conditions do apply</p>
+                <br>
                <!--img src="images/about/adone.jpg" class="adImage"--> <!--https://www.istockphoto.com/photo/happy-puppy-welsh-corgi-14-weeks-old-dog-winking-panting-and-sitting-isolated-on-gm1482199015-509248962?searchscope=image%2Cfilm-->
                <img src="images/about/adsix.jpg" class="adImage" > <!--https://www.istockphoto.com/photo/portrait-funny-and-happy-shiba-inu-puppy-dog-peeking-out-from-behind-a-blue-banner-gm1503385646-523099248?searchscope=image%2Cfilm-->
                <img src="images/about/adtwo.jpg" class="adImage" >
@@ -85,7 +88,7 @@
 
              </div>
             
-            <div class="col-md"></div>
+           
          </div>
     </div> <!--Containter closed-->
     <!--Footer-->
