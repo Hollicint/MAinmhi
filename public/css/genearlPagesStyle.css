@@ -1,0 +1,155 @@
+#adminLogin, #logInOut{
+  text-align: right;
+
+}
+
+#logInOut{
+  text-align: right;
+}
+
+/**************  INDEX **************/
+
+.indexTxt, p, h3{
+  text-align: center;
+}
+
+
+
+.img-fluid{
+  width:1500px;
+  height:1250px; 
+  position:sticky;
+  padding: 24px;
+  
+}
+
+#petAds{
+  text-align: center;
+}
+
+.adImage{
+  width:1600px;
+  height:1250px; 
+  position:sticky;
+  padding: 29px;
+  text-align: center;
+}
+
+
+.indexLoginIcon{
+  width:2000px;
+  height:2000px; 
+}
+
+
+/* User Account */
+.user-account {
+  color: #8C3061;
+  padding: 15px;
+  text-align: center;
+  font-size: 100px;
+}
+
+/* Insurance Company */
+.insurance {
+  color: #8C3061;
+  padding: 15px;
+  text-align: center;
+  font-size: 100px;
+}
+/* carousel */
+
+.carousel-caption{
+  color: black;
+}
+.carousel-caption{
+  font-size: 80px;
+  text-align: center;
+  color: rgb(240, 163, 18);
+}
+.carousel-caption, .item{
+ position: fixed;
+}
+/**************  about **************/
+#aboutTxt{
+  text-align: left;
+   font-size: 80px;
+   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
+
+ .img-fluidAbout{
+  width:1500px;
+  height:1250px; 
+  position:sticky;
+  padding: 40px;
+  margin: 10px;
+  
+} 
+/************** Support **************/
+
+.formBackground{
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  font-size: 3em;
+  text-align: center;
+}
+
+.supportForm{
+  /*
+   border-radius: 5px;
+  padding: 20px;
+  font-size: 3em;
+  */
+  text-align: center;
+  font-size: 100px;
+  padding: 20px;
+  margin: 40px;
+
+}
+
+
+input[type=textarea] {
+  width: 100%;
+  height: 150px;
+
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+}
+
+#supportTableDetails td{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+  font-size: 100px;
+  color: black;
+ 
+}
+
+
+.google-map{
+     padding-bottom: 30%;
+     position: relative;
+}
+
+.google-map iframe {
+     height: 50%;
+     width: 50%;
+     left: 0;
+     top: 0;
+     position: absolute;
+}
+
+
+/**********404***************/
+
+.errImage{
+ text-align: center;
+}
+
+
+

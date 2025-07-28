@@ -1,0 +1,89 @@
+/*********** User Reg Page ***************/
+
+#RegForm{
+  font-size: 90px;
+  padding: 15px;
+  margin: 10px;
+}
+
+
+#regDate{
+  
+   
+}
+
+
+
+
+
+
+/************ Insurance User Profile Page ***********/
+
+/* Pop up Message */
+.popupMessage{
+    padding: 25px;
+    background-color: rgb(217, 55, 46);
+    color: white;
+}
+
+
+.closePopupMessage{
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.closepopup:hover {
+  color: black;
+}
+
+/* Table */
+
+.insureStatusUpdate{
+  font-size: 50px;
+  width:100px;
+}
+#insuranceTable tr{
+ 
+}
+
+#insuranceTable th {
+  padding: 35px;
+  background-color: #8C3061;
+  color: white;
+  border: 25px solid ;
+  font-size: 90px;
+}
+#insuranceTable td {
+  padding: 20px;
+  border-bottom: 1px solid #DDD;
+  background-color: white;
+  font-size: 60px;
+}
+
+
+/*
+#insuranceTable:hover a{
+  background-color: #D6EEEE;
+}
+
+#insuranceTable:hover td{
+  background-color: #D6EEEE;
+}
+.informreg{
+  font-size: 80px;
+  padding: 15px;
+  margin: 10px;
+}
+.form-inline{
+  font-size: 90px;
+  padding: 15px;
+  margin: 10px;
+}
+
+
+*/

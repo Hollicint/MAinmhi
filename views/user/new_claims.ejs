@@ -9,19 +9,23 @@
                   <div class="col">
                      <img src="/images/profileImages/paw.png"  class="petprofileImg" alt="">
                      <br><br>
-                     <div><h3>Pets Name: <%= pet.petName %> </h3></div>
+                     <% if (pet) { %>
+                     <div><h4>Pets Name: <%= pet.petName %> </h4></div>
                      <div><h4>Pets Type: <%= pet.petType %> </h4></div>
                      <div><h4>Pets Breed: <%= pet.breed %> </h4></div>
                      <div><h4>Pets Gender: <%= pet.gender %> </h4></div>
                      <div><h4>D.O.B:  <%= pet.dateOfBirth %> </h4></div>
                      <div><h4>Pets Colour: <%= pet.colour %> </h4></div>
-                     <div><h4>Microchipping: <%= pet.microchipping %> </h4></div>
-                     <div><h4>Microchipping Number:  <%= pet.microchippingNum %> </h4></div>
-                     <div><h4>Policy Number: <%= pet.policyNum %> </h4></div>
-                     <div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div>
-                     <br>
-                     
-                     <div><h3>Owner: <%= user.firstName %> <%= user.lastName %> </h3></div>
+                     <br>  <div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div><br>
+                    <div><h4>Policy Number: <%= pet.policyNum %> </h4></div>
+                    <div><h4>Policy Start Date: <%= pet.startDate %> </h4></div>
+                    <div><h4>Policy End Date: <%= pet.endDate %> </h4></div>
+                    <div><h4>Desexed: <%= pet.desexed %> </h4></div>
+                    <div><h4>Microchipping: <%= pet.microchipping %> </h4></div>
+                    <div><h4>Microchipping Number:  <%= pet.microchippingNum %> </h4></div>
+
+                      <% } %> 
+                     <div><br><h4>Owner: <%= user.firstName %> <%= user.lastName %> </h4></div>
                       <br>
                      <div class="accountBtns logInOut">
     
@@ -65,7 +69,7 @@
                                  </tr>
                                  <tr>
                                      <th>
-                                         <label for="areaOfIssue">Area Of Issue: </label>
+                                         <label for="areaOfIssue">Area Of Issue: </label><br>
                                          <select name="areaOfIssue" class="areaOfIssue">
                                              <option value="unselected"> </option>
                                              <optgroup label="Face">
@@ -101,23 +105,25 @@
                                                  <option value="back Left">Back Foot Left </option>
                                              </optgroup>
                                                  <optgroup label="Additioanl">
-                                                 <option value="furr">furr </option>
+                                                 <option value="Furr">Furr </option>
                                                  <option value="Scales">Scales</option>
-                                                
+                                                 <option value="Wing">Wing</option>
                                              </optgroup>
                                          </select>
                                      </th>
                                  </tr>
                                  <tr>
                                      <th>
-                                         <label for="incidentStartDate">Issue Date: </label>
+                                         <label for="incidentStartDate">Issue Date: </label><br>
                                          <input type="date" name="incidentStartDate" placeholder="Issue Date" required> <br>
+                                         
                                      </th>
                                  </tr>
                                  <tr>
-                                    <th>
-                                        <label for="vetDate">Vet First visit Date: </label>
+                                    <th><br>
+                                        <label for="vetDate">Vet First visit Date: </label><br>
                                         <input type="date" name="vetDate" placeholder="Issue Date" required> <br>
+                                        
                                     </th>
                                  </tr>
                                  <tr>
@@ -139,19 +145,19 @@
                                  </tr>
                                  <tr>
                                     <th>
-                                        <label for="claimStatus">Claim Status</label>
+                                        <label for="claimStatus">Claim Status</label><br>
                                          <select name="claimStatus" id="claimStatus">
-                                            <option value="claim Unselected">unselected</option>
-                                            <option value="claim Ready">Ready</option>
-                                            <option value="claim Working">Working On</option>
-                                            <option value="claim Waiting">Waiting Update</option>
-                                            <option value="claimComplete">Complete</option>
+                                            <option value="Unselected"></option>                                         
+                                            <option value="Claim Ready for Insurer">Claim Ready for Insurer</option>
+                                            <option value="Working on Claim">Working on Claim</option>
+                                            <option value="Claim Waiting from Vet">Waiting Update from Vet</option>
+                                            <option value="Claim Complete">Claim Complete</option>
                                          </select>    <br>
                                     </th>
                                  </tr>
                                  <tr>
                                     <th>
-                                         <label for="claimAmount">Claim Cost: </label>
+                                         <label for="claimAmount">Claim Cost: </label><br>
                                          <input type="number" name="claimAmount"  required> <br>
                                     </th>
                                  </tr>
@@ -163,7 +169,7 @@
                                  </tr>
                                  <tr>
                                     <td>
-                                        <button type="submit">Save Claim</button>
+                                        <button type="submit" id="userLoginButton">Save Claim</button>
                                     </td>
                                  </tr>
                              </table>
@@ -174,7 +180,7 @@
 
     </div>
     <!--Footer-->
-    <%- include("../partials/footer.ejs") %>    
+    <%- include("../partials/footer_genPages.ejs") %>    
     <script  src="/js/claims.js"></script>    
 </body>
 </html>

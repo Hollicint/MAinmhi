@@ -37,6 +37,11 @@ const regUserSchema= new Schema({
         type: String,
         required: true
     },  
+     insurerCompanyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "RegisterInsuranceCompany",
+          required: false
+    },
     // only user role access set as defluat
     role:{
         type: String,

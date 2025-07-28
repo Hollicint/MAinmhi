@@ -1,0 +1,136 @@
+/* Register form */
+
+.userRegForm{
+  
+}
+
+/**************  User Login page **************/
+
+.loginTxt, h1, h2{
+  text-align: center;
+}
+
+
+.userLoginForm{
+  border-radius: 5px;
+  font-size: 3em;
+  padding: 50px;
+}
+
+/*.userLoginIcon{
+  width:3000px;
+  height:2500px; 
+  
+}*/
+
+.leftimage-col {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-size: 50px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/* Right column (Form) */
+.rightSide-col {
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.full-height {
+    min-height: 100vh;
+    display: flex;
+}
+
+.petprofileImg{
+   width: 1200px;
+   height: 1200px;
+   text-align: center;
+
+}
+
+.edit_userDetails{
+  display: none;
+}
+
+
+
+
+/************ Pet Profile Page ***********/
+
+
+.petProfileTable th{
+  background-color: #8C3061;
+  padding: 70px;    
+  font-size: 75px;
+}
+.petProfileTable td{
+  background-color: rgb(255, 247, 247);
+  padding: 90px;    
+  font-size: 85px;
+  text-align: left;
+}
+
+
+.edit_petDetails{
+   display: none;
+}
+
+#submitClaimBtn{}
+
+.createPetAccount {
+    color: black;
+    padding: 15px;
+    text-align: center;
+    
+}
+
+#claimDisplay th {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: center;
+  background-color: #8C3061;
+  color: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  
+}
+#claimDisplay td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #DDD;
+  background-color: white;
+  font-size: 80px;
+  
+}
+#claimDisplay:hover td{
+  background-color: #D6EEEE;
+}
+
+/*************** Claim *********************/
+.editClaimSection{
+  display: none;
+}
+
+.claimForm, th, td{
+  font-size: 60px;
+  height: 20px;
+  padding: 25px;
+  margin: 14px;
+}
+.viewClaimForm{
+  font-size: 70px;
+  height: 20px;
+  padding: 15px;
+  margin: 10px;
+  text-align: left;
+}
+#editClaim{
+  font-size: 110px;
+}
+

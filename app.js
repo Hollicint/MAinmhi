@@ -10,8 +10,6 @@ const path = require("path");
 const bodyParser = require('body-parser');
 const { body, validationResult } = require("express-validator");
 
-
-
 // import of models connected to DB
 //const UserLoginDetail = require("./models/userlogindetail");
 const RegisterUser = require("./models/registeruser");
@@ -22,7 +20,6 @@ const RegisterInsurer = require("./models/registerinsurer");
 const RegisterInsuranceCompany = require("./models/registerinsurancecompany")
 const AdminUser = require("./models/adminuser");
 
-//Login Security 
 //inserting limit attempts for login
 const rateLimit = require('express-rate-limit');
 //imports bcrypt for hashing
@@ -47,6 +44,10 @@ const { title } = require("process");
 //load environment 
 require('dotenv').config();
 
+
+
+// ####################### SESSION & MIDDLEWARE SECTION  ##############################################
+
 //session configurations
 app.use(
     session({
@@ -57,7 +58,6 @@ app.use(
         resave: false,
         // no empty sessions
         saveUninitialized: false,
-        //saveUninitialized: false,
         //resetting session after 1 min if the site isnt touched it will make user sign back in
         //securing cookies
         cookie: {
@@ -71,6 +71,7 @@ app.use(
         rolling: true,
     })
 );
+
 
 app.use((request, response, next)=>{
     response.locals.user = request.session.user || null;
@@ -91,10 +92,11 @@ const limitLogin = rateLimit({
 app.set("view engine", "ejs")
 app.set('views', __dirname + '/views');
 
-//Retrieves data to server
-app.use(express.urlencoded({ extended: true }));
+
 //middleware to allow access to static files
 app.use(express.static("public"));
+//Retrieves data to server
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //Middleware to check Authentication
@@ -118,7 +120,9 @@ function isAdminAuthen(request, response, next) {
 }
 
 
-// Mongodb connection
+
+// ####################### MONGODB & GRIDFS SECTION  ##############################################
+
 const dbURI = process.env.mongo_db;
 
 /*
@@ -182,9 +186,10 @@ mongoose.connect(dbURI) // connects DB
         */
         //listen for incoming requests
         //app.listen(3000);
-//////////////////////////////////////////////////
 
-//route and response
+
+
+// #######################  PUBLIC PAGES SECTION  ##############################################
 
     //Index Page
      app.get("/", (request, response) => {
@@ -207,8 +212,11 @@ mongoose.connect(dbURI) // connects DB
          response.redirect("/support");
      });
 
-//////////////////////////////////////////////
-     //User Login & Register
+
+
+
+// #######################  USER SIDE SECTION  ##############################################
+
      // User register get
      app.get("/user/reg_userpage", (request, response) => {
          response.render("user/reg_userpage", {
@@ -237,7 +245,7 @@ mongoose.connect(dbURI) // connects DB
             const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
             if (!emailFormat.test(emailAddress)) { 
               //  errorMessage.push( "Invalid credentials");
-                 errorMessage.emailAddress ="Email Already on system";
+                 errorMessage.emailAddress ="Email already on system";
             }
         //Check Username is enterd correctly
             if(username.length < 6){
@@ -317,7 +325,7 @@ mongoose.connect(dbURI) // connects DB
             if (!user) {
                  return response.render("user/user_loginpage", {
                     title: "User Login",
-                    errorMessage: "Invalid credentials" 
+                    errorMessage: "User credentials do not exist" 
                  });                    
             } 
             // checking password
@@ -326,7 +334,7 @@ mongoose.connect(dbURI) // connects DB
             if(!matchedLogin) {
                 return response.render("user/user_loginpage", {
                     title: "User Login",
-                    errorMessage: "Invalid credentials" 
+                    errorMessage: "Invalid password credentials" 
                 });                    
             } 
             // connects to user registered logins and goes to profile
@@ -392,14 +400,14 @@ mongoose.connect(dbURI) // connects DB
 
     // edit user profile details
     app.post("/user/user_profile/:id", isAuthen, async(request, response)=>{
-       
-       const userId = request.params.id;
-        const {
+        try{
+            const userId = request.params.id;
+            const {
             firstName, lastName, emailAddress, contactNumber,
              dateOfBirth, address, username, password
             } = request.body;
 
-         try{    
+            
             const user = await RegisterUser.findById(userId);
 
             user.firstName = firstName;
@@ -409,21 +417,46 @@ mongoose.connect(dbURI) // connects DB
             user.dateOfBirth = dateOfBirth;
             user.address = address;
             user.username = username;
-           // user.password = body.password;
+           // user.password = password;
+
+           // update the password 
             if(password && password.trim() !==""){
                 const hashedPassword = await bcrypt.hash(password, 12);
                 user.password = hashedPassword;
             }
+            // save details
             await user.save();
+            //get the updated details
+           // const updatedUserDetails = await RegisterUser.findById(userId);
 
-            const updatedUserDetails = await RegisterUser.findById(userId);
+            request.session.user ={
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                emailAddress: user.emailAddress,
+                contactNumber: user.contactNumber,
+                dateOfBirth: user.dateOfBirth,
+                address: user.address,
+                username: user.username,
+                password: user.password,
+            }
 
-           response.redirect(`/user/user_profile/${userId}`);
+            const pets = await PetAccountDetail.find({ userId: user._id });
+            //user = await RegisterUser.findOne({ 
+            //    _id: user,
+            //    userId: request.session.user._id,
+            //});
 
-           // response.render("user/user_profile", {
-           //     title: "User Profile",
-           //     user: updatedUserDetails,
-           // });
+          // response.redirect(`/user/user_profile/${userId}`);
+
+           response.render("user/user_profile", {
+                title: "User Profile",
+                // user: updatedUserDetails,
+               // user: request.session.user,
+               user: user,
+                pets: pets,
+                errorMessage: null
+            });
 
         } catch (error) {
             console.error("Update error", error);
@@ -432,8 +465,10 @@ mongoose.connect(dbURI) // connects DB
 
     });
 
- ////////////////////////////////////////////////////////////////
-    //Pet  Login & Register
+
+// #######################  PET SECTION  ##############################################
+
+    // GET - register pet account
     app.get("/user/reg_petpage", async(request, response) => {
         try {
             const insuranceCompanies = await RegisterInsuranceCompany.find(); 
@@ -446,6 +481,7 @@ mongoose.connect(dbURI) // connects DB
             response.status(500).send("Error with registration");
         }
     });
+
     // Post Pets reg form and save to connected user
     app.post("/user/reg_petpage", async (request, response) => {
         try {
@@ -469,8 +505,9 @@ mongoose.connect(dbURI) // connects DB
                 endDate: request.body.endDate,
                 //insuranceCompanyName: request.body.insuranceCompanyName,
                 //insurerCompanyId: request.body.insurerCompanyId,
-                insurerCompanyId: request.body.insurerCompanyId,
-                userId: request.session.user._id
+               // insurerCompanyId: request.body.insurerCompanyId,
+               insuranceCompanyName: request.body.insuranceCompanyName,
+            userId: request.session.user._id
 
             });
             await pet.save();
@@ -480,6 +517,23 @@ mongoose.connect(dbURI) // connects DB
             console.error("Error with registration", error);
             response.status(500).send("Error with registration");
         }
+    });
+
+    //Get pet profile
+     app.get("/user/pets_profile",isAuthen, async (request, response) => {
+        try {
+
+            const pets = request.session.user;
+            response.render("/user/pets_profile", {
+                title: "Pet profile",
+                pets: pets
+            });
+
+
+        } catch (error) {
+            console.error("Error with displaying data", error);
+            response.status(500).send("Error with data");
+        }   
     });
 
 
@@ -538,6 +592,7 @@ mongoose.connect(dbURI) // connects DB
               pet,
               user: request.session.user,
               claimsdetail: allclaimsconnected,
+            //  insurerCompany
             });
 
         }catch(error){
@@ -546,9 +601,85 @@ mongoose.connect(dbURI) // connects DB
         }
 
     });
+
+
+
+
+    // Edit pet profile details
+    app.post("/user/pets_profile/:id",isAuthen, async (request, response) => {
+        try{
+            const petId = request.params.id;
+            
+            const {
+                petName, petType, breed, gender,
+                colour, dateOfBirth, microchipping, microchippingNum,
+                policyNum,desexed, startDate, endDate,insuranceCompanyName //, insurerCompanyId
+            } = request.body;        
+
+             const pet = await PetAccountDetail.findById(petId);
+            
+
+
+
+             // update pet details
+             pet.petName = petName,
+             pet.petType= petType,
+             pet.breed = breed,
+             pet.gender = gender,
+             pet.colour = colour,
+             pet.dateOfBirth = dateOfBirth,
+             pet.microchipping = microchipping,
+             pet.microchippingNum = microchippingNum,
+             pet.policyNum = policyNum,
+             pet.desexed = desexed,
+             pet.startDate = startDate,
+             pet.endDate = endDate,
+              pet.insuranceCompanyName = insuranceCompanyName,
+          //   pet.insurerCompanyId = insurerCompanyId,
+
+            // save details
+            await pet.save();
+            //get the updated details
+           //const updatedPetDetails = await PetAccountDetail.findById(petId);
+        //    request.session.user ={
+        //        //_id: pet._id,
+        //        petName: pet.petName,
+        //        petType: pet.petType,
+        //        breed: pet.breed,
+        //        gender: pet.gender,
+        //        colour: pet.colour,
+        //        dateOfBirth: pet.dateOfBirth,
+        //        microchipping: pet.microchipping,
+        //        microchippingNum: pet.microchippingNum,
+        //        policyNum: pet.policyNum,
+        //        desexed: pet.desexed,
+        //        startDate: pet.startDate, 
+        //        dateOfBirth: pet.dateOfBirth,
+        //        endDate: pet.endDate,
+        //         insuranceCompanyName: pet.insuranceCompanyName,  
+        //       // insurerCompanyId: pet.insurerCompanyId,                              
+        //    }
+            const claimsdetail = await ClaimDetail.find({petId: pet._id }); 
+
+
+            response.render("user/pets_profile", {
+                title: "Pet Profile",
+                pet: pet,
+                claimsdetail: claimsdetail,
+                errorMessage: null
+            });
+        }catch(error){
+            console.error("Error with pet profile details", error);
+            response.status(500).send("Error with pet profile");
+        }    
+    });
  
- /////////////////////////////////////////////////
-     //Claim Side
+
+
+
+// #######################  CLAIM SECTION  ##############################################
+
+
         app.get("/user/new_claims", isAuthen, async (request, response) => {
              try {
 
@@ -696,7 +827,7 @@ mongoose.connect(dbURI) // connects DB
 
                response.render("user/view_claims", {
                    title: "View Claim",
-                   pet,
+                   pet:pet,
                    claim,
                    user: request.session.user,
                    isArchived: isArchived
@@ -833,11 +964,26 @@ mongoose.connect(dbURI) // connects DB
 
         });
 
-//////////////////////////////////////////////////////////////////
-//  // Insurance Company 
+    // GET - User Payment Details
+    app.get("/user/user_paymentDetails/id",  isAuthen, async (request, response) => {
+            response.render("user/user_paymentDetails", { 
+                title: "User Payment Details",
+                pet: pets,
+                user: request.session.user || null,
+                errorMessage: null
+            });
+    });        
 
 
-// Get Insuracnce User Company form
+
+
+
+// #######################  INSURANCE COMPANY USER SIDE SECTION  ##############################################
+
+
+//############# Insurance Company User Register  ########################//
+
+    // GET - ICU Register
     app.get("/insurance/reg_insuranceCompany", (request, response) => {
             response.render("insurance/reg_insuranceCompany", { 
                 title: "insurance Company Registration",
@@ -874,18 +1020,24 @@ mongoose.connect(dbURI) // connects DB
          try {   
             // Check Email is entered correctly
             const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-            if (!emailFormat.test(insuranceCompanyEmail,)) { 
-                 errorMessage.insuranceCompanyEmail ="Email Already on system";
+
+            if (!emailFormat.test(staffEmailAddress,)) { 
+                 errorMessage.staffEmailAddress ="Incorrect email format";
             }
+
+            if (!emailFormat.test(insuranceCompanyEmail,)) { 
+                 errorMessage.insuranceCompanyEmail ="Incorrect email format";
+            }
+
 
         //Check Username is enterd correctly
             if(!username || username.length < 6){
-               errorMessage.username ="Username must be more than 6 characters";
+               errorMessage.username ="Username does not meet requirements please recheck";
               }
 
     	//Check Password is enterd correctly
             if(!password || password.length < 8 || password.length > 14 ){ 
-                errorMessage.password ="password must contain 8-14 characters";
+                errorMessage.password ="password does not meet requirements please recheck";
             }
 
 
@@ -901,7 +1053,7 @@ mongoose.connect(dbURI) // connects DB
                 }
                 if(userExisting.staffEmailAddress === staffEmailAddress){
                     errorMessage.staffEmailAddress ="email Address already exist";
-                }
+                } 
             }
 
         //Check if errors are on page it will stay and not go to pet reg page
@@ -913,7 +1065,9 @@ mongoose.connect(dbURI) // connects DB
                 });
             }
 
+            //saving details
             const company = await newInsurerCompany.save();
+            // hashing password
             const hashedPassword = await bcrypt.hash(password, saltRounds);
             const insurerUser = await RegisterInsurer({
                 staffFirstName, staffLastName, staffEmailAddress,
@@ -932,7 +1086,9 @@ mongoose.connect(dbURI) // connects DB
         }
     });
 
-    // Insurance Company User logins in
+//############# Insurance Company User Login  ########################//
+
+    // GET - ICU Login
     app.get("/insurance/insurance_loginpage", (request, response) => {
         response.render("insurance/insurance_loginpage", { 
             title: "insurance Login",
@@ -941,8 +1097,7 @@ mongoose.connect(dbURI) // connects DB
         });
     });
 
-    
-    // post login details to correct user profile
+     // POST - ICU Login details to direct to profile
     app.post("/insurance/insurance_loginpage",limitLogin, async (request, response) => {
         const { username, password } = request.body;
         try {
@@ -952,7 +1107,7 @@ mongoose.connect(dbURI) // connects DB
             if (!insurerUser) {
                    return response.render("insurance/insurance_loginpage", {
                     title: "insurer User Login",
-                    errorMessage: "Not Registered user" 
+                    errorMessage: "Not a Registered user" 
                      });                    
                 } 
 
@@ -981,6 +1136,9 @@ mongoose.connect(dbURI) // connects DB
         }
     });
 
+//############# Insurance Company User Profile  ########################//
+
+    // GET - ICU Profile
    app.get("/insurance/insurance_profile", isInsurerAuthen, async (request, response) => {
     try {
         //Get the login Insurance user
@@ -991,15 +1149,20 @@ mongoose.connect(dbURI) // connects DB
         }).select('_id firstName lastName');
 
          // Get the users ID's
-        const userIds = users.map(user => user._id);
+        const userIds = users.map(user => user._id);//.toString());
 
        //get the pets connect to insurance company
-        const pets = await PetAccountDetail.find({  }).select('_id');
+        const pets = await PetAccountDetail.find({
+           // insurerCompanyId: companyId
+        }).select('_id');
+
         // Get the Pets and the claims ID's
-        const petIds = pets.map(pet => pet._id);
+        const petIds = pets.map(pet => pet._id);//.toString());
 
         // Get the pet claims 
-        const claims = await ClaimDetail.find({ })
+        const claims = await ClaimDetail.find({
+           // petId: { $in: petIds }
+        })
            .populate("petId")
            .populate("userId")
            .exec();
@@ -1011,7 +1174,7 @@ mongoose.connect(dbURI) // connects DB
            insurerUser,
            company: insurerUser.company,
            claims,
-           pets,
+           pet:pets,
            users,
        });
     } catch (error) {
@@ -1020,19 +1183,33 @@ mongoose.connect(dbURI) // connects DB
       }
    });
 
-   
-    //////////////////////////////////////////////////////////////////
-    // Admin
+    // POST - ICU Profile
+   app.get("/insurance/insurance_profile", isInsurerAuthen, async (request, response) => {
+    try{
 
+    }catch (error) {
+       console.error("Error with Insurer profile details", error);
+        response.status(500).send("Error with Insurer profile");
+      }
+   });
+
+
+
+   
+// #######################  ADMIN SIDE SECTION ##############################################
+
+
+    
+// GET Reg adming - Admin wont have access to this section. as there wont be a visibale register admin page
  app.get("/admin/reg_adminpage", (request, response) => {
     response.render("admin/reg_adminpage", {
-         title: "Admin",
+        title: "Admin",
         errorMessage: {},
         values:{}
     });
    
-    });
-
+    }); 
+    //POST Admin reg
  app.post("/admin/reg_adminpage", async (request, response) => {
     const {
        adminfirstName, adminLastName, adminEmailAddress, adminStaffNumber, username,password
@@ -1093,19 +1270,21 @@ mongoose.connect(dbURI) // connects DB
     });
 
 
-
+    // Login Page
     app.get("/admin/admin_loginpage", (request, response) => {
         response.render("admin/admin_loginpage", {
-            title: "Admin Login",
+            title: "Admin  Login",
             adminUser: request.session.adminUser || null,
             errorMessage: null
         });
-    });
 
+    });
+ 
    app.post("/admin/admin_loginpage", limitLogin, async (request, response) => {
        const { username, password } = request.body;
        try{
            const adminUser = await AdminUser.findOne({ username });
+
            // Gives error if users doesnt exis
            if (!adminUser) {
                 return response.render("admin/admin_loginpage", {
@@ -1140,20 +1319,19 @@ mongoose.connect(dbURI) // connects DB
 
   app.get("/admin/admin_profile",isAdminAuthen,async (request, response) => {
     try{
+        // Get the Admin User
         const adminUser = await AdminUser.findById(request.session.adminUser._id).lean();
 
-        
-        const users = await RegisterUser.find({ }).select('_id');
-        const userIds = users.map(user => user._id);
-
-       // const insurerUser = await RegisterInsurer.findById(request.session.insurerUser._id).populate("company");
+        const users = await RegisterUser.find({ }).select('_id firstName lastName emailAddress insurerCompanyId');
+        const insurerUsers = await RegisterInsurer.find({}).populate('company').lean(); 
 
         response.render("admin/admin_profile", {
             title: "Admin profile",
             adminUser,
             users,
-          //  insurerUser
+           insurerUsers
         });
+
     }catch(error){
         console.error("Error with Admin profile details", error);
         response.status(500).send("Error with Admin profile");
@@ -1163,16 +1341,27 @@ mongoose.connect(dbURI) // connects DB
   });
 
 
+/*
+     const adminUser = await AdminUser.findById(request.session.adminUser._id).lean();
+      const users = await RegisterUser.find({ }).select('_id');
+      const userIds = users.map(user => user._id);
+     -// const insurerUser = await RegisterInsurer.findById(request.session.insurerUser._id).populate("company");
+      response.render("admin/admin_profile", {
+          title: "Admin profile",
+          adminUser,
+          users,
+        //  insurerUser
+      });
+
+*/
  // app.get("/admin/admin_profile", (request, response) => {
  //     response.render("admin/admin_profile", { title: "Admin" });
  // });
 
 
 
+// #######################  LOGOUT SECTION  ##############################################
 
- //   /////////////////////////////////////////////////
-    //logout
-    
     //user
     app.get("/user/logout", (request, response) => {
         request.session.destroy(() => {
@@ -1209,21 +1398,33 @@ mongoose.connect(dbURI) // connects DB
     //});
 
 
+// #######################  404 page  ##############################################
 
-//404 page
 app.use((request, response) => {
     response.status(404).render("404", { title: "404" });
 });
 
-/* Important for testing
-   when testing cypress uncomment this and remove test: jest in package.json */ 
 
+
+
+// ####################### TESTING  ##############################################
+
+ // Important for testing
+  // when testing cypress uncomment this and remove test: jest in package.json 
+   
   app.listen(3000, () => console.log("Server running"))
+
+
 
 });
 
  //when testing Jest uncomment this and add test: jest in package.json    
  //module.exports = app;
+
+
+/*######################## END OF TESTING SECTION #######################################*/ 
+
+
 
 
 
