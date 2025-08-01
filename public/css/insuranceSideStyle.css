@@ -14,9 +14,6 @@
 
 
 
-
-
-
 /************ Insurance User Profile Page ***********/
 
 /* Pop up Message */
@@ -64,26 +61,3 @@
   background-color: white;
   font-size: 60px;
 }
-
-
-/*
-#insuranceTable:hover a{
-  background-color: #D6EEEE;
-}
-
-#insuranceTable:hover td{
-  background-color: #D6EEEE;
-}
-.informreg{
-  font-size: 80px;
-  padding: 15px;
-  margin: 10px;
-}
-.form-inline{
-  font-size: 90px;
-  padding: 15px;
-  margin: 10px;
-}
-
-
-*/

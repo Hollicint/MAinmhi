@@ -1,125 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--head-->
+<!--head Connection--> 
 <%- include ("../partials/head.ejs") %>
-
 <body>
-    <div class="container-fluid conatainer3-mainBody">
-
-        <div class="row">
-            <div class="col-4 leftimage-col ">
-                <div class="col">
+    <!-- Bootstrap containers div -->
+    <div class="container-fluid container3-mainBody full-height">
+        <!-- Left Hand Side column: contains the User profile -->    
+        <div class="col-4 leftimage-col ">
+            <div class="col">
                <img src="/images/accountsImages/usersIcon.jpg" class="indexLoginIcon" alt="icon">
-                    <br><br> <!--https://www.pexels.com/photo/photo-of-woman-wearing-blue-zip-up-jacket-1090387/-->
-                    <div class="update_userDetails">
-                        
-                         <% if (user) { %>
-                         <div><h4>Username: <%= user.username %></h4><br><br></div>
-                         <div><h4>Name: <%= user.firstName %></h4><br></div>
-                         <div><h4>Name: <%= user.lastName %></h4><br></div>
-                         <div><h4>Email: <%= user.emailAddress %></h4><br></div>
-                         <div><h4>Contant Number: <%= user.contactNumber %></h4><br></div>
-                         <div><h4>D.O.B: <%= user.dateOfBirth %></h4><br></div>
-                         <div><h4>Address: <%= user.address %></h4><br></div><br>
+                <br><br> <!--https://www.pexels.com/photo/photo-of-woman-wearing-blue-zip-up-jacket-1090387/-->
+                <div class="update_userDetails">
+                    <% if (user) { %>
+                        <h3>User Informaiton</h3><br> 
+                        <div><h4>Username: <%= user.username %></h4><br></div>
+                        <div><h4>Name: <%= user.firstName %></h4><br></div>
+                        <div><h4>Name: <%= user.lastName %></h4><br></div>
+                        <div><h4>Email: <%= user.emailAddress %></h4><br></div>
+                        <div><h4>Contant Number: <%= user.contactNumber %></h4><br></div>
+                        <div><h4>D.O.B: <%= user.dateOfBirth %></h4><br></div>
+                        <div><h4>Address: <%= user.address %></h4><br></div><br>
                         <button id="update_userDetailsBtn" class="userLoginButton">Update <%= user.firstName %> Details </button>   
-                         <% } %>     
-                    </div>   <br>     
-
-                   
-                    <div class="edit_userDetails">
-                        <form action="/user/user_profile/<%= user._id %>" method="post" >
-                            
-                            <!--input type="text" required name="id" value="<%= user._id %>" hidden><br-->
-                             <label for="username"><h4>Username: </h4></label>
-                            <input type="text" name="username" class="displayBox" value="<%= user.username %>"required><br>
-                            <label for="firstName"><h4>Name: </h4></label>
-                            <input type="text" name="firstName" class="displayBox" value="<%= user.firstName %>" required> <br>
-                            <label for="lastName"><h4>Last Name: </h4></label>
-                            <input type="text" name="lastName" class="displayBox" value="<%= user.lastName %>"required><br>                            
-                            <label for="emailAddress"><h4>Email: </h4></label>
-                            <input type="email" name="emailAddress" class="displayBox" value="<%= user.emailAddress %>"required><br>
-                             <label for="contactNumber"><h4>Contant Number: </h4></label>
-                            <input type="text" name="contactNumber" class="displayBox" value="<%= user.contactNumber %>"required><br>
-                            <label for="dateOfBirth"><h4>D.O.B: </h4></label>
-                            <input type="date" name="dateOfBirth" class="displayBox" value="<%= user.dateOfBirth %>"required><br>                 
-                            <label for="address"><h4>Address: </h4></label>
-                            <input type="text" name="address" class="displayBox" value="<%=user.address %>"required><br>               
-                            
-                            <label for="password"><h4>Password: </h4></label>
-                            <input type="password" name="password" class="displayBox" ><br><br>                    
-                            <button id="save_editUserDetailsBtn" class="userLoginButton">Save <%= user.firstName %> Details </button>   
-                                     
-                        </form>                                                   
+                    <% } %>     
+                </div>    
+                <!-- Edit of user details-->
+                <div class="edit_userDetails">
+                    <form action="/user/user_profile/<%= user._id %>" method="post" >
+                        <!--input type="text" required name="id" value="<%= user._id %>" hidden><br-->
+                         <label for="username"><h4>Username: </h4></label>
+                        <input type="text" name="username" class="displayBox" value="<%= user.username %>"required><br>
+                        <label for="firstName"><h4>Name: </h4></label>
+                        <input type="text" name="firstName" class="displayBox" value="<%= user.firstName %>" required> <br>
+                        <label for="lastName"><h4>Last Name: </h4></label>
+                        <input type="text" name="lastName" class="displayBox" value="<%= user.lastName %>"required><br>                            
+                        <label for="emailAddress"><h4>Email: </h4></label>
+                        <input type="email" name="emailAddress" class="displayBox" value="<%= user.emailAddress %>"required><br>
+                        <label for="contactNumber"><h4>Contant Number: </h4></label>
+                        <input type="text" name="contactNumber" class="displayBox" value="<%= user.contactNumber %>"required><br>
+                        <label for="dateOfBirth"><h4>D.O.B: </h4></label>
+                        <input type="date" name="dateOfBirth" class="displayBox" value="<%= user.dateOfBirth %>"required><br>                 
+                        <label for="address"><h4>Address: </h4></label>
+                        <input type="text" name="address" class="displayBox" value="<%=user.address %>"required><br>               
+                        
+                        <label for="password"><h4>Password: </h4></label>
+                        <input type="password" name="password" class="displayBox" ><br><br>                    
+                        <button id="save_editUserDetailsBtn" class="userLoginButton">Save <%= user.firstName %> Details </button>             
+                    </form>                                                   
+                </div>
+                <br><br>
+                <!-- Login out of account-->
+                <%if(user) {%>
+                    <div class="logInOut">
+                        <a href="/user/logout">  <%= user.username %> Logout</a>
                     </div>
-
-
-
-                    <br><br>
-                     <!-- Login out of account-->
-                    <%if(user) {%>
-                        <div class="logInOut">
-                          <a href="/user/logout">  <%= user.username %> Logout</a>
-                        </div>
-             
-                    <% } %>    
-                    <br><br>
-                    <!--
-                    <a href="/user/user_paymentDetails">Payment details</a>
-                    -->    
-
-                </div>   
-            </div>
-            <div class="col-md-8 createPetAccount">
-                <div class="col">
-                  <div> 
-                    <h1>Welcome to M'Ainmhi <%= user.firstName %>! </h1>
-                    <br><br><br>
-                    <br><br><br>
-                   
-                    <br><br><br>
+                <% } %>    <br>
+                <!--<a href="/user/user_paymentDetails">Payment details</a>-->    
+            </div>   
+        </div><!-- Left Hand Side column: contains the User profile -->
+        <!--Right Hand Side column: Main Content-->   
+        <div class="col-md-8 createPetAccount">
+            <div class="col">
+                <div> 
+                    <h1>Welcome to M'Ainmhi <%= user.firstName %>! </h1><br><br><br>
                     <h3>  Pet Accounts </h3>
-                     <h3>Please To store your beloved pet medical information</h3>
-                   
-                    <br><br>
+                    <h3>Please To store your beloved pet medical information</h3> <br><br>
                     <p>Access your pets account below to create a claim on their profile. <br> Add more of your pets by clicking the Add a Pet Icon. </p>
                     <br><br>
-                  </div>
-
-                  <div>
+                </div>
+                <div>
                     <% if (pets.length > 0) { %>
                     <div class="row mt-3"> 
                         <% pets.forEach(pet => { %>
-                        <div class="col-6 pet-account"> 
+                        <div class="col-6 pet-account"> <br>
                             <h3>Pets Name: <%= pet.petName %></h3><br><br>
                             <a href="/user/pets_profile/<%= pet._id %>"><img src="/images/profileImages/paw.png" alt="<%= pet.petType %>" class="rounded-circle petprofileImg"  data-cy="petLink"></a>
                                <h3>Pet Type: <%= pet.petType %></h3>
                         </div>   
-                    <% }); %>    
-                    <br>
-                    <div class="col-6 pet-account"  ><br><br><br><br><br><br>
-                        
-                        <a href="/user/reg_petpage"><img src="/images/profileImages/paw.png" alt="New Account" class="rounded-circle petprofileImg" ></a> 
-                        <h3>Add a Pet  </h3>
-                     </div>
-                    <br>
+                         <% }); %> <br>
+                        <div class="col-6 pet-account"  ><br><br><br><br><br><br>
+                            <a href="/user/reg_petpage"><img src="/images/profileImages/paw.png" alt="New Account" class="rounded-circle petprofileImg" ></a> 
+                            <h3>Add a Pet  </h3>
+                        </div><br>
                     <% } else { %>
-                    <div class="col-6 pet-account">
-                        <h3>No Pet registered yet </h3>
-                        <a href="/user/reg_petpage"><img src="/images/profileImages/paw.png" alt="New Account" class="rounded-circle" class="petprofileImg"></a>
-                     <br> 
+                        <div class="col-6 pet-account">
+                            <h3>No Pet registered yet </h3>
+                            <a href="/user/reg_petpage"><img src="/images/profileImages/paw.png" alt="New Account" class="rounded-circle" class="petprofileImg"></a><br> 
+                        </div>    
+                    
+                    <% } %> <br>  
                     </div>    
-                    </div> 
-                    <% } %>  
-                    <br>  <br>    
-                  </div>
                 </div>
-                <br><br>  
-            </div>
-        </div>  
-    
-    </div>  
-    <!--Footer-->
-   <%- include("../partials/footer_genPages.ejs") %> 
+            </div>  
+        </div> <!-- End of Right Hand Side column: Main Content-->       
+    </div> <!-- End of Bootstrap containers div -->
+    <!--Footer Connection-->
+    <%- include ("../partials/footer_genPages.ejs") %>  
+   <!--JS page Connection-->
    <script  src="/js/updateUserDetails.js"></script>     
 </body>
 </html>

@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--head-->
+<!--head Connection-->    
 <%- include ("../partials/head.ejs") %>
 <body>
-    <div class="container-fluid conatainer3-mainBody full-height">
+    <!-- Bootstrap containers div -->
+    <div class="container-fluid container3-mainBody full-height">
+        <!-- Left Hand Side column: contains the ICU Profile-->  
         <div class="col-4 leftimage-col">
             <div class="col">
                  <h1> M'Ainmhi </h1><br>
                 <img src="/images/accountsImages/insuranceIcon.jpg"  class="indexLoginIcon" alt="icon"><br><br>
-
                 <div class="update_insurerDetails">
                     <h3>User Informaiton</h3><br>                 
-                     <div><h4>Name: <%= insurerUser.staffFirstName %> <%= insurerUser.staffLastName %></h4></div>
-                     <div><h4>Email: <%= insurerUser.staffEmailAddress %></h4></div>
-                     <div><h4>Contant Number: <%= insurerUser.staffContactNumber %></h4></div>
-                     <div><h4>Staff Number: <%= insurerUser.staffNumber %></h4></div>
-                     <div><h4>Position: <%= insurerUser.staffRole %></h4></div><br>
+                    <div><h4>Name: <%= insurerUser.staffFirstName %> <%= insurerUser.staffLastName %></h4></div>
+                    <div><h4>Email: <%= insurerUser.staffEmailAddress %></h4></div>
+                    <div><h4>Contant Number: <%= insurerUser.staffContactNumber %></h4></div>
+                    <div><h4>Staff Number: <%= insurerUser.staffNumber %></h4></div>
+                    <div><h4>Position: <%= insurerUser.staffRole %></h4></div><br>
 
-                     <h3>Company Informaiton</h3><br>
-                     <div>
-                          <% if (company) { %>
-                             <h4>Company Name: <%= company.insuranceCompanyName %> </h4>
-                             <h4>Company Support Email: <%= company.insuranceCompanyEmail %> </h4>
-                             <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
-                              <h4>Company Address: <%= company.insuranceCompanyAddress %> </h4>
-                          <% } else { %>
-                             <p>You have no company registered.</p>
-                         <% } %>    
-                     </div> 
+                    <h3>Company Informaiton</h3><br>
+                    <div>
+                        <% if (company) { %>
+                            <h4>Company Name: <%= company.insuranceCompanyName %> </h4>
+                            <h4>Company Support Email: <%= company.insuranceCompanyEmail %> </h4>
+                            <h4>Company Number: <%= company.insuranceCompanyContact %> </h4>
+                            <h4>Company Address: <%= company.insuranceCompanyAddress %> </h4>
+                        <% } else { %>
+                            <p>You have no company registered.</p>
+                        <% } %>    
+                    </div> 
                 </div>   
                 <br><br>    
-                <div> 
+                <div><!-- ICU Log out-->
                     <%if(insurerUser) {%>
                         <div class="logInOut">
                           <a href="/insurance/logout">  <%= insurerUser.staffFirstName %> Logout</a>
@@ -39,77 +40,67 @@
                     <% } %>  <br>
                 </div>
             </div>
-        </div>    
-          
+        </div> <!-- End of Left Hand Side column: contains the ICU Profile-->    
+        <!--Right Hand Side column: Main Content-->  
         <div class="col-8 ">
             <div class="col">
                 <div>
                     <h1>Welcome <%= insurerUser.staffFirstName %>!</h1><br><br>
                 </div>
-
                 <div class="popupMessage">
                     <span class="closePopupMessage" onclick="this.parentElement.style.display='none';">&times;</span>
                    <p> Policy Holder has submitted a new claim</p>  <br>
                 </div>
-
-                <div> <br><br>
-                    <table id="insuranceTable">
-                        <div>
-                            <tr>
-                                <th>Claims Title</th>
-                                <th>Pets Name</th>
-                                <th>Policy Holder</th>
-                                <th>Policy Holder Email</th>
-                                <th>Claim Area</th> 
-                                <th>Claim Status</th>                     
-                            </tr>
-                        </div>
-
-                        <div>
-                             <!--% if (claims.length ) { %--> 
+                <div>
+                    <table id="insuranceTable">      
+                        <tr>
+                            <th>Claims Title</th>
+                            <th>Pets Name</th>
+                            <th>Policy Holder</th>
+                            <th>Policy Holder Email</th>
+                            <th>Claim Area</th> 
+                            <th>Claim Comment</th>                     
+                        </tr>
+                        <% if (claims  && claims.length > 0 ) { %> 
+                            <!--% if (claims.length ) { %--> 
                             <% claims.forEach(claim => { %>  
-                                 <!--% if (claim.userId && userId.includes(claims.userId._id.toString())) { %-->
-                             <tr>
-                               <td><%= claim.claimTitle %></td>
-                                <td><a href="/user/pets_profile/<%= pet._id %>" target="_blank"><%= claim.petId ? claim.petId.petName : "N/A" %></a></td>
-                                <!--td><a href="/user/view_claims/<%= claim._id %>"><%= claim.claimTitle %></a></td-->
-                               
-                                <td><%= claim.userId ? claim.userId.firstName + claim.userId.lastName  : "N/A"  %></td>
-                                <td><%= claim.userId ? claim.userId.emailAddress   : "N/A"  %></td>
-
-                                <td><%= claim.areaOfIssue %></td>
-                                 <td>
-                                    <div>
-                                        <form action="/insurance/insurance_profile.ejs">
-                                            <textarea name="insurerComment" id="" rows="1" cols="30"></textarea>                                       
-                                            <input type="submit" value="submit">
-                                        </form>
-                                        <!-- This status will go to the user once the insurer has views the claim and has an update-->
-                                       <!--select name="insureStatusUpdate">
-                                            <option value="blank"><p></p></option>
-                                            <option value="Confirmed"><span>Confirmed</span></option>
-                                            <option value="Refused">Refused</option>
-                                            <option value="Waiting for Vet Update">Waiting for Vet Update</option>
-                                            <option value="Needs Vet's Update">Needs more information from Vet</option>
-                                            <option value="Waiting for Vet Update">Waiting for Policy Update</option>
-                                            <option value="Needs more information from Vet">Needs more information from Policy</option>
-                                        </select> 
-                                        <button id="saveIucbtn" class="userLoginButton">Save</button-->
-                                    </div>
-                                 </td>        
-                             </tr> 
-                              <!--% } %-->                 
-                            <!--% }); %-->
-                             <% }) %>      
-                            <!--% } %-->     
-                        </div>
+                            <!--% if (claim.userId && userId.includes(claims.userId._id.toString())) { %-->
+                        <tr>
+                            <td><%= claim.claimTitle %></td>
+                            <td><a href="/user/pets_profile/<%= pet._id %>" target="_blank"><%= claim.petId ? claim.petId.petName : "N/A" %></a></td>
+                            <!--td><a href="/user/view_claims/<%= claim._id %>"><%= claim.claimTitle %></a></td-->
+                            <td><%= claim.userId ? claim.userId.firstName + claim.userId.lastName  : "N/A"  %></td>
+                            <td><%= claim.userId ? claim.userId.emailAddress   : "N/A"  %></td>
+                            <td><%= claim.areaOfIssue %></td>
+                            <td>
+                                <textarea name="insuranceComment" rows="1" cols="30" data-cy="extraDetails" > </textarea>
+                                <button type="submit" id="userLoginButton">Save </button>
+                             </td>      
+                            <!--form action="/insurance/insurance_profile.ejs">
+                                <textarea name="insurerComment" id="" rows="1" cols="30"></textarea>                                       
+                                <input type="submit" value="submit">
+                            </form-->
+                            <!-- This status will go to the user once the insurer has views the claim and has an update-->
+                            <!--select name="insureStatusUpdate">
+                                <option value="blank"><p></p></option>
+                                <option value="Confirmed"><span>Confirmed</span></option>
+                                <option value="Refused">Refused</option>
+                                <option value="Waiting for Vet Update">Waiting for Vet Update</option>
+                                <option value="Needs Vet's Update">Needs more information from Vet</option>
+                                <option value="Waiting for Vet Update">Waiting for Policy Update</option>
+                                <option value="Needs more information from Vet">Needs more information from Policy</option>
+                            </select> 
+                            <button id="saveIucbtn" class="userLoginButton">Save</button-->  
+                                 
+                        </tr> 
+                            <% }) %>      
+                        <% } %>     
                     </table>
                 </div>
-                <br><br>
             </div>
-        </div>
-    </div> <!--container end div-->
-    <!--Footer-->
+        </div> <!-- End of Right Hand Side column: Main Content-->  
+    </div> <!-- End of Bootstrap containers div -->
+    <!--Footer Connection-->
     <%- include ("../partials/footer_genPages.ejs") %>
 </body>
 </html>

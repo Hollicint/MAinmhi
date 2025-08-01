@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--head-->
+<!--head Connection--> 
 <%- include ("./partials/head.ejs") %>
 <body>
-    <div class="container-fluid conatainer3-mainBody">
-        <!--header-->
+    <!-- Bootstrap containers div -->
+    <div class="container-fluid container3-mainBody">
+        <!--header Connection-->
         <%- include ("./partials/header.ejs") %>
-         <div class="row">
+        <div class="row">
             <div class="col">
                 <h3>Contact us for any issues </h3><br>
                 <p>
@@ -17,82 +18,75 @@
                     action. If you need more information please do get in touch with our support department who will be able to provide the needed information.
                 </p>
             </div>
-         </div>
-         <div class="row">
+        </div>
+        <div class="row">
             <!--div class="col-md"> </div-->
-             <div class="col"><br><br>
-                <form action="https://api.web3forms.com/submit" method="POST" class="supportForm">               
-                    <!--https://web3forms.com/#start   https://docs.web3forms.com/ -->
-                 
-                     <input type="hidden" name="support_form" value="072b7cf2-70a6-478a-ac1e-3359fe5acac3">
+             <div class="col">
 
-                    <tr>
-                       
+                <!-- Not fully working-->
+                <!--form action="/support" method="POST" id="supportForm"-->  
+                <!--form action="https://api.web3forms.com/submit" method="POST" id="supportForm"-->                   
+                    <!--https://web3forms.com/#start   https://docs.web3forms.com/ -->
+                     <!--input type="hidden" name="access_key" value="072b7cf2-70a6-478a-ac1e-3359fe5acac3"-->
+                     <!--input type="hidden" name="access_key" value="<%= process.env.support_form%>">
+
+                    
                         <label for="name">Name</label><br>
                         <input type="text" name="name" class="form-group" required><br>                     
-                    </tr>
-                    <tr>
-                      
+
                         <label for="email">Email address</label> <br>
                         <input type="email" name="email" class="form-group" required ><br>
-                    </tr>
-                    <tr>
-                      
-                    <label for="formTextArea"> Message</label><br>
-                    <textarea  class="form-group" rows="5"  style="height:200px"  name="message" required></textarea>
 
-                         <!-- Honeypot Spam Protection -->
-                    <input type="checkbox" name="botcheck" class="hidden" >
-                    <br>
-                    <button type="submit" id="userLoginButton" >Submit</button>   
-                     
-                    </tr>          
-                </form><br><br><br>
-             </div>
-            
-             <div class="col">
-                <br><br><br>
+                        <label for="formTextArea"> Message</label><br>
+                        <textarea  class="form-group" rows="5"  style="height:200px"  name="message" required></textarea-->
+                    <!-- Honeypot Spam Protection -->
+                        <!--input type="checkbox" name="botcheck" class="hidden" >
+                        <br>
+                        <button type="submit" id="userLoginButton" >Submit</button-->   
+                   
+                <!--/form-->
+                
+             <!--/div>
+             <div class="col"-->
                  <table id="supportTableDetails">
-
+                    <br><br>
                     <tr>
-
-                        <td>Support Email:</td>
-                        <td>info@mainmhi.com</td>
-                    </tr>  
-                    <tr>
-                        <td>Support Email:</td>
-                        <td>mainmhiltd@gmail.com</td>
-                    </tr>                                  
-                        <td>Contact Number:</td>
-                         <td> +000 000 0000</td>
+                        <td>
+                            Contact our support team for help
+                        </td>
                     </tr>
-                    <br>
-                </table> <br>
+                    <tr>
+                        <td>Support Email: mainmhiltd@gmail.com</td>
+                      </tr> 
+                    <tr>     
+                        <td>Contact Number:  +000 000 0000</td>
+                    </tr>
+                   <br><br>
+                </table> 
             </div>
-         </div>
-         <div class="row">
+        </div>
+        <div class="row">
+            
             <!--div class="col google-map"--> 
                 <!--https://blog.hubspot.com/website/how-to-embed-google-map-in-html-->
               <!--  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1938.227752507857!2d-6.245175628932288!3d53.34955232648783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sie!4v1751826368457!5m2!1sen!2sie" 
                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"> </iframe>--> 
-            <!--/div--> 
-                
-             <div id="petAds"><br>
-                
-            <p>Do you have a business that you wish to prompt, contact our support department to get your business AD on our site. Terms and conditions do apply</p>
+            <!--/div-->    
+            <div id="petAds"><br>
+                <br><br><br><br>
+                <p>Do you have a business that you wish to prompt, contact our support department to get your business AD on our site. Terms and conditions do apply</p>
                 <br>
                <!--img src="images/about/adone.jpg" class="adImage"--> <!--https://www.istockphoto.com/photo/happy-puppy-welsh-corgi-14-weeks-old-dog-winking-panting-and-sitting-isolated-on-gm1482199015-509248962?searchscope=image%2Cfilm-->
                <img src="images/about/adsix.jpg" class="adImage" > <!--https://www.istockphoto.com/photo/portrait-funny-and-happy-shiba-inu-puppy-dog-peeking-out-from-behind-a-blue-banner-gm1503385646-523099248?searchscope=image%2Cfilm-->
                <img src="images/about/adtwo.jpg" class="adImage" >
                <img src="images/about/adeight.jpg" class="adImage" > <!--https://www.istockphoto.com/photo/overhead-view-of-bags-with-grains-and-pellets-for-sale-at-the-forage-gm1276714803-376141304?searchscope=image%2Cfilm-->
-
-             </div>
-            
-           
-         </div>
-    </div> <!--Containter closed-->
-    <!--Footer-->
+            </div>
+ 
+        </div>
+    </div> <!-- End of Bootstrap containers div -->
+    <!--Footer Connection-->
     <%- include ("./partials/footer_genPages.ejs") %>  
+    <!--JS Connection -->
     <script  src="/js/support.js"></script> 
 </body>
 </html>

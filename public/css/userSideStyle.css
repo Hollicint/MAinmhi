@@ -1,7 +1,6 @@
 /* Register form */
 
-.userRegForm{
-  
+.userRegForm input{
 }
 
 /**************  User Login page **************/
@@ -90,6 +89,18 @@
     
 }
 
+.claimDetailsList{
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: left;
+  color: black;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 50px;
+}
+
+
+/*
 #claimDisplay th {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -111,7 +122,7 @@
 #claimDisplay:hover td{
   background-color: #D6EEEE;
 }
-
+*/
 /*************** Claim *********************/
 .editClaimSection{
   display: none;
@@ -123,14 +134,13 @@
   padding: 25px;
   margin: 14px;
 }
-.viewClaimForm{
+.viewClaimForm, .viewClaimSection{
   font-size: 70px;
   height: 20px;
   padding: 15px;
   margin: 10px;
   text-align: left;
 }
-#editClaim{
-  font-size: 110px;
+#editClaim,#saveClaim,#userLoginButton,#submitClaimBtn{
+  font-size: 60px;
 }
-

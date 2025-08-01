@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--head-->
+<!--head Connection-->
 <%- include ("../partials/head.ejs") %>
 <body>   
-     <div class="container-fluid conatainer3-mainBody full-height">
-       
+    <!-- Bootstrap containers-->
+    <div class="container-fluid container3-mainBody full-height">
+       <!--Left Hand Side column: contains the Admin Logo-->
         <div class="col-4 leftimage-col">
             <img src="/images/profileImages/adminIcon.jpg" class="indexLoginIcon" alt="icon">
-         </div>
-
+        </div>
+        <!--Right Hand Side column: Main Content-->
         <div class="col-8 rightSide-col ">
             <div>
                 <h1>Admin Login Page</h1><br><br><br>
             </div>
-            <div>
+            <div> <!--Login Form Div-->
+                <!--Admin Login Form-->
                 <form action="/admin/admin_loginpage" method="post">
                         <!--User and Password that will be checked if exists-->
                     <div class="row"> 
-      >
                          <!--User and Password that will be checked if exists-->
                         <div id="userLoginForm"><br>
                             <label for="username">Username: </label>
@@ -28,6 +29,7 @@
                             <br><br>  <br> 
                             <button type="submit" id="userLoginButton"> Enter </button> <!--Submit button-->
                         </div>  
+                        <!-- Error message if Admin credentials are incorrect -->
                          <div id="errorMessage" style="font-size: 100px">
                             <% if(errorMessage) { %>
                              <div>
@@ -37,16 +39,19 @@
                         </div>
                     </div>
                 </form>
-                  <!--  <a href="/admin/reg_adminpage"><h3>Register</h3></a> -->
-                
-                    <!--a href="/forgottenpass"> <h3>Forgotten Password</h3></a-->
-            </div>   
+                <!-- Not need just from orginal set up-->
+                <!--  <a href="/admin/reg_adminpage"><h3>Register</h3></a> -->
+
+                <!--Not created yet might not have due to user role as admin-->
+                <!--a href="/forgottenpass"> <h3>Forgotten Password</h3></a-->
+
+            </div>   <!--End of Login Form Div-->
 
                  
-        </div>
+        </div> <!-- end of Right Hand Side column: Main Content-->
         
-    </div> 
-    <!--Footer-->
+    </div> <!-- End of Container div -->
+    <!--Footer Connection-->
     <%- include ("../partials/footer_genPages.ejs") %>%>   
  </body>
 </html>

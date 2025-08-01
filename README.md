@@ -86,35 +86,34 @@
 
 ## Security
 
-  - Session &   Cookies
+  - Session & Cookies
+   As there are 3 roles users that can access the site, the use of session and authentication the session was a need. All three can login at different browsers at the same time without affect one another
 
 <img width="644" height="531" alt="Image" src="https://github.com/user-attachments/assets/909f6a65-4f23-4978-b4c7-0c60c5872d59" />
 
- 
    - Header security
+   Blocking XSS attacks and the use of other attack and messages sent over https. It allows only trusted or secure site cookies with a check for the users’ activity on the page, if none the pages check will restart.
    
 <img width="1169" height="266" alt="Image" src="https://github.com/user-attachments/assets/70df20fa-ff78-4ff8-a18e-da0e7e350d61" />
 
    - limitLogin
-  
+  To be able to have the function of locked accounts and stop a user inputting their passwords too many times incorrectly.
 <img width="437" height="110" alt="Image" src="https://github.com/user-attachments/assets/f59ad24e-6698-4772-8bad-8e65aa45a64b" />
 
    - Middleware
-  
+  All three have different restrictions or allowance on what they can or cannot access to their connected role. These are then called in the routes connecting to the individual user to check that the correct user account is being accessed. 
 <img width="374" height="425" alt="Image" src="https://github.com/user-attachments/assets/c8decf87-8f1a-432f-a93f-2105b27fffd4" />
 
-   - Register Checks
-
+   - Register Checks &  Login checks
+ Checks at registration and Login was needed to make sure the user is inputted the correct format and to also check that if the users already has an account they arent duplicating their account
 <img width="619" height="510" alt="Image" src="https://github.com/user-attachments/assets/67466fb0-e65d-4c9b-af7e-aa46a7638fea" />
-
- - Password Encryption
-
-<img width="491" height="120" alt="Image" src="https://github.com/user-attachments/assets/8499af3d-376f-487c-848a-cb3fd60fa6c5" />
-
-   - Login checks
-
 <img width="537" height="313" alt="Image" src="https://github.com/user-attachments/assets/d9c6b556-3c78-4799-ad21-a1455dac330f" />
 
+ - Password Encryption
+Once the user registers their account and their details are correct the password will be save to the database. to ensure even if hacked the password was hashed to protect the users account
+<img width="491" height="120" alt="Image" src="https://github.com/user-attachments/assets/8499af3d-376f-487c-848a-cb3fd60fa6c5" />
+
+ 
 ## Credits
 
 HOLLY DOWLING  :  X21150117 - x21150117@student.ncirl.ie

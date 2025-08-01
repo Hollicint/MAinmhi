@@ -25,14 +25,14 @@ const adminUserSchema= new Schema({
         type: String,
         required: true
     }, 
-   // userId: {
-   //     type: mongoose.Schema.Types.ObjectId,
-   //     ref: "RegisterUser",
-   // }, 
-   // insurerUserId: {
-   //     type: mongoose.Schema.Types.ObjectId,
-   //     ref: "RegisterInsurer",
-   // }, 
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "RegisterUser",
+    }, 
+    insurerUserId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "RegisterInsurer",
+    }, 
     // only user role access set as defluat
     role:{
         type: String,
