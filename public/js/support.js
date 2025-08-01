@@ -5,8 +5,6 @@
  //   zoom: 8
 
 document.addEventListener("DOMContentLoaded", ()=>{
-    const supportFormElement = document.querySelector(".supportForm");
-
-  
+    const supportFormElement = document.getElementById(".supportForm");
 
 });

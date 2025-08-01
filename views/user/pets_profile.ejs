@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--head-->
+<!--head Connection--> 
 <%- include ("../partials/head.ejs") %>
 <body>
+    <!-- Bootstrap containers div -->
     <div class="container-fluid container3-mainBody full-height">
-        
-             <div class="col-4 leftimage-col ">
-                  <div class="col">
-                     <img src="/images/profileImages/paw.png"  class="petprofileImg" alt="">
-                     <br><br>
-
-
+        <!-- Left Hand Side column: contains the User profile --> 
+        <div class="col-4 leftimage-col ">
+            <div class="col">
+                <img src="/images/profileImages/paw.png"  class="petprofileImg" alt=""><br><br>
               <!-- Pet Profile that user can edit -->       
-                    <div  class="update_petDetails">
-                        <% if (pet) { %>
+                <div  class="update_petDetails">
+                    <% if (pet) { %>
                         <div><h4>Pets Name: <%= pet.petName %> </h4></div>
                         <div><h4>Pets Type: <%= pet.petType %> </h4></div>
                         <div><h4>Pets Breed: <%= pet.breed %> </h4></div>
                         <div><h4>Pets Gender: <%= pet.gender %> </h4></div>
                         <div><h4>D.O.B:  <%= pet.dateOfBirth %> </h4></div>
                         <div><h4>Pets Colour: <%= pet.colour %> </h4></div>
-                          <br>    
+                        <br>
+                        <h4>Vet Information</h4>    
+                        <br>
+                        <div><h4>Vet Name: <%= pet.vetCompanyName %> </h4></div>
+                        <div><h4>Vet Email:  <%= pet.vetCompanyEmail %> </h4></div>
+                        <div><h4>Vet Contact: <%= pet.vetCompanyNumber %> </h4></div>
+                        <br>
+                        <h4>Insurance Policy Information</h4>
+                        <br>
                         <div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div><br>
 
                         <!--if (insurerCompany) { >  
@@ -38,158 +44,141 @@
                         <div><h4>Microchipping Number:  <%= pet.microchippingNum %> </h4></div>
                         <br>
                         <button id="update_petDetailsBtn" class="userLoginButton">Update <%= pet.petName %> Details </button>   
-                        <% } %> 
-                    </div>
-                    <div class="edit_petDetails">
-                        <form action="/user/pets_profile/<%= pet._id %>" method="post" > 
-                            <!--input type="text" required name="id" value="<%= pet._id %>" hidden><br-->
-                            <label for="petName"><h4>Pets Name: </h4></label>
-                            <input type="text" name="petName" class="displayBox" value="<%= pet.petName %>" required> <br>
-                            <label for="petType"><h4>Pets Type: </h4></label>
-                            <input type="text" name="petType" class="displayBox" value="<%= pet.petType %>"required><br>                            
-                            <label for="breed"><h4>Pets Breed: </h4></label>
-                            <input type="text" name="breed" class="displayBox" value="<%= pet.breed %>"required><br>
-                             <label for="gender"><h4>Pets Gender: </h4></label>
-                            <input type="text" name="gender" class="displayBox" value="<%=pet.gender %>"required><br>
-                            <label for="dateOfBirth"><h4>D.O.B: </h4></label>
-                            <input type="date" name="dateOfBirth" class="displayBox" value="<%= pet.dateOfBirth %>"required><br>                 
-                            <label for="colour"><h4>Pets Colour: </h4></label>
-                            <input type="text" name="colour" class="displayBox" value="<%= pet.colour %>"required><br><br>  
-                            
-                             <label for="insuranceCompanyName"><h4>Insurance Company: </h4></label>
-                            <input type="text" name="insuranceCompanyName" class="displayBox" value="<%= pet?.insuranceCompanyName || '' %>"><br>
+                    <% } %> 
+                </div>
+                <!-- Edit of pet details-->
+                <div class="edit_petDetails">
+                    <form action="/user/pets_profile/<%= pet._id %>" method="post" > 
+                        <!--input type="text" required name="id" value="<%= pet._id %>" hidden><br-->
+                        <label for="petName"><h4>Pets Name: </h4></label>
+                        <input type="text" name="petName" class="displayBox" value="<%= pet.petName %>" required> <br>
+                        <label for="petType"><h4>Pets Type: </h4></label>
+                        <input type="text" name="petType" class="displayBox" value="<%= pet.petType %>"required><br>                            
+                        <label for="breed"><h4>Pets Breed: </h4></label>
+                        <input type="text" name="breed" class="displayBox" value="<%= pet.breed %>"required><br>
+                         <label for="gender"><h4>Pets Gender: </h4></label>
+                        <input type="text" name="gender" class="displayBox" value="<%=pet.gender %>"required><br>
+                        <label for="dateOfBirth"><h4>D.O.B: </h4></label>
+                        <input type="date" name="dateOfBirth" class="displayBox" value="<%= pet.dateOfBirth %>"required><br>                 
+                        <label for="colour"><h4>Pets Colour: </h4></label>
+                        <input type="text" name="colour" class="displayBox" value="<%= pet.colour %>"required><br><br>  
+                        <br><h4>Vet Information</h4><br>      
+                        
+                        <label for="vetCompanyName"><h4>Vet Name: </h4></label>
+                        <input type="text" name="vetCompanyName" class="displayBox" value="<%= pet.vetCompanyName %>" required><br>                           
+                        <label for="vetCompanyEmail"><h4>Vet Email: </h4></label>
+                        <input type="text" name="vetCompanyEmail" class="displayBox" value="<%= pet.vetCompanyEmail %>" required><br>                            
+                        <label for="vetCompanyNumber"><h4>Vet Contact Number: </h4></label>
+                        <input type="text" name="vetCompanyNumber" class="displayBox" value="<%= pet.vetCompanyNumber %>" required><br>                           
+                        
+                        <br><h4>Vet Information</h4><br> 
+                        <label for="insuranceCompanyName"><h4>Insurance Company: </h4></label>
+                        <input type="text" name="insuranceCompanyName" class="displayBox" value="<%= pet?.insuranceCompanyName || '' %>"><br>
+                        <!--label for="insurerCompanyId"><h4>Insurance Company: </h4></label>
+                        <input type="text" name="insurerCompanyId" class="displayBox" value="<%= pet.insurerCompanyId %>"required><br-->                         
+                        <label for="policyNum"><h4>Policy Number: </h4></label>
+                        <input type="text" name="policyNum" class="displayBox" value="<%= pet.policyNum %>" required><br>
+                         <label for="startDate"><h4>Policy Start Date: </h4></label>
+                        <input type="date" name="startDate" class="displayBox" value="<%= pet.startDate %>" required><br>  
+                        <label for="endDate"><h4>Policy Expiry Date: </h4></label>
+                        <input type="date" name="endDate" class="displayBox" value="<%= pet.endDate %>" required><br>
+                        <label for="desexed"><h4>Desexed: </h4></label>
+                        <select name="desexed" >
+                            <option value="blank"> </option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="Undecided">Undecided</option>
+                            <option value="Not Yet">Not Yet</option>
+                        </select><br>
+                        <!--input type="text" name="desexed" class="displayBox" value="<%= pet.desexed %>"required><br-->
 
-                            <!--label for="insurerCompanyId"><h4>Insurance Company: </h4></label>
-                            <input type="text" name="insurerCompanyId" class="displayBox" value="<%= pet.insurerCompanyId %>"required><br-->
-                            
-                            <label for="policyNum"><h4>Policy Number: </h4></label>
-                            <input type="text" name="policyNum" class="displayBox" value="<%= pet.policyNum %>" required><br>
+                        <label for="microchipping"><h4>Microchipping: </h4></label>
+                        <select name="microchipping" >
+                            <option value="blank"> </option>
+                            <option value="yes">Yes </option>
+                            <option value="no">No </option>
+                        </select><br>
+                        <!--input type="text" name="microchipping" class="displayBox" value="<%= pet.microchipping %>"required><br-->
+                        <label for="microchippingNum"><h4>Microchipping Number: </h4></label>
+                        <input type="text" name="microchippingNum" class="displayBox"value="<%= pet.microchippingNum %>" required><br><br>       
 
-                             <label for="startDate"><h4>Policy Start Date: </h4></label>
-                            <input type="date" name="startDate" class="displayBox" value="<%= pet.startDate %>" required><br>  
-                            <label for="endDate"><h4>Policy Expiry Date: </h4></label>
-                            <input type="date" name="endDate" class="displayBox" value="<%= pet.endDate %>" required><br>
-
-                            <label for="desexed"><h4>Desexed: </h4></label>
-                            <select name="desexed" >
-                                <option value="blank"> </option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                                <option value="Undecided">Undecided</option>
-                                <option value="Not Yet">Not Yet</option>
-                            </select><br>
-                            <!--input type="text" name="desexed" class="displayBox" value="<%= pet.desexed %>"required><br-->
-                            
-                            <label for="microchipping"><h4>Microchipping: </h4></label>
-                            <select name="microchipping" >
-                                <option value="blank"> </option>
-                                <option value="yes">Yes </option>
-                                <option value="no">No </option>
-                            </select><br>
-                            <!--input type="text" name="microchipping" class="displayBox" value="<%= pet.microchipping %>"required><br-->
-                            <label for="microchippingNum"><h4>Microchipping Number: </h4></label>
-                            <input type="text" name="microchippingNum" class="displayBox"value="<%= pet.microchippingNum %>" required><br><br>       
-        
-                            <button id="save_editPetDetailsBtn"  class="userLoginButton">Save <%= pet.petName %> Details </button>   
-                                     
-                        </form>   
-                    </div>   
-
-
-                      <br>
-                     <div class="accountBtns logInOut">
-    
-                        <a href="/user/user_profile" data-cy="userLink"> <%= user.username %> 's Profile | </a>
-                           <!-- Login out of account-->
-                        <%if(user) {%>
-                            <a href="/user/logout"> Logout</a>
-                        <% } %> 
-                    </div>
-
-                  </div>
-             </div>
-
-             <!-- Main Body of the page-->
-             <div class="col-md-8 createPetAccount">
-                 <div class="col claimDetailsList">
-                     <div> 
-                         <h1> <%= pet.petName %>'s Account </h1>
-                         <h2>Start your claim creation and storage now!</h2><br><br>
-                         
-                     </div>
-                     <div >
-                         <table class="petProfileTable" >
-                             <div>
-                                 <tr>
-                                  <!-- Buttons while Code is being created to move around pages-->
-                                  <a href="/user/new_claims/<%= pet._id %>" data-cy="claimLink"><p>Create New Claim..</p></a><br><br><br><br>
-                                 </tr>
-
-                             </div>
-                             <div>
-                                 <tr>
-                                    <br><br>
-                                  <h3>Claim List</h3>
-                                 </tr>
-                             </div>
-                             <div>
-                                 <tr><br>
-                                    <th>Claim Title:</th>
-                                    <th>Area Of Issue:</th>
-                                    <th>Claims Cost:</th>
-                                    <th>Claims Status:</th>
-                                    <th>View Claims:</th>   
-                                    <th>Submit Claim to Insurer:</th>
-                                    <th>Archive Claims:</th>
-                                 </tr>
-                             </div>
-                             <div>
-                                 <% if (claimsdetail && claimsdetail.length > 0) { %>
-                                 <% claimsdetail.forEach(claim => { %>
-                                <tr>
-                                    <td><%= claim.claimTitle %></td>
-                                    <td><%= claim.areaOfIssue %></td>
-                                    <td><%= claim.claimAmount %></td>
-                                    <td><%= claim.claimStatus %></td>                             
-                                    <td><a href="/user/view_claims/<%= claim._id %>"><button id="userLoginButton">View & Edit</button></a></td>
-                                    <!--td><p><button id="sendBtnICU" onclick="alert('Sent Claim')">Submit</button></p></td-->
-                                    <td>
-                                       <form action="/user/pets_profile/<%= pet._id %>" onsubmit="submitClaimFunction()">
-                                           <!--input type="submit" value="Submit" id="submitClaimBtn"-->
-                                           <button class="userLoginButton" id="submitClaimBtn"   >Submit</button>
-                                           <!--p><button class="sendBtnICU"  id="userLoginButton">Submit</button></p-->
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <% if (!claim.isArchived) { %>
-                                            <form action="/user/archive_claims/<%= claim._id %>" method="post">
+                        <button id="save_editPetDetailsBtn"  class="userLoginButton">Save <%= pet.petName %> Details </button>               
+                    </form>   
+                </div> <br><br>
+                <div class="accountBtns logInOut">
+                    <a href="/user/user_profile" data-cy="userLink"> <%= user.username %> 's Profile | </a>
+                    <!-- Login out of account-->
+                    <%if(user) {%>
+                        <a href="/user/logout"> Logout</a>
+                    <% } %> 
+                </div>
+            </div>
+        </div><!-- End of Left Hand Side column: contains the User profile --> 
+         <!--Right Hand Side column: Main Content--> 
+        <div class="col-md-8 createPetAccount">
+            <div class="col claimDetailsList">
+                <div> 
+                    <h1> <%= pet.petName %>'s Account </h1>
+                    <h2>Start your claim creation and storage now!</h2><br><br>    
+                </div>
+                <div>
+                    <table class="petProfileTable" >
+                        <tr>
+                            <!-- Buttons while Code is being created to move around pages-->
+                            <a href="/user/new_claims/<%= pet._id %>" data-cy="claimLink"><p>Create New Claim..</p></a><br><br><br><br>
+                        </tr>
+                        <tr>
+                            <h3>Claim List</h3><br>
+                        </tr>
+                        <tr>
+                            <th>Claim Title:</th>
+                            <th>Area Of Issue:</th>
+                            <th>Claims Cost:</th>
+                            <th>Claims Status:</th>
+                            <th>View Claims:</th>   
+                            <th>Submit Claim to Insurer:</th>
+                            <th>Archive Claims:</th>
+                        </tr>
+                        <% if (claimsdetail && claimsdetail.length > 0) { %>
+                            <% claimsdetail.forEach(claim => { %>
+                            <tr>
+                                <td><%= claim.claimTitle %></td>
+                                <td><%= claim.areaOfIssue %></td>
+                                <td><%= claim.claimAmount %></td>
+                                <td><%= claim.claimStatus %></td>                             
+                                <td><a href="/user/view_claims/<%= claim._id %>"><button id="userLoginButton">View & Edit</button></a></td>
+                                <!--td><p><button id="sendBtnICU" onclick="alert('Sent Claim')">Submit</button></p></td-->
+                                <td>
+                                    <form action="/user/pets_profile/<%= pet._id %>" onsubmit="submitClaimFunction()">
+                                     <!--input type="submit" value="Submit" id="submitClaimBtn"-->
+                                    <button class="userLoginButton" id="submitClaimBtn"   >Submit</button>
+                                    <!--p><button class="sendBtnICU"  id="userLoginButton">Submit</button></p-->
+                                    </form>
+                                </td>
+                                <td>
+                                    <% if (!claim.isArchived) { %>
+                                        <form action="/user/archive_claims/<%= claim._id %>" method="post">
                                              <p><button id="sendBtnStore" class="userLoginButton">Archive</button></p>
-                                            </form>
-                                        <% } %>
-                                    </td>
-                                </tr>
-                                 <% }); %>
-                             <% } else { %>
-                             <tr>
+                                        </form>
+                                    <% } %>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
                                  <td colspan="10">No claims submitted.</td>
                              </tr>
-                              <% } %>
-                             </div>
-                             
-                         
-                         </table>
-                     </div>
+                        <% } %>
 
-                 </div> 
-                 <br><br>     
-             </div>
-     
- 
-    </div>  
-     <!--Footer-->
-    <%- include("../partials/footer_genPages.ejs") %>     
+                    </table>
+                </div>
+            </div>     
+        </div> <!--End of Right Hand Side column: Main Content--> 
+    </div> <!-- End of Bootstrap containers div --> 
+    <!--Footer Connection-->
+    <%- include("../partials/footer_genPages.ejs") %>   
+    <!-- JS connection-->  
     <script  src="/js/claims.js"></script>
     <script  src="/js/petsprofile.js"></script>     
-
 </body>
 </html>

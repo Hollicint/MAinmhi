@@ -1,86 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!--head-->
+<!--head Connection--> 
 <%- include ("../partials/head.ejs") %>
-
 <body>
-    <div class="container-fluid conatainer3-mainBody full-height">
-         
-            <div class="col-4 leftimage-col ">
+    <!-- Bootstrap containers div -->
+    <div class="container-fluid container3-mainBody full-height">
+        <!-- Left Hand Side column: contains the User reg-->    
+        <div class="col-4 leftimage-col ">
                <img src="/images/accountsImages/usersIcon.jpg" class="indexLoginIcon" alt="icon">
+        </div> <!-- End of Left Hand Side column: contains the ICU reg-->   
+        <!--Right Hand Side column: Main Content-->   
+        <div class="col-8 rightSide-col ">  
+            <div class="loginTxt">
+                 <h2>Register</h2>
+                <p>
+                    <br>Register your account, by simply filling in the form below, you will be directed 
+                    to create your pet account. Once created you will be login to you profile, where you can view your pets account.
+                    You can then start recording your pets claims.
+                </p><br>
+                <p>Already have an account <a href="/user/user_loginpage">Login</a></p>
+               
+                <!--For viewing reg page when editing-->
+                <!--a href="/user/reg_petpage"><h3>Pet Register</h3></a-->
+                
             </div>
-            <div class="col-8 rightSide-col ">
-        
-                <div class="loginTxt">
-                     <h2>Register</h2>
-                    <p>
-                        <br>Register your account, by simply filling in the form below, you will be directed 
-                        to create your pet account. Once created you will be login to you profile, where you can view your pets account.
-                        You can then start recording your pets claims.
-                    </p><br>
-                    <p>Already have an account <a href="/user/user_loginpage">Login</a></p>
-                   
-                    <!--a href="/user/reg_petpage"><h3>Pet Register</h3></a-->
-                </div>
-              
-                <div id="registerSection">
-                    <form action="/user/reg_userpage" class="form-inline" method="post">
-                        <div class="row userRegForm" > 
-                             <!--Register a new user-->
-                             <div><label for="firstName">First Name: </label>
-                                <input type="text" name="firstName"  value="<%= values?.firstName || '' %>" required></div><br><br>
-                             <div><label for="lastName">Last Name: </label>
-                                <input type="text" name="lastName" value="<%= values?.lastName || '' %>" required></div><br><br>
-                                
-                             <div><label for="emailAddress">Email: </label>
-                                <input type="email" name="emailAddress" value="<%= values?.emailAddress || '' %>" required> <br><br>    
-                               <div id="errorMessage">
-                                <% if(errorMessage?.emailAddress){ %>
-                                    <span id="text-danger fw-bold"><%= errorMessage.emailAddress %></span>
-                                <% } %>
-                               </div> 
-                            </div><br>
-                             <div><label for="contactNumber">Contact Number: </label>
-                                 <input type="text" name="contactNumber" value="<%= values?.contactNumber || '' %>" required></div><br><br>
-                             <div><label for="dateOfBirth">Date of Birth: </label>
-                                 <input type="date" name="dateOfBirth" value="<%= values?.dateOfBirth || '' %>" required></div><br><br>
-                             <div><label for="address">Address: </label>
-                                <input type="text" name="address" value="<%= values?.address || '' %>" required></div><br>   <br>
-
-                             <div><label for="username">Username:</label>
-                                <small id="passwordHelpInline" class="text-muted"> Username must be more than 6 characters.</small><br>
-                                <input type="text" name="username" value="<%= values?.username || '' %>"   required>
-
-                                <div id="errorMessage">
-                                 <% if(errorMessage?.username){ %>
-                                    <span class="errorMessageLogin"><%= errorMessage.username %></span>
-                                <% } %>
-                                </div>
-                            </div>
-                                
-                             <div><label for="password">Password:</label>
-                                <small id="passwordHelpInline" class="text-muted"> Must be 8-14 characters long. </small><br>
-                                <input type="password" name="password"  required>   
-                                 <div id="errorMessage">
-                                <% if(errorMessage?.password){ %>
-                                    <span class="errorMessageLogin"><%= errorMessage.password %></span>
-                                <% } %>
-                                </div>
-                                
-                            </div>
-                          
-                             <!--class="form-control"-->
-                              <div> <br><button type="submit"id="userLoginButton">Register Pet </button></div>
-                         </div>
+            <div id="registerSection" class="row userRegForm">
+                <form action="/user/reg_userpage" class="form-inline" method="post">
+                         <!--Register a new user-->
+                    <label for="firstName">First Name: </label>
+                    <input type="text" name="firstName"  value="<%= values?.firstName || '' %>" required><br><br>
+                    <label for="lastName">Last Name: </label>
+                    <input type="text" name="lastName" value="<%= values?.lastName || '' %>" required><br><br>
+                    <label for="emailAddress">Email: </label>
+                    <input type="email" name="emailAddress" value="<%= values?.emailAddress || '' %>" required><br><br>    
+                    <div id="errorMessage">
+                        <% if(errorMessage?.emailAddress){ %>
+                            <span class="errorMessageLogin"><%= errorMessage.emailAddress %></span>
+                        <% } %>
+                    </div> 
                      
-                    </form>
-                    <!--a href="/user/reg_petpage">pet</a-->
-                    
-                </div>
-                <br><br>
+                    <label for="contactNumber">Contact Number: </label>
+                    <input type="text" name="contactNumber" value="<%= values?.contactNumber || '' %>" required><br><br>
+                    <label for="dateOfBirth">Date of Birth: </label>
+                    <input type="date" name="dateOfBirth" value="<%= values?.dateOfBirth || '' %>" required><br><br>
+                    <label for="address">Address: </label>
+                    <input type="text" name="address" value="<%= values?.address || '' %>" required><br><br>    
+                    <label for="username">Username:</label>
+                        <small id="passwordHelpInline" class="text-muted"> Username must be more than 6 characters.</small><br>
+                        <input type="text" name="username" value="<%= values?.username || '' %>"   required>
+                    <div id="errorMessage">
+                        <% if(errorMessage?.username){ %>
+                            <span class="errorMessageLogin"><%= errorMessage.username %></span>
+                        <% } %>
+                    </div>
+                    <label for="password">Password:</label>
+                        <small id="passwordHelpInline" class="text-muted"> Must be 8-14 characters long.</small><br>
+                        <input type="password" name="password"  value="<%= values?.password || '' %>"   required>   
+                    <div id="errorMessage">
+                        <% if(errorMessage?.password){ %>
+                            <span class="errorMessageLogin"><%= errorMessage.password %></span>
+                        <% } %>
+                    </div>
+
+                    <div> <br><button type="submit"id="userLoginButton">Register Pet </button></div>
+                </form>
             </div>
-     </div>    
-    <!--Footer-->
-    <%- include("../partials/footer_genPages.ejs") %>
+        </div><!-- End of Right Hand Side column: Main Content-->  
+     </div> <!--End of Bootstrap containers div -->  
+    <!--Footer Connection -->
+     <%- include("../partials/footer_genPages.ejs") %>   
 </body>
 </html>

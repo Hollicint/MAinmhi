@@ -20,9 +20,9 @@ const regInsuranceCompanySchema = new Schema({
     insurerId: {
         type: Schema.Types.ObjectId,
          ref: "RegisterInsurer",
-       // required: true
+       required: false
     },
-        role:{
+     role:{
         type: String,
         enum: ['insurancecompany'],
         default:'insurancecompany',

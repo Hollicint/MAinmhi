@@ -1,186 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--head-->
+<!--head Connection--> 
 <%- include ("../partials/head.ejs") %>
 <body>
-    <div class="container-fluid conatainer3-mainBody full-height">
-      
-               <div class="col-4 leftimage-col ">
-                  <div class="col">
-                     <img src="/images/profileImages/paw.png"  class="petprofileImg" alt="">
-                     <br><br>
-                     <% if (pet) { %>
-                     <div><h4>Pets Name: <%= pet.petName %> </h4></div>
-                     <div><h4>Pets Type: <%= pet.petType %> </h4></div>
-                     <div><h4>Pets Breed: <%= pet.breed %> </h4></div>
-                     <div><h4>Pets Gender: <%= pet.gender %> </h4></div>
-                     <div><h4>D.O.B:  <%= pet.dateOfBirth %> </h4></div>
-                     <div><h4>Pets Colour: <%= pet.colour %> </h4></div>
-                     <br>  <div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div><br>
+    <!-- Bootstrap containers div -->
+    <div class="container-fluid container3-mainBody full-height">
+        <!-- Left Hand Side column: contains the pet details --> 
+        <div class="col-4 leftimage-col ">
+            <div class="col">
+                <img src="/images/profileImages/paw.png"  class="petprofileImg"><br><br>
+                <% if (pet) { %>
+                    <div><h4>Pets Name: <%= pet.petName %> </h4></div>
+                    <div><h4>Pets Type: <%= pet.petType %> </h4></div>
+                    <div><h4>Pets Breed: <%= pet.breed %> </h4></div>
+                    <div><h4>Pets Gender: <%= pet.gender %> </h4></div>
+                    <div><h4>D.O.B:  <%= pet.dateOfBirth %> </h4></div>
+                    <div><h4>Pets Colour: <%= pet.colour %> </h4></div>
+                    <br>
+                    <h4>Vet Information</h4>    
+                    <br>
+                    <div><h4>Vet Name: <%= pet.vetCompanyName %> </h4></div>
+                    <div><h4>Vet Email:  <%= pet.vetCompanyEmail %> </h4></div>
+                    <div><h4>Vet Contact: <%= pet.vetCompanyNumber %> </h4></div>
+                    <br>
+                    <h4>Insurance Policy Information</h4>
+                    <br>  
+                    <div><h4>Insurance Company: <%= pet.insuranceCompanyName %> </h4></div><br>
                     <div><h4>Policy Number: <%= pet.policyNum %> </h4></div>
                     <div><h4>Policy Start Date: <%= pet.startDate %> </h4></div>
                     <div><h4>Policy End Date: <%= pet.endDate %> </h4></div>
                     <div><h4>Desexed: <%= pet.desexed %> </h4></div>
                     <div><h4>Microchipping: <%= pet.microchipping %> </h4></div>
                     <div><h4>Microchipping Number:  <%= pet.microchippingNum %> </h4></div>
-
-                      <% } %> 
-                     <div><br><h4>Owner: <%= user.firstName %> <%= user.lastName %> </h4></div>
-                      <br>
-                     <div class="accountBtns logInOut">
-    
-                        <a href="/user/pets_profile/<%= pet._id %>" data-cy="petLink"> <%= pet.petName %>'s Profile | </a>
-                        <a href="/user/user_profile" data-cy="userLink"> <%= user.username %> 's Profile | </a>
-                           <!-- Login out of account-->
-                        <%if(user) {%>
-                            <a href="/user/logout"> Logout</a>
-                        <% } %> 
-                    </div>
-                    
-                  </div>
-             </div>
-             <div class="col-md-8 createPetAccount">
-                <div class="col claimDetailsList"> 
-                    <div>
-                          <h1>Claims</h1>
-                    </div>
-                    <div>
-                        <form  action="/user/new_claims" method="post" enctype="multipart/form-data">
-                            <table  class="claimForm" >
-                                <tr>
-                                    <th>
-                                        <label for="petId"> Choose your pet</label>
-                                        <select name="petId" required>
-                                            <option value="<%= pet._id %>"><%= pet.petName %></option>               
-                                        </select>
-                                    </th>
-                                </tr>
-                                 <tr>
-                                     <th>
-                                         <label for="claimTitle">Title: </label>
-                                         <input type="text" name="claimTitle" class="displayBox" required> <br>
-                                     </th>
-                                 </tr>
-                                 <tr>
-                                     <th>
-                                         <label for="claimDescription">Description: </label><br>
-                                         <textarea name="claimDescription" rows="4" cols="50" data-cy="claimDescrip" required> </textarea>
-                                     </th>
-                                 </tr>
-                                 <tr>
-                                     <th>
-                                         <label for="areaOfIssue">Area Of Issue: </label><br>
-                                         <select name="areaOfIssue" class="areaOfIssue">
-                                             <option value="unselected"> </option>
-                                             <optgroup label="Face">
-                                                 <option value="nose">Nose </option>
-                                                 <option value="teeth">Teeth </option>
-                                                 <option value="tongue">Tongue </option>
-                                                 <option value="throat">Throat </option>
-                                                 <option value="right Eye">Right Eye</option>
-                                                 <option value="left Eye">Left Eye</option>
-                                             </optgroup>
-                                             <optgroup label="Head">
-                                                 <option value="right Ear">Right Ear</option>
-                                                 <option value="left Ear">Left Ear</option>
-                                                 <option value="back Of Neck">Back of Neck </option>
-                                                 <option value="front Of Neck">Front of Neck </option>
-                                                 <option value="back Of Head">Back of Head </option>
-                                             </optgroup>
-                                             <optgroup label="Back">
-                                                 <option value="body">Body </option>
-                                                 <option value="stomach">Stomach </option>
-                                                 <option value="tail">Tail </option>
-                                             </optgroup>
-                                             <optgroup label="Leg">
-                                                 <option value="front Right"> Front Right </option>
-                                                 <option value="front left"> Front Left </option>
-                                                 <option value="back Right"> Back Right </option>
-                                                 <option value="back Left"> Back Left </option>
-                                             </optgroup>
-                                             <optgroup label="Foot">
-                                                 <option value="front Right">Front Foot Right </option>
-                                                 <option value="front left">Front Foot Left </option>
-                                                 <option value="back Right">Back Foot Right </option>
-                                                 <option value="back Left">Back Foot Left </option>
-                                             </optgroup>
-                                                 <optgroup label="Additioanl">
-                                                 <option value="Furr">Furr </option>
-                                                 <option value="Scales">Scales</option>
-                                                 <option value="Wing">Wing</option>
-                                             </optgroup>
-                                         </select>
-                                     </th>
-                                 </tr>
-                                 <tr>
-                                     <th>
-                                         <label for="incidentStartDate">Issue Date: </label><br>
-                                         <input type="date" name="incidentStartDate" placeholder="Issue Date" required> <br>
-                                         
-                                     </th>
-                                 </tr>
-                                 <tr>
-                                    <th><br>
-                                        <label for="vetDate">Vet First visit Date: </label><br>
-                                        <input type="date" name="vetDate" placeholder="Issue Date" required> <br>
-                                        
-                                    </th>
-                                 </tr>
-                                 <tr>
-                                    <th>
-                                        <label for="vetDetail">Vet Details: </label> <br>
-                                        <textarea  name="vetDetail" rows="4" cols="50" data-cy="vetDetailNote" required > </textarea>  <br>
-                                    </th>
-                                 </tr>
-                                 <tr>
-                                    <th>
-                                        <label for="claimImage">Image Upload</label><br>
-                                         <input type="file" name="claimImage" accept="image/*" multiple >
-                                    </th>
-                                 </tr>
-                                 <tr>
-                                    <th> <label for="claimDocument">Document Upload</label><br>
-                                        <input type="file" name="claimDocument" accept=".pdf,.doc,.docx" multiple>
-                                    </th> 
-                                 </tr>
-                                 <tr>
-                                    <th>
-                                        <label for="claimStatus">Claim Status</label><br>
-                                         <select name="claimStatus" id="claimStatus">
-                                            <option value="Unselected"></option>                                         
-                                            <option value="Claim Ready for Insurer">Claim Ready for Insurer</option>
-                                            <option value="Working on Claim">Working on Claim</option>
-                                            <option value="Claim Waiting from Vet">Waiting Update from Vet</option>
-                                            <option value="Claim Complete">Claim Complete</option>
-                                         </select>    <br>
-                                    </th>
-                                 </tr>
-                                 <tr>
-                                    <th>
-                                         <label for="claimAmount">Claim Cost: </label><br>
-                                         <input type="number" name="claimAmount"  required> <br>
-                                    </th>
-                                 </tr>
-                                 <tr>
-                                     <th>
-                                         <label for="additionalclaimDescription">Additional Description: </label><br>
-                                         <textarea name="additionalclaimDescription" rows="4" cols="50" data-cy="extraDetails" > </textarea>
-                                     </th>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                        <button type="submit" id="userLoginButton">Save Claim</button>
-                                    </td>
-                                 </tr>
-                             </table>
-                         </form>                       
-                    </div>
+                <% } %> 
+                <div><br><h4>Owner: <%= user.firstName %> <%= user.lastName %> </h4><br></div>
+                <div class="accountBtns logInOut">
+                    <a href="/user/pets_profile/<%= pet._id %>" data-cy="petLink"> <%= pet.petName %>'s Profile | </a>
+                    <a href="/user/user_profile" data-cy="userLink"> <%= user.username %> 's Profile | </a>
+                       <!-- Login out of account-->
+                    <%if(user) {%>
+                        <a href="/user/logout"> Logout</a>
+                    <% } %> 
+                </div> 
+            </div>
+        </div>  <!-- End of Left Hand Side column: contains the pet details --> 
+        <!--Right Hand Side column: Main Content--> 
+        <div class="col-md-8 createPetAccount">
+            <div class="col claimDetailsList"> 
+                <div>
+                    <h1>Claims</h1>
                 </div>
-             </div>
+                <div>
+                    <form  action="/user/new_claims" class="form-inline" method="post" enctype="multipart/form-data">
+                        <label for="petId"> Choose your pet</label>
+                            <select name="petId" required>
+                                <option value="<%= pet._id %>"><%= pet.petName %></option>               
+                            </select><br>
+                        <label for="claimTitle">Title: </label>
+                        <input type="text" name="claimTitle" class="displayBox" required> <br>
+                        <label for="claimDescription">Description: </label><br>
+                        <textarea name="claimDescription" rows="4" cols="50" data-cy="claimDescrip" required> </textarea><br>
+                        <label for="areaOfIssue">Area Of Issue: </label>
+                        <select name="areaOfIssue" class="areaOfIssue">
+                            <option value="unselected"> </option>
+                            <optgroup label="Face">
+                                <option value="nose">Nose </option>
+                                <option value="teeth">Teeth </option>
+                                <option value="tongue">Tongue </option>
+                                <option value="throat">Throat </option>
+                                <option value="right Eye">Right Eye</option>
+                                <option value="left Eye">Left Eye</option>
+                            </optgroup>
+                            <optgroup label="Head">
+                                <option value="right Ear">Right Ear</option>
+                                <option value="left Ear">Left Ear</option>
+                                <option value="back Of Neck">Back of Neck </option>
+                                <option value="front Of Neck">Front of Neck </option>
+                                <option value="back Of Head">Back of Head </option>
+                            </optgroup>
+                            <optgroup label="Back">
+                                <option value="body">Body </option>
+                                <option value="stomach">Stomach </option>
+                                <option value="tail">Tail </option>
+                            </optgroup>
+                            <optgroup label="Leg">
+                                <option value="front Right"> Front Right </option>
+                                <option value="front left"> Front Left </option>
+                                <option value="back Right"> Back Right </option>
+                                <option value="back Left"> Back Left </option>
+                            </optgroup>
+                            <optgroup label="Foot">
+                                <option value="front Right">Front Foot Right </option>
+                                <option value="front left">Front Foot Left </option>
+                                <option value="back Right">Back Foot Right </option>
+                                <option value="back Left">Back Foot Left </option>
+                            </optgroup>
+                                <optgroup label="Additioanl">
+                                <option value="Furr">Furr </option>
+                                <option value="Scales">Scales</option>
+                                <option value="Wing">Wing</option>
+                            </optgroup>
+                        </select><br>
+                        <label for="incidentStartDate">Issue Date: </label>
+                        <input type="date" name="incidentStartDate" placeholder="Issue Date" required><br>   
+                        <label for="vetDate">Vet First visit Date: </label>
+                        <input type="date" name="vetDate" placeholder="Issue Date" required><br>        
+                        <label for="vetDetail">Vet Details: </label><br>
+                        <textarea  name="vetDetail" rows="4" cols="50" data-cy="vetDetailNote" required > </textarea> <br>
+                        <label for="claimStatus">Claim Status</label>
+                        <select name="claimStatus" id="claimStatus">
+                            <option value="Unselected"></option>                                         
+                            <option value="Claim Ready for Insurer">Claim Ready for Insurer</option>
+                            <option value="Working on Claim">Working on Claim</option>
+                            <option value="Claim Waiting from Vet">Waiting Update from Vet</option>
+                            <option value="Claim Complete">Claim Complete</option>
+                         </select> <br>
+                        <label for="claimAmount">Claim Cost: </label>
+                        <input type="number" name="claimAmount"  required> <br><br>
+                        <label for="additionalclaimDescription">Additional Description: </label><br>
+                        <textarea name="additionalclaimDescription" rows="4" cols="50" data-cy="extraDetails" > </textarea><br>
 
-    </div>
-    <!--Footer-->
-    <%- include("../partials/footer_genPages.ejs") %>    
+                        <label for="claimImage">Image Upload</label>
+                        <input type="file" name="claimImage" accept="image/*" multiple > <br>
+                        <label for="claimDocument">Document Upload</label>
+                        <input type="file" name="claimDocument" accept=".pdf,.doc,.docx" multiple><br>
+
+                        <button type="submit" id="userLoginButton">Save Claim</button>
+                    </form>                       
+                </div>
+            </div>
+        </div> <!--Right Hand Side column: Main Content--> 
+    </div><!-- End of Bootstrap containers div -->
+    <!--Footer Connection-->
+    <%- include("../partials/footer_genPages.ejs") %>   
+    <!-- JS connection--> 
     <script  src="/js/claims.js"></script>    
 </body>
 </html>

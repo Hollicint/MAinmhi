@@ -1,203 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--head-->
+<!--head Connection-->
 <%- include ("../partials/head.ejs") %>
 <body>
-    <div class="container-fluid conatainer3-mainBody full-height">
-        <div class="row"></div>
-            <div class="col-4 leftimage-col">
-                <div class="col">
-                    <img src="/images/profileImages/adminIcon.jpg" class="indexLoginIcon"  alt="icon"> <br><br>
-                    <!--https://www.istockphoto.com/vector/digital-security-line-icon-design-gm1371134975-440538718?searchscope=image%2Cfilm-->
-                    <div >
-                        <div><h4>Name <%= adminUser.adminfirstName %> <%= adminUser.adminLastName %></h4><br></div>
-                        <div><h4>Email: <%= adminUser.adminEmailAddress %></h4><br></div>
-                        <div><h4>Staff Number: <%= adminUser.adminStaffNumber %></h4><br></div>
-                        <div><h4>Ext Number: 9091 </h4><br></div>
-                        <div><h4>Username: <%= adminUser.username %></h4><br></div>
-                        <div></div>
-                    </div>
-
-                    <%if(adminUser) {%>
-                        <div class="logInOut"><br>
-                             <a href="/admin/logout" data-cy="adminLogout">  Logout</a>
-                        </div>
-                     <% } %>         
+    <!-- Bootstrap containers div -->
+    <div class="container-fluid container3-mainBody full-height">
+        <!-- Left Hand Side column: contains the Admin Logo-->    
+        <div class="col-4 leftimage-col">
+            <div class="col">
+                <img src="/images/profileImages/adminIcon.jpg" class="indexLoginIcon"  alt="icon"> <br><br>
+                <!--https://www.istockphoto.com/vector/digital-security-line-icon-design-gm1371134975-440538718?searchscope=image%2Cfilm-->
+                <div >
+                    <div><h4> Name <%= adminUser.adminfirstName %> <%= adminUser.adminLastName %></h4><br></div>
+                    <div><h4> Email: <%= adminUser.adminEmailAddress %></h4><br></div>
+                    <div><h4>Staff Number: <%= adminUser.adminStaffNumber %></h4><br></div>
+                    <div><h4>Ext Number: 9091 </h4><br></div>
+                    <div><h4>Username: <%= adminUser.username %></h4><br></div>
+                    <div></div>
                 </div>
-
-            </div>    
-              
-            <div class="col-8 ">
-                <div class="col">
-                    <div>
-                        <h1>Administrator Section  M'Ainmhi </h1>
+                <!-- Admin Log out-->
+                <%if(adminUser) {%>
+                    <div class="logInOut"><br>
+                         <a href="/admin/logout" data-cy="adminLogout">  Logout</a>
                     </div>
-                           <div> 
-                       <table id="claimDisplay"> <!--reportDisplay-->
-                            <div>
-                                <tr>
-                                    <th><h4>Content</h4></th>
-                                    <th><h4>Generate Report</h4></th>
-                                    <th><h4>Saved Report</h4></th>
-                                    <th><h4>Comment</h4></th>                     
-                                </tr>
-                            </div>
-                            <div>
-                                <tr>
-                                    <td>All Users</td>    
-                                    <td><button id="reportBtn">Create</button></td>
-                                    <td>UsersReport.pdf</td>   
-                                    <td>
-                                        <textarea name="" id="" cols="20" rows="2"></textarea>
-                                        <button id="saveBtn" class="userLoginButton"> Save Comment</button>
-                                    </td>  
-                                                
-                                </tr>
-                                <tr>
-                                    <td> All Companies</td>    
-                                    <td><button id="reportBtn">Create</button></td> 
-                                    <td>CompaniesReport.pdf</td>    
-                                    <td>
-                                        <textarea name="text-area" id="text-area" cols="20" rows="2"></textarea>
-                                        <button id="saveBtn" class="userLoginButton"> Save Comment</button>
-                                    </td>              
-                                </tr>    
-                            </div>
-                       </table>
-                        <br><br><br><br><br><br>
-                    </div>
-                    <div> <br><br>
-                        <table id="claimDisplay">
-                            <div>
-                                <tr>
-                                    <th><h4>User Name</h4></th>
-                                    <th><h4>User Type</h4></th>
-                                    <th><h4>Email</h4></th>
-                                    <th><h4>Locked</h4></th>
-                                    <th><h4>Unlocked</h4></th>
-                                    <th><h4>Archive Account</h4></th>                     
-                                </tr>
-                            </div>
-                            <div> 
-                                  
-                                <% users.forEach(user => { %>  
-                                <tr>
-                                    <td>
-                                         <%= user.firstName %>  <%= user.lastName %>
-
-                                    </td>
-                                    <td> 
-                                       <p>Claim User</p>
-                                         
-                                    </td>
-                                    <td>
-                                         <%= user.emailAddress %> 
-
-                                    </td>
-                                    <td> 
-                                        <label class="clickBoxContainer"></label>
-                                        <input type="checkbox" checked="checked" ><!--id="clickBox" onclick="clickBoxFunction()"-->
-                                        
-                                    </td>
-                                    <td>
-                                        <label class="clickBoxContainer"></label>
-                                          <input type="checkbox" id="clickBox" onclick="clickBoxFunction()">
-                                      
-                                    </td>
-                                    <td>
-                                        <label class="clickBoxContainer"></label>
-                                        <input type="checkbox" id="clickBox" onclick="clickBoxFunction()">
-                                       
-                                    </td>
-                              </tr>
-                                <% }) %>   
-                                     
-                           </div>
-                         
-                            <div> 
-                                 
-                                <% insurerUsers.forEach(insurerUser => { %>  
-                                <tr>
-                                    <td>
-                                         <%= insurerUser.staffFirstName %>  <%= insurerUser.staffLastName %>
-
-                                    </td>
-                                    <td> 
-                                       <p>Insurance Company User</p>
-                                         
-                                    </td>
-                                    <td>
-                                         <%= insurerUser.staffEmailAddress %> 
-
-                                    </td>
-                                    <td> 
-                                        <label class="clickBoxContainer"></label>
-                                        <input type="checkbox" id="clickBox" onclick="clickBoxFunction()">
-                                      
-                                    </td>
-                                    <td>
-                                        <label class="clickBoxContainer"></label>
-                                        <input type="checkbox" id="clickBox" onclick="clickBoxFunction()">
-
-                                    </td>
-                                    <td>
-                                        <label class="clickBoxContainer"></label>
-                                        <input type="checkbox" id="clickBox" onclick="clickBoxFunction()">
-                                    </td>
-                              </tr>
-                                <% }) %>   
-                                    
-                           </div>
-                        </table>
-                        <br><br><br><br><br><br>
-                    </div> 
-
-                <!--
-                     ** FUTURE INPUTs **
-                    This section below will be the full sites report section. Admin can create different reports for Audits or if 
-                    how it should look is that if a user or company needs information that is archived details to be give in a full pdf format
-                -->
-                
-             
-
-                    <!--div> 
-                       <table id="reportDisplay">
-                            <div>
-                                <tr>
-                                    <th><h4>User</h4></th>
-                                    <th><h4>Email</h4></th>
-                                    <th><h4>Archived Details</h4></th>
-                                    <th><h4>Exported</h4></th>                     
-                                </tr>
-                            </div>
-                            <div>
-                                <tr>
-                                    <td>Tia Berry</td>    
-                                    <td> tiaberry@gmail.com</td>
-                                    <td> <a href="">Archived List</a></td>   
-                                    <td> 
-                                        <label class="switch">
-                                            
-                                            <input type="checkbox" checked>
-                                            <span class="slider round"></span>
-                                        </label>  
-                                    </td>               
-                                </tr>
-
-                            </div>
-                       </table>
-
-                    </div-->
-
-                </div>
+                 <% } %>         
             </div>
-
-       
-        </div>
-    </div> <!--container end div-->
-    <!--Footer-->
+        </div> <!-- end of Left Hand Side column: contains the Admin Logo--> 
+        <!--Right Hand Side column: Main Content-->  
+        <div class="col-md-8"> 
+            <div class="col">
+                <div>
+                    <h1>Administrator Section  M'Ainmhi </h1><br>
+                </div>
+                <div> <!--Report Details Table-->
+                    <table id="reportDisplay">
+                        <tr>
+                            <th>Content</th>
+                            <th>Generate Report</th>
+                            <th>Saved Report</th>
+                            <th>Comment</th>                     
+                        </tr>
+                        <tr>
+                            <td>All Users</td>    
+                            <td><button id="reportBtn" class="userLoginButton">Create</button></td>
+                            <td>UsersReport.pdf</td>   
+                            <td>
+                                <textarea name="text-area" id="text-area" cols="20" rows="2"></textarea> 
+                                <button id="saveBtn" class="userLoginButton"> Save Comment</button>
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td> All Companies</td>    
+                            <td><button id="reportBtn" class="userLoginButton">Create</button></td> 
+                            <td>CompaniesReport.pdf</td>    
+                            <td>
+                                <textarea name="text-area" id="text-area" cols="20" rows="2"></textarea>
+                                <button id="saveBtn" class="userLoginButton"> Save Comment</button>
+                            </td>              
+                        </tr>         
+                    </table>  
+                </div> <!--end of Report Details Table-->
+                <div> <!--Users & Insurance Users Details Table div-->
+                    <table id="reportDisplay">
+                        <tr>
+                            <th>Users Full Name</th>
+                            <th>Email</th>
+                            <th>Username/Job Role</th>
+                            <th>Locked Account</th>
+                            <th>Unlocked Account</th>
+                            <th>Archive Account</th>                     
+                        </tr> 
+                        <!-- Calling the User details-->
+                        <% users.forEach(user => { %>  
+                            <tr>
+                                <td>
+                                    <%= user.firstName %>  <%= user.lastName %>
+                                </td>
+                                <td>
+                                    <%= user.emailAddress %> 
+                                </td>
+                                <td> 
+                                  <%= user.username %> 
+                                </td>
+                                
+                                <td> 
+                                    <input type="checkbox" id="checkbox" checked onclick="clickBoxFunction()">
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="checkbox" onclick="clickBoxFunction()">
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="checkbox" onclick="clickBoxFunction()">
+                                </td>
+                            </tr>
+                        <% }) %> <!--End of Calling the User details-->
+                        <!-- Calling the Insurance User details-->
+                        <% insurerUsers.forEach(insurerUser => { %>  
+                            <tr>
+                                <td>
+                                    <%= insurerUser.staffFirstName %>  <%= insurerUser.staffLastName %>
+                                </td>
+                                <td>
+                                    <%= insurerUser.staffEmailAddress %> 
+                                </td>
+                                <td> 
+                                    <%= insurerUser.staffRole %> 
+                                </td>
+                                <td> 
+                                    <input type="checkbox" id="checkbox" onclick="clickBoxFunction()">
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="checkbox" checked onclick="clickBoxFunction()">
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="checkbox" onclick="clickBoxFunction()">
+                                </td>
+                            </tr>
+                        <% }) %> <!-- Calling the Insurance User details-->            
+                    </table>
+                </div> <!--End of Users & Insurance Users Details Table-->
+             <!--
+                 ** FUTURE INPUTs **
+                This section below will be the full sites report section. Admin can create different reports for Audits or if 
+                how it should look is that if a user or company needs information that is archived details to be give in a full pdf format
+             -->
+            </div>
+        </div> <!-- end of Right Hand Side column: Main Content-->
+     
+    </div> <!-- End of Container div -->
+    <!--Footer Connection-->
     <%- include ("../partials/footer_genPages.ejs") %>
-    <!--Script to connect to JS folder-->
+    <!--Script to connect to JS folder -->
     <script src="/js/adminprofile.js"></script>
 </body>
 </html>

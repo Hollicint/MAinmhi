@@ -48,7 +48,19 @@ const petDetailSchema = new Schema({
     endDate: {
         type: String,
         required: true
-    },   
+    },
+    vetCompanyName: {
+        type: String,
+        required: true
+    },  
+    vetCompanyEmail: {
+        type: String,
+        required: true
+    },  
+    vetCompanyNumber: {
+        type: String,
+        required: true
+    }, 
     insuranceCompanyName: {
         type: String,
         required: true

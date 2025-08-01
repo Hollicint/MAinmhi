@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--head-->
+<!--head Connection-->    
 <%- include ("../partials/head.ejs") %>
-<body>   
-     <div class="container-fluid conatainer3-mainBody full-height">
-       
+<body>
+    <!-- Bootstrap containers div -->   
+     <div class="container-fluid container3-mainBody full-height">
+        <!-- Left Hand Side column: contains the ICU login--> 
         <div class="col-4 leftimage-col">
             <img src="/images/accountsImages/insuranceIcon.jpg" class="indexLoginIcon" alt="icon">
-         </div>
-
+        </div> <!-- Left Hand Side column: contains the ICU login--> 
+         <!--Right Hand Side column: Main Content-->
         <div class="col-8 rightSide-col ">
             <div>
                 <h1>Insurance Login Page</h1><br> <br>
                 <p>
-                    Login into your Company account, to link up with your policy holders claims.
-                </p><br>
-                <p>
+                    Login into your Company account, to link up with your policy holders claims. <br>
                     If your company isnt registered, create one <a href="/insurance/reg_insuranceCompany"data-cy="regICU">Register account</a> and follow the on screen directions,
                     or go back to the <a href="/">Home</a> page
                  </p>
                 </p><br>
             </div>
+            <!--Insurance Login-->
             <div id="registerSection">
                 <form action="/insurance/insurance_loginpage" method="post">
                         <!--User and Password that will be checked if exists-->
                     <div class="row"> 
-
-                               <!--User and Password that will be checked if exists-->
+                        <!--User and Password that will be checked if exists-->
                         <div id="userLoginForm">  <br>
                             <label for="username">Username: </label>
                             <input type="text" name="username" placeholder="Username"  required>
@@ -36,7 +35,7 @@
                             <br>
                             <button type="submit" id="userLoginButton"> Enter </button>
                         </div>   
-                          <div id="errorMessage" style="font-size: 100px">
+                        <div id="errorMessage" style="font-size: 100px">
                             <br>
                             <% if(errorMessage) { %>
                              <div>
@@ -46,13 +45,11 @@
                         </div>
                     </div>
                 </form>
-                   
-                    <!--a href="/forgottenpass"> <h3>Forgotten Password</h3></a-->
-            </div>   
-                
-        </div>
-    </div> 
-    <!--Footer-->
+                     <!--a href="/forgottenpass"> <h3>Forgotten Password</h3></a-->
+            </div> <!--End of Insurance Login-->   
+        </div> <!--End of Right Hand Side column: Main Content-->
+    </div><!--End of Bootstrap containers div --> 
+    <!--Footer Connection-->
     <%- include ("../partials/footer_genPages.ejs") %>%>   
  </body>
 </html>
